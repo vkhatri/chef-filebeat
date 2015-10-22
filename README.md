@@ -3,7 +3,7 @@ filebeat Cookbook
 
 [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
 
-This is a [Chef] cookbook to manage [filebeat].
+This is a [Chef] cookbook to manage [Filebeat].
 
 
 ## Repository
@@ -42,6 +42,8 @@ This cookbook was tested on Amazon & Ubuntu Linux and expected to work on other 
 
 * `default['filebeat']['enable_localhost_output']` (default: `true`): by default add localhost `hosts` for output `elasticsearch` and `logstash`
 
+* `default['filebeat']['prospectors_dir']` (default: `/etc/filebeat/conf.d`): prospectors configuration file directory
+
 * `default['filebeat']['prospectors']` (default: `{}`): prospectors configuration file
 
 ## Configuration File filebeat.yml Attributes
@@ -50,7 +52,7 @@ This cookbook was tested on Amazon & Ubuntu Linux and expected to work on other 
 
 * `default['filebeat']['config']['filebeat']['registry_file']` (default: `/var/lib/filebeat/registry`): filebeat services to capture packets
 
-* `default['filebeat']['config']['filebeat']['prospectors_dir']` (default: `/etc/filebeat/conf.d`): filebeat prospectors configuration files folder
+* `default['filebeat']['config']['filebeat']['config_dir']` (default: `node['filebeat']['prospectors_dir']`): filebeat prospectors configuration files folder
 
 
 * `default['filebeat']['config']['output']['elasticsearch']['enabled']` (default: `true`): enable elasticsearch output
@@ -189,5 +191,5 @@ limitations under the License.
 
 
 [Chef]: https://www.chef.io/
-[filebeat]: http://filebeat.com
+[Filebeat]: https://www.elastic.co/products/beats/filebeat
 [Contributors]: https://github.com/vkhatri/chef-filebeat/graphs/contributors

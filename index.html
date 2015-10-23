@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Chef Filebeat by vkhatri</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Chef Filebeat</h1>
+        <p>Chef Cookbook to Manage Elastic Filebeat https://supermarket.chef.io/cookbooks/filebeat</p>
+
+        <p class="view"><a href="https://github.com/vkhatri/chef-filebeat">View the Project on GitHub <small>vkhatri/chef-filebeat</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/vkhatri/chef-filebeat/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/vkhatri/chef-filebeat/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/vkhatri/chef-filebeat">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="filebeat-cookbook" class="anchor" href="#filebeat-cookbook" aria-hidden="true"><span class="octicon octicon-link"></span></a>filebeat Cookbook</h1>
+
+<p><a href="https://travis-ci.org/vkhatri/chef-filebeat"><img src="https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master" alt="Build Status"></a></p>
+
+<p>This is a <a href="https://www.chef.io/">Chef</a> cookbook to manage <a href="https://www.elastic.co/products/beats/filebeat">Filebeat</a>.</p>
+
+<h2>
+<a id="repository" class="anchor" href="#repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository</h2>
+
+<p><a href="https://github.com/vkhatri/chef-filebeat">https://github.com/vkhatri/chef-filebeat</a></p>
+
+<h2>
+<a id="supported-os" class="anchor" href="#supported-os" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported OS</h2>
+
+<p>This cookbook was tested on Amazon &amp; Ubuntu Linux and expected to work on other RHEL platforms.</p>
+
+<h2>
+<a id="recipes" class="anchor" href="#recipes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recipes</h2>
+
+<ul>
+<li><p><code>filebeat::default</code> - default recipe (use it for run_list)</p></li>
+<li><p><code>filebeat::install</code> - install filebeat</p></li>
+<li><p><code>filebeat::config</code> - configure filebeat</p></li>
+</ul>
+
+<h2>
+<a id="core-attributes" class="anchor" href="#core-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Core Attributes</h2>
+
+<ul>
+<li><p><code>default['filebeat']['version']</code> (default: <code>1.0.0-beta4</code>): filebeat version</p></li>
+<li><p><code>default['filebeat']['package_url']</code> (default: <code>calculated</code>): package download url</p></li>
+<li><p><code>default['filebeat']['conf_dir']</code> (default: <code>/etc/filebeat</code>): filebeat yaml configuration file directory</p></li>
+<li><p><code>default['filebeat']['conf_file']</code> (default: <code>/etc/filebeat/filebeat.yml</code>): filebeat configuration file</p></li>
+<li><p><code>default['filebeat']['notify_restart']</code> (default: <code>true</code>): whether to restart filebeat service on configuration file change</p></li>
+<li><p><code>default['filebeat']['disable_service']</code> (default: <code>false</code>): whether to stop and disable filebeat service</p></li>
+<li><p><code>default['filebeat']['enable_localhost_output']</code> (default: <code>true</code>): by default add localhost <code>hosts</code> for output <code>elasticsearch</code> and <code>logstash</code></p></li>
+<li><p><code>default['filebeat']['prospectors_dir']</code> (default: <code>/etc/filebeat/conf.d</code>): prospectors configuration file directory</p></li>
+<li><p><code>default['filebeat']['prospectors']</code> (default: <code>{}</code>): prospectors configuration file</p></li>
+</ul>
+
+<h2>
+<a id="configuration-file-filebeatyml-attributes" class="anchor" href="#configuration-file-filebeatyml-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File filebeat.yml Attributes</h2>
+
+<ul>
+<li><p><code>default['filebeat']['config']['filebeat']['prospectors']</code> (default: <code>[]</code>): filebeat interface device name</p></li>
+<li><p><code>default['filebeat']['config']['filebeat']['registry_file']</code> (default: <code>/var/lib/filebeat/registry</code>): filebeat services to capture packets</p></li>
+<li><p><code>default['filebeat']['config']['filebeat']['config_dir']</code> (default: <code>node['filebeat']['prospectors_dir']</code>): filebeat prospectors configuration files folder</p></li>
+<li><p><code>default['filebeat']['config']['output']['elasticsearch']['enabled']</code> (default: <code>true</code>): enable elasticsearch output</p></li>
+<li><p><code>default['filebeat']['config']['output']['elasticsearch']['hosts']</code> (default: <code>[]</code>): elasticsearch hosts</p></li>
+<li><p><code>default['filebeat']['config']['output']['elasticsearch']['save_topology']</code> (default: <code>false</code>):</p></li>
+<li><p><code>default['filebeat']['config']['output']['logstash']['enabled']</code> (default: <code>true</code>): enable logstash output</p></li>
+<li><p><code>default['filebeat']['config']['output']['logstash']['hosts']</code> (default: <code>[]</code>): logstash hosts</p></li>
+<li><p><code>default['filebeat']['config']['output']['logstash']['loadbalance']</code> (default: <code>true</code>): set true to load balance between logstash hosts</p></li>
+<li><p><code>default['filebeat']['config']['output']['logstash']['index']</code> (default: <code>filebeat</code>): logstash index name</p></li>
+<li><p><code>default['filebeat']['config']['output']['logstash']['tls']['enabled']</code> (default: <code>false</code>):</p></li>
+<li><p><code>default['filebeat']['config']['output']['logstash']['save_topology']</code> (default: <code>false</code>):</p></li>
+<li><p><code>default['filebeat']['config']['output']['file']['enabled']</code> (default: <code>false</code>):</p></li>
+<li><p><code>default['filebeat']['config']['output']['file']['path']</code> (default: <code>/tmp/filebeat</code>):</p></li>
+<li><p><code>default['filebeat']['config']['output']['file']['filename']</code> (default: <code>filebeat</code>):</p></li>
+<li><p><code>default['filebeat']['config']['output']['file']['rotate_every_kb']</code> (default: <code>10240</code>):</p></li>
+<li><p><code>default['filebeat']['config']['output']['file']['number_of_files']</code> (default: <code>7</code>):</p></li>
+</ul>
+
+<p>For more attribute info, visit below links:</p>
+
+<p><a href="https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml">https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml</a></p>
+
+<h2>
+<a id="how-to-add-filebeat-prospectors-via-node-attribute" class="anchor" href="#how-to-add-filebeat-prospectors-via-node-attribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Add Filebeat Prospectors via Node Attribute</h2>
+
+<p>Individual propspectors configuration file can be added using attribute <code>default['filebeat']['prospectors']</code>. Each prospector configuration will
+be created as a different yaml file under <code>default['filebeat']['prospector_dir']</code> with prefix <code>prospector-</code></p>
+
+<pre><code>  "default_attributes": {
+    "filebeat": {
+      "prospectors": {
+        "system_logs": {
+          "filebeat": {
+            "prospectors": [
+              {
+                "paths": [
+                  "/var/log/messages",
+                  "/var/log/syslog"
+                ],
+                "type": "log",
+                "fields": {
+                  "type": "system_logs"
+                }
+              }
+            ]
+          }
+        },
+        "secure_logs": {
+          "filebeat": {
+            "prospectors": [
+              {
+                "paths": [
+                  "/var/log/secure",
+                  "/var/log/auth.log"
+                ],
+                "type": "log",
+                "fields": {
+                  "type": "secure_logs"
+                }
+              }
+            ]
+          }
+        },
+        "apache_logs": {
+          "filebeat": {
+            "prospectors": [
+              {
+                "paths": [
+                  "/var/log/apache/*.log"
+                ],
+                "type": "log",
+                "ignore_older": "24h",
+                "scan_frequency": "15s",
+                "harvester_buffer_size": 16384,
+                "fields": {
+                  "type": "apache_logs"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+
+</code></pre>
+
+<p>Above configuration will create three different prospector files - <code>prospector-system_logs.yml, prospector-secure_logs.yml and prospector-apache_logs.yml</code></p>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<ol>
+<li>Fork the repository on Github</li>
+<li>Create a named feature branch (like <code>add_component_x</code>)</li>
+<li>Write your change</li>
+<li>Write tests for your change (if applicable)</li>
+<li>Run the tests (<code>rake &amp; rake knife</code>), ensuring they all pass</li>
+<li>Write new resource/attribute description to <code>README.md</code>
+</li>
+<li>Write description about changes to PR</li>
+<li>Submit a Pull Request using Github</li>
+</ol>
+
+<h2>
+<a id="copyright--license" class="anchor" href="#copyright--license" aria-hidden="true"><span class="octicon octicon-link"></span></a>Copyright &amp; License</h2>
+
+<p>Authors:: Virender Khatri and <a href="https://github.com/vkhatri/chef-filebeat/graphs/contributors">Contributors</a></p>
+
+<pre>
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/vkhatri">vkhatri</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>

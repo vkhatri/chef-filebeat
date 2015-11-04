@@ -37,4 +37,18 @@ package 'filebeat' do
   source package_file
   options '--force-confdef --force-confold' if node['platform_family'] == 'debian'
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
+  not_if { node['platform'] == 'windows'}
+end
+
+directory node['filebeat']['windows']['base_dir'] do
+  recursive true
+  action :create
+  only_if { node['platform'] == 'windows'}
+end
+
+windows_zipfile node['filebeat']['windows']['base_dir'] do
+  source package_file
+  action :unzip
+  only_if { node['platform'] == 'windows' }
+  not_if  { ::File.exist?(node['filebeat']['windows']['base_dir'] + '/' + node['filebeat']['windows']['version_string'] + '/install-service-filebeat.ps1')}
 end

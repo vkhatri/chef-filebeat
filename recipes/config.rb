@@ -17,7 +17,10 @@
 # limitations under the License.
 #
 
-directory node['filebeat']['prospectors_dir']
+directory node['filebeat']['prospectors_dir'] do
+  recursive true
+  action :create
+end
 
 file node['filebeat']['conf_file'] do
   content JSON.parse(node['filebeat']['config'].to_json).to_yaml.lines.to_a[1..-1].join
@@ -35,6 +38,11 @@ prospectors.each do |prospector, configuration|
 end
 
 service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:enable, :start]
+
+powershell_script 'install filebeat as service' do
+  code "#{node['filebeat']['windows']['base_dir']}/#{node['filebeat']['windows']['version_string']}/install-service-filebeat.ps1"
+  only_if { node['platform'] == 'windows' }
+end
 
 service 'filebeat' do
   supports :status => true, :restart => true

@@ -3,6 +3,12 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.1.1
+-----
+
+- Brandon Wilson - Include dpkg options to keep old config files when upgrading filebeat to a new release. Without specifying the dpkg options, dpkg will attempt to interactively ask if it should keep the old conf file, or replace it with the vendor supplied conf file which comes with the new version of the package. Since chef is running dpkg non-interactively, it causes dpkg to exit with code 1, and the chef run fails.
+
+
 0.1.0
 -----
 

@@ -9,6 +9,5 @@ default['filebeat']['prospectors_dir'] = ::File.join(node['filebeat']['conf_dir'
 default['filebeat']['conf_file'] = ::File.join(node['filebeat']['conf_dir'], 'filebeat.yml')
 
 default['filebeat']['windows'] = {
-  'base_dir' => 'C:/opt/filebeat/',
-  'version_string' => 'filebeat-nightly-windows'
+  'base_dir' => 'C:/opt/filebeat/'
 }

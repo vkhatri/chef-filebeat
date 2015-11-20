@@ -20,7 +20,8 @@
 if node['filebeat']['package_url'] == 'auto'
   package_url = value_for_platform_family(
     'debian' =>        "https://download.elastic.co/beats/filebeat/filebeat_#{node['filebeat']['version']}_amd64.deb",
-    %w(rhel fedora) => "https://download.elastic.co/beats/filebeat/filebeat-#{node['filebeat']['version']}-x86_64.rpm"
+    %w(rhel fedora) => "https://download.elastic.co/beats/filebeat/filebeat-#{node['filebeat']['version']}-x86_64.rpm",
+  'windows' =>       "https://download.elastic.co/beats/filebeat/filebeat-#{node['filebeat']['version']}-windows.zip"
   )
 else
   package_url = node['filebeat']['package_url']

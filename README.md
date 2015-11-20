@@ -6,6 +6,8 @@ filebeat Cookbook
 This is a [Chef] cookbook to manage [Filebeat].
 
 
+>> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/filebeat).
+
 ## Repository
 
 https://github.com/vkhatri/chef-filebeat

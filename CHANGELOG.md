@@ -3,6 +3,11 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.2.x
+-----
+- Patrick Christopher - add support for Windows deploys.
+
+
 0.1.1
 -----
 

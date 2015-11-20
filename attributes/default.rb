@@ -1,10 +1,6 @@
 default['filebeat']['version'] = '1.0.0-beta4'
 default['filebeat']['disable_service'] = false
-
-default['filebeat']['package_url'] = value_for_platform_family(
-  'debian' =>        "https://download.elastic.co/beats/filebeat/filebeat_#{node['filebeat']['version']}_amd64.deb",
-  %w(rhel fedora) => "https://download.elastic.co/beats/filebeat/filebeat-#{node['filebeat']['version']}-x86_64.rpm"
-)
+default['filebeat']['package_url'] = 'auto'
 default['filebeat']['notify_restart'] = true
 default['filebeat']['enable_localhost_output'] = true
 default['filebeat']['conf_dir'] = '/etc/filebeat'

@@ -30,7 +30,7 @@ This cookbook was tested on Amazon & Ubuntu Linux and expected to work on other 
 
 * `default['filebeat']['version']` (default: `1.0.0-beta4`): filebeat version
 
-* `default['filebeat']['package_url']` (default: `calculated`): package download url
+* `default['filebeat']['package_url']` (default: `auto`): package url
 
 * `default['filebeat']['conf_dir']` (default: `/etc/filebeat`): filebeat yaml configuration file directory
 

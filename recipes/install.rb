@@ -17,10 +17,19 @@
 # limitations under the License.
 #
 
-package_file = ::File.join(Chef::Config[:file_cache_path], ::File.basename(node['filebeat']['package_url']))
+if node['filebeat']['package_url'] == 'auto'
+  package_url = value_for_platform_family(
+    'debian' =>        "https://download.elastic.co/beats/filebeat/filebeat_#{node['filebeat']['version']}_amd64.deb",
+    %w(rhel fedora) => "https://download.elastic.co/beats/filebeat/filebeat-#{node['filebeat']['version']}-x86_64.rpm"
+  )
+else
+  package_url = node['filebeat']['package_url']
+end
+
+package_file = ::File.join(Chef::Config[:file_cache_path], ::File.basename(package_url))
 
 remote_file package_file do
-  source node['filebeat']['package_url']
+  source package_url
   not_if { ::File.exist?(package_file) }
 end
 

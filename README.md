@@ -31,6 +31,11 @@ https://github.com/vkhatri/chef-filebeat
 
 This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work on other RHEL platforms.
 
+## Major Changes
+
+### v0.2.x
+- Removed default output configuration attributes for `elasticsearch`, `logstash` and `file`
+- Removed attributed `default['filebeat']['enable_localhost_output']` as default `output` attributes are disabled
 
 ## Cookbook Dependency
 

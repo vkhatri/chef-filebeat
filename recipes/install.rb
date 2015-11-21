@@ -29,7 +29,8 @@ end
 
 package_file = ::File.join(Chef::Config[:file_cache_path], ::File.basename(package_url))
 
-remote_file package_file do
+remote_file 'filebeat_package_file' do
+  path package_file
   source package_url
   not_if { ::File.exist?(package_file) }
 end

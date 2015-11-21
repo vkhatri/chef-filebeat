@@ -3,16 +3,13 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
-0.2.x
+0.2.0
 -----
-- Patrick Christopher - add support for Windows deploys.
-
-
-0.1.1
------
-
 - Brandon Wilson - Include dpkg options to keep old config files when upgrading filebeat to a new release. Without specifying the dpkg options, dpkg will attempt to interactively ask if it should keep the old conf file, or replace it with the vendor supplied conf file which comes with the new version of the package. Since chef is running dpkg non-interactively, it causes dpkg to exit with code 1, and the chef run fails.
 
+- Virender Khatri - Fix for #4, handle derived attribute for package_url
+
+- Patrick Christopher - Added support for Windows OS
 
 0.1.0
 -----

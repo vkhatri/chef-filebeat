@@ -1,22 +1,40 @@
 filebeat Cookbook
 ================
 
-[![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.2.0-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
 
 This is a [Chef] cookbook to manage [Filebeat].
 
 
 >> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/filebeat).
 
+
+## Most Recent Release
+
+```
+cookbook 'filebeat', '~> 0.2.0'
+```
+
+## From Git
+
+```
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat'
+```
+
 ## Repository
 
+```
 https://github.com/vkhatri/chef-filebeat
-
+```
 
 ## Supported OS
 
-This cookbook was tested on Amazon & Ubuntu Linux and expected to work on other RHEL platforms.
+This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work on other RHEL platforms.
 
+
+## Cookbook Dependency
+
+- windows
 
 ## Recipes
 
@@ -30,7 +48,7 @@ This cookbook was tested on Amazon & Ubuntu Linux and expected to work on other 
 ## Core Attributes
 
 
-* `default['filebeat']['version']` (default: `1.0.0-beta4`): filebeat version
+* `default['filebeat']['version']` (default: `1.0.0-rc2`): filebeat version
 
 * `default['filebeat']['package_url']` (default: `auto`): package url
 

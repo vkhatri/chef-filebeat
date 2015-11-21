@@ -51,5 +51,5 @@ windows_zipfile node['filebeat']['windows']['base_dir'] do
   source package_file
   action :unzip
   only_if { node['platform'] == 'windows' }
-  not_if  { ::File.exist?(node['filebeat']['windows']['base_dir'] + '/' + node['filebeat']['windows']['version_string'] + '/install-service-filebeat.ps1') }
+  not_if  { ::File.exist?(node['filebeat']['windows']['base_dir'] + "/filebeat-#{node['filebeat']['version']}-windows" + '/install-service-filebeat.ps1') }
 end

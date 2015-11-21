@@ -9,3 +9,7 @@ source_url 'https://github.com/vkhatri/chef-filebeat' if respond_to?(:source_url
 issues_url 'https://github.com/vkhatri/chef-filebeat/issues' if respond_to?(:issues_url)
 
 depends 'windows'
+
+%w(windows ubuntu centos amazon redhat fedora).each do |os|
+  supports os
+end

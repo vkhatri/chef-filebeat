@@ -39,7 +39,7 @@ end
 
 service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:enable, :start]
 
-powershell_script 'install filebeat as service' do
+powershell 'install filebeat as service' do
   code "#{node['filebeat']['windows']['base_dir']}/#{node['filebeat']['windows']['version_string']}/install-service-filebeat.ps1"
   only_if { node['platform'] == 'windows' }
 end

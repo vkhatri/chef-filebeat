@@ -17,10 +17,16 @@
 # limitations under the License.
 #
 
+if node['platform_family'] == 'debian' && node['kernel']['machine'] == 'x86_64'
+  arch_name = 'amd64'
+else
+  arch_name = node['kernel']['machine']
+end
+
 if node['filebeat']['package_url'] == 'auto'
   package_url = value_for_platform_family(
-    'debian' =>        "https://download.elastic.co/beats/filebeat/filebeat_#{node['filebeat']['version']}_amd64.deb",
-    %w(rhel fedora) => "https://download.elastic.co/beats/filebeat/filebeat-#{node['filebeat']['version']}-x86_64.rpm",
+    'debian' =>        "https://download.elastic.co/beats/filebeat/filebeat_#{node['filebeat']['version']}_#{arch_name}.deb",
+    %w(rhel fedora) => "https://download.elastic.co/beats/filebeat/filebeat-#{node['filebeat']['version']}-#{arch_name}.rpm",
     'windows' =>       "https://download.elastic.co/beats/filebeat/filebeat-#{node['filebeat']['version']}-windows.zip"
   )
 else

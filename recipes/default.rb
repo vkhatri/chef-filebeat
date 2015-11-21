@@ -17,10 +17,5 @@
 # limitations under the License.
 #
 
-if node['filebeat']['enable_localhost_output']
-  node.default['filebeat']['config']['output']['elasticsearch']['hosts'] = ['localhost:9200']
-  node.default['filebeat']['config']['output']['logstash']['hosts'] = ['localhost:5044']
-end
-
 include_recipe 'filebeat::install'
 include_recipe 'filebeat::config'

@@ -61,8 +61,6 @@ This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work 
 
 * `default['filebeat']['disable_service']` (default: `false`): whether to stop and disable filebeat service
 
-* `default['filebeat']['enable_localhost_output']` (default: `true`): by default add localhost `hosts` for output `elasticsearch` and `logstash`
-
 * `default['filebeat']['prospectors_dir']` (default: `/etc/filebeat/conf.d`): prospectors configuration file directory
 
 * `default['filebeat']['prospectors']` (default: `{}`): prospectors configuration file

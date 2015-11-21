@@ -35,6 +35,7 @@ This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work 
 ## Cookbook Dependency
 
 - windows
+- powershell
 
 ## Recipes
 

@@ -41,12 +41,17 @@ This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work 
 
 - windows
 - powershell
+- apt
+- yum
+
 
 ## Recipes
 
 - `filebeat::default` - default recipe (use it for run_list)
 
-- `filebeat::install` - install filebeat
+- `filebeat::install_windows` - install filebeat for windows platform
+
+- `filebeat::install_package` - install filebeat package for linux platform
 
 - `filebeat::config` - configure filebeat
 
@@ -54,9 +59,9 @@ This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work 
 ## Core Attributes
 
 
-* `default['filebeat']['version']` (default: `1.0.0-rc2`): filebeat version
+* `default['filebeat']['version']` (default: `1.0.0`): filebeat version
 
-* `default['filebeat']['package_url']` (default: `auto`): package url
+* `default['filebeat']['package_url']` (default: `auto`): package url for windows installation
 
 * `default['filebeat']['conf_dir']` (default: `/etc/filebeat`): filebeat yaml configuration file directory
 
@@ -79,40 +84,38 @@ This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work 
 * `default['filebeat']['config']['filebeat']['config_dir']` (default: `node['filebeat']['prospectors_dir']`): filebeat prospectors configuration files folder
 
 
-* `default['filebeat']['config']['output']['elasticsearch']['enabled']` (default: `true`): enable elasticsearch output
-
-* `default['filebeat']['config']['output']['elasticsearch']['hosts']` (default: `[]`): elasticsearch hosts
-
-* `default['filebeat']['config']['output']['elasticsearch']['save_topology']` (default: `false`):
-
-
-* `default['filebeat']['config']['output']['logstash']['enabled']` (default: `true`): enable logstash output
-
-* `default['filebeat']['config']['output']['logstash']['hosts']` (default: `[]`): logstash hosts
-
-* `default['filebeat']['config']['output']['logstash']['loadbalance']` (default: `true`): set true to load balance between logstash hosts
-
-* `default['filebeat']['config']['output']['logstash']['index']` (default: `filebeat`): logstash index name
-
-* `default['filebeat']['config']['output']['logstash']['tls']['enabled']` (default: `false`):
-
-* `default['filebeat']['config']['output']['logstash']['save_topology']` (default: `false`):
-
-
-* `default['filebeat']['config']['output']['file']['enabled']` (default: `false`):
-
-* `default['filebeat']['config']['output']['file']['path']` (default: `/tmp/filebeat`):
-
-* `default['filebeat']['config']['output']['file']['filename']` (default: `filebeat`):
-
-* `default['filebeat']['config']['output']['file']['rotate_every_kb']` (default: `10240`):
-
-* `default['filebeat']['config']['output']['file']['number_of_files']` (default: `7`):
-
+* `default['filebeat']['config']['output']` (default: `{}`): configure elasticsearch. logstash, file etc.  output
 
 For more attribute info, visit below links:
 
 https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml
+
+
+# Elasticsearch YUM/APT Repository Attributes
+
+* `default['filebeat']['yum']['description']` (default: ``): beats yum reporitory attribute
+
+* `default['filebeat']['yum']['gpgcheck']` (default: `true`): beats yum reporitory attribute
+
+* `default['filebeat']['yum']['enabled']` (default: `true`): beats yum reporitory attribute
+
+* `default['filebeat']['yum']['baseurl']` (default: `https://packages.elastic.co/beats/yum/el/$basearch`): beatsyum reporitory attribute
+
+* `default['filebeat']['yum']['gpgkey']` (default: `https://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats yum reporitory attribute
+
+* `default['filebeat']['yum']['action']` (default: `:create`): beats yum reporitory attribute
+
+
+* `default['filebeat']['apt']['description']` (default: `calculated`): beats apt reporitory attribute
+
+* `default['filebeat']['apt']['components']` (default: `['stable', 'main']`): beats apt reporitory attribute
+
+* `default['filebeat']['apt']['uri']` (default: `https://packages.elastic.co/beats/apt`): beats apt reporitory attribute
+
+* `default['filebeat']['apt']['key']` (default: `http://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats apt reporitory attribute
+
+* `default['filebeat']['apt']['action']` (default: `:add`): filebeat apt reporitory attribute
+
 
 
 ## How to Add Filebeat Prospectors via Node Attribute

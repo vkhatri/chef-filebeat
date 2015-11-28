@@ -3,16 +3,6 @@ require 'spec_helper'
 describe 'filebeat::default' do
   shared_examples_for 'filebeat' do
     context 'all_platforms' do
-      %w(install config).each do |r|
-        it "include recipe filebeat::#{r}" do
-          expect(chef_run).to include_recipe("filebeat::#{r}")
-        end
-      end
-
-      it 'download filebeat package file' do
-        expect(chef_run).to create_remote_file('filebeat_package_file')
-      end
-
       it 'create prospector directory /etc/filebeat/conf.d' do
         expect(chef_run).to create_directory('/etc/filebeat/conf.d')
       end
@@ -37,6 +27,14 @@ describe 'filebeat::default' do
 
     include_examples 'filebeat'
 
+    it 'adds beats yum repository' do
+      expect(chef_run).to create_yum_repository('beats')
+    end
+
+    it 'include recipe filebeat::install_package' do
+      expect(chef_run).to include_recipe('filebeat::install_package')
+    end
+
     it 'install filebeat package' do
       expect(chef_run).to install_package('filebeat')
     end
@@ -51,6 +49,14 @@ describe 'filebeat::default' do
 
     include_examples 'filebeat'
 
+    it 'adds beats apt beats' do
+      expect(chef_run).to add_apt_repository('beats')
+    end
+
+    it 'include recipe filebeat::install_package' do
+      expect(chef_run).to include_recipe('filebeat::install_package')
+    end
+
     it 'install filebeat package' do
       expect(chef_run).to install_package('filebeat')
     end
@@ -64,6 +70,14 @@ describe 'filebeat::default' do
     end
 
     include_examples 'filebeat'
+
+    it 'include recipe filebeat::install_windows' do
+      expect(chef_run).to include_recipe('filebeat::install_windows')
+    end
+
+    it 'download filebeat package file' do
+      expect(chef_run).to create_remote_file('filebeat_package_file')
+    end
 
     it 'create filebeat base dir C:/opt/filebeat/' do
       expect(chef_run).to create_directory('C:/opt/filebeat/')

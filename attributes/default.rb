@@ -1,4 +1,4 @@
-default['filebeat']['version'] = '1.0.0-rc2'
+default['filebeat']['version'] = '1.0.0'
 default['filebeat']['disable_service'] = false
 default['filebeat']['package_url'] = 'auto'
 
@@ -10,3 +10,16 @@ default['filebeat']['conf_file'] = ::File.join(node['filebeat']['conf_dir'], 'fi
 default['filebeat']['windows'] = {
   'base_dir' => 'C:/opt/filebeat/'
 }
+
+default['filebeat']['yum']['baseurl'] = 'https://packages.elastic.co/beats/yum/el/$basearch'
+default['filebeat']['yum']['description'] = 'Elastic Beats Repository'
+default['filebeat']['yum']['gpgcheck'] = true
+default['filebeat']['yum']['enabled'] = true
+default['filebeat']['yum']['gpgkey'] = 'https://packages.elasticsearch.org/GPG-KEY-elasticsearch'
+default['filebeat']['yum']['action'] = :create
+
+default['filebeat']['apt']['uri'] = 'https://packages.elastic.co/beats/apt'
+default['filebeat']['apt']['description'] = 'Elastic Beats Repository'
+default['filebeat']['apt']['components'] = %w(stable main)
+default['filebeat']['apt']['action'] = :add
+default['filebeat']['apt']['key'] = 'https://packages.elasticsearch.org/GPG-KEY-elasticsearch'

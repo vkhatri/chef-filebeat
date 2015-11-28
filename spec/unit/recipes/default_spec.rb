@@ -49,7 +49,7 @@ describe 'filebeat::default' do
 
     include_examples 'filebeat'
 
-    it 'adds beats apt beats' do
+    it 'adds beats apt repository' do
       expect(chef_run).to add_apt_repository('beats')
     end
 

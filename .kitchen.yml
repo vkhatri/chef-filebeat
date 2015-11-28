@@ -3,14 +3,35 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
   - name: ubuntu-14.04
-  - name: centos-7.1
+    run_list:
+    - recipe[apt]
+  - name: centos-6.5
+    run_list:
+    - recipe[yum]
+
 
 suites:
   - name: default
+    require_chef_omnibus: 12.5.1
     run_list:
       - recipe[filebeat::default]
     attributes:
+      filebeat:
+        prospectors:
+          system_logs:
+            filebeat:
+              prospectors:
+              - paths:
+                - var/log/messages
+                - /var/log/syslog
+                type: log
+                fields:
+                  type: system_logs
+        config:
+          output:
+            elasticsearch:
+              hosts: ["127.0.0.1:9200"]

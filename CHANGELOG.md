@@ -3,6 +3,26 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.2.5
+-----
+
+- Virender Khatri - disabled default output configuration and enable_localhost_output attributes
+
+- Virender Khatri - #10, handle missing attribute node['filebeat']['windows']['version_string']
+
+- Virender Khatri - #6, added specs
+
+- Virender Khatri - #13, major changes to support repository package install
+
+0.2.1
+-----
+
+- Virender Khatri - Added platforms metadata info
+
+- Virender Khatri - #8, add missing dependency on powershell for windows platform
+
+- Virender Khatri - #9, use resource powershell instead of powershell_script
+
 0.2.0
 -----
 - Brandon Wilson - Include dpkg options to keep old config files when upgrading filebeat to a new release. Without specifying the dpkg options, dpkg will attempt to interactively ask if it should keep the old conf file, or replace it with the vendor supplied conf file which comes with the new version of the package. Since chef is running dpkg non-interactively, it causes dpkg to exit with code 1, and the chef run fails.

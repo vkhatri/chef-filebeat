@@ -1,7 +1,7 @@
 filebeat Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.2.1-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.2.5-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
 
 This is a [Chef] cookbook to manage [Filebeat].
 
@@ -12,7 +12,7 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```
-cookbook 'filebeat', '~> 0.2.1'
+cookbook 'filebeat', '~> 0.2.5'
 ```
 
 ## From Git
@@ -91,7 +91,7 @@ For more attribute info, visit below links:
 https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml
 
 
-# Elasticsearch YUM/APT Repository Attributes
+## Filebeat YUM/APT Repository Attributes
 
 * `default['filebeat']['yum']['description']` (default: ``): beats yum reporitory attribute
 

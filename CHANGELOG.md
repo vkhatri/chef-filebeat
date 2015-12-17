@@ -3,6 +3,13 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.2.6
+-----
+
+- Virender Khatri - #18, added LWRP resource for prospectors
+
+- Virender Khatri - #15, fix kitchen test
+
 0.2.5
 -----
 

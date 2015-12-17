@@ -1,7 +1,7 @@
 filebeat Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.2.5-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.2.6-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
 
 This is a [Chef] cookbook to manage [Filebeat].
 
@@ -12,7 +12,7 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```
-cookbook 'filebeat', '~> 0.2.5'
+cookbook 'filebeat', '~> 0.2.6'
 ```
 
 ## From Git
@@ -33,7 +33,7 @@ This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work 
 
 ## Major Changes
 
-### v0.2.x
+### v0.2.5
 - Removed default output configuration attributes for `elasticsearch`, `logstash` and `file`
 - Removed attributed `default['filebeat']['enable_localhost_output']` as default `output` attributes are disabled
 

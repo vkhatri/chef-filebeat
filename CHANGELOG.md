@@ -3,6 +3,13 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.2.7
+-----
+
+- Virender Khatri - #21, add yum_repository resource attribute metadata_expire
+
+- Virender Khatri - #20, update to beat v1.0.1
+
 0.2.6
 -----
 

@@ -93,67 +93,77 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
 - *force_close_files* (optional, TrueClass/FalseClass)	- filebeat propspector configuration attribute
 
 
-## Core Attributes
+## How to Add Filebeat Output via Node Attribute
+
+### ElasticSearch Output
+
+```
+  "default_attributes": {
+    "filebeat": {
+      "config": {
+        "output": {
+          "elasticsearch": {
+		    "enabled": true,
+          	"hosts": ["127.0.0.1:9200"],
+			"save_topology": false,
+			"max_retries": 3,
+			"bulk_max_size": 1000,
+			"flush_interval": null,
+			"protocol": "http",
+			"username": null,
+			"password": null,
+			"index": "filebeat",
+			"path": "/elasticsearch"
+          }
+        }
+      }
+    }
+  }
+
+```
 
 
-* `default['filebeat']['version']` (default: `1.0.0`): filebeat version
+### Logstash Output
 
-* `default['filebeat']['package_url']` (default: `auto`): package url for windows installation
+```
+  "default_attributes": {
+    "filebeat": {
+      "config": {
+        "output": {
+          "logstash": {
+			"enabled": true,
+			"hosts": ["127.0.0.1:5000"],
+			"loadbalance": true,
+			"save_topology": false,
+			"index": "filebeat"
+          }
+        }
+      }
+    }
+  }
 
-* `default['filebeat']['conf_dir']` (default: `/etc/filebeat`): filebeat yaml configuration file directory
+```
 
-* `default['filebeat']['conf_file']` (default: `/etc/filebeat/filebeat.yml`): filebeat configuration file
+### File Output
 
-* `default['filebeat']['notify_restart']` (default: `true`): whether to restart filebeat service on configuration file change
+```
+  "default_attributes": {
+    "filebeat": {
+      "config": {
+        "output": {
+          "file": {
+			"enabled": true,
+			"path": "/tmp/filebeat",
+			"filename": "filebeat",
+			"rotate_every_kb": 1000,
+			"number_of_files": 7
+          }
+        }
+      }
+    }
+  }
 
-* `default['filebeat']['disable_service']` (default: `false`): whether to stop and disable filebeat service
-
-* `default['filebeat']['prospectors_dir']` (default: `/etc/filebeat/conf.d`): prospectors configuration file directory
-
-* `default['filebeat']['prospectors']` (default: `{}`): prospectors configuration file
-
-## Configuration File filebeat.yml Attributes
-
-* `default['filebeat']['config']['filebeat']['prospectors']` (default: `[]`): filebeat interface device name
-
-* `default['filebeat']['config']['filebeat']['registry_file']` (default: `/var/lib/filebeat/registry`): filebeat services to capture packets
-
-* `default['filebeat']['config']['filebeat']['config_dir']` (default: `node['filebeat']['prospectors_dir']`): filebeat prospectors configuration files folder
-
-
-* `default['filebeat']['config']['output']` (default: `{}`): configure elasticsearch. logstash, file etc.  output
-
-For more attribute info, visit below links:
-
-https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml
-
-
-## Filebeat YUM/APT Repository Attributes
-
-* `default['filebeat']['yum']['description']` (default: ``): beats yum reporitory attribute
-
-* `default['filebeat']['yum']['gpgcheck']` (default: `true`): beats yum reporitory attribute
-
-* `default['filebeat']['yum']['enabled']` (default: `true`): beats yum reporitory attribute
-
-* `default['filebeat']['yum']['baseurl']` (default: `https://packages.elastic.co/beats/yum/el/$basearch`): beatsyum reporitory attribute
-
-* `default['filebeat']['yum']['gpgkey']` (default: `https://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats yum reporitory attribute
-
-* `default['filebeat']['yum']['action']` (default: `:create`): beats yum reporitory attribute
-
-
-* `default['filebeat']['apt']['description']` (default: `calculated`): beats apt reporitory attribute
-
-* `default['filebeat']['apt']['components']` (default: `['stable', 'main']`): beats apt reporitory attribute
-
-* `default['filebeat']['apt']['uri']` (default: `https://packages.elastic.co/beats/apt`): beats apt reporitory attribute
-
-* `default['filebeat']['apt']['key']` (default: `http://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats apt reporitory attribute
-
-* `default['filebeat']['apt']['action']` (default: `:add`): filebeat apt reporitory attribute
-
-
+```
 
 ## How to Add Filebeat Prospectors via Node Attribute
 
@@ -222,6 +232,69 @@ be created as a different yaml file under `default['filebeat']['prospector_dir']
 
 
 Above configuration will create three different prospector files - `prospector-system_logs.yml, prospector-secure_logs.yml and prospector-apache_logs.yml`
+
+
+## Core Attributes
+
+
+* `default['filebeat']['version']` (default: `1.0.0`): filebeat version
+
+* `default['filebeat']['package_url']` (default: `auto`): package url for windows installation
+
+* `default['filebeat']['conf_dir']` (default: `/etc/filebeat`): filebeat yaml configuration file directory
+
+* `default['filebeat']['conf_file']` (default: `/etc/filebeat/filebeat.yml`): filebeat configuration file
+
+* `default['filebeat']['notify_restart']` (default: `true`): whether to restart filebeat service on configuration file change
+
+* `default['filebeat']['disable_service']` (default: `false`): whether to stop and disable filebeat service
+
+* `default['filebeat']['prospectors_dir']` (default: `/etc/filebeat/conf.d`): prospectors configuration file directory
+
+* `default['filebeat']['prospectors']` (default: `{}`): prospectors configuration file
+
+
+## Configuration File filebeat.yml Attributes
+
+* `default['filebeat']['config']['filebeat']['prospectors']` (default: `[]`): filebeat interface device name
+
+* `default['filebeat']['config']['filebeat']['registry_file']` (default: `/var/lib/filebeat/registry`): filebeat services to capture packets
+
+* `default['filebeat']['config']['filebeat']['config_dir']` (default: `node['filebeat']['prospectors_dir']`): filebeat prospectors configuration files folder
+
+
+* `default['filebeat']['config']['output']` (default: `{}`): configure elasticsearch. logstash, file etc.  output
+
+For more attribute info, visit below links:
+
+https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml
+
+
+## Filebeat YUM/APT Repository Attributes
+
+* `default['filebeat']['yum']['description']` (default: ``): beats yum reporitory attribute
+
+* `default['filebeat']['yum']['gpgcheck']` (default: `true`): beats yum reporitory attribute
+
+* `default['filebeat']['yum']['enabled']` (default: `true`): beats yum reporitory attribute
+
+* `default['filebeat']['yum']['baseurl']` (default: `https://packages.elastic.co/beats/yum/el/$basearch`): beatsyum reporitory attribute
+
+* `default['filebeat']['yum']['gpgkey']` (default: `https://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats yum reporitory attribute
+
+* `default['filebeat']['yum']['action']` (default: `:create`): beats yum reporitory attribute
+
+
+* `default['filebeat']['apt']['description']` (default: `calculated`): beats apt reporitory attribute
+
+* `default['filebeat']['apt']['components']` (default: `['stable', 'main']`): beats apt reporitory attribute
+
+* `default['filebeat']['apt']['uri']` (default: `https://packages.elastic.co/beats/apt`): beats apt reporitory attribute
+
+* `default['filebeat']['apt']['key']` (default: `http://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats apt reporitory attribute
+
+* `default['filebeat']['apt']['action']` (default: `:add`): filebeat apt reporitory attribute
+
 
 ## Contributing
 

@@ -11,9 +11,12 @@ describe 'filebeat::default' do
         expect(chef_run).to create_file('/etc/filebeat/filebeat.yml')
       end
 
+      it 'run ruby_block delay filebeat service start' do
+        expect(chef_run).to run_ruby_block('delay filebeat service start')
+      end
+
       it 'enable filebeat service' do
         expect(chef_run).to enable_service('filebeat')
-        expect(chef_run).to start_service('filebeat')
       end
     end
   end

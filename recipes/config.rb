@@ -37,12 +37,19 @@ prospectors.each do |prospector, configuration|
   end
 end
 
-service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:enable, :start]
-
 powershell 'install filebeat as service' do
   code "#{node['filebeat']['windows']['base_dir']}/filebeat-#{node['filebeat']['version']}-windows/install-service-filebeat.ps1"
   only_if { node['platform'] == 'windows' }
 end
+
+ruby_block 'delay filebeat service start' do
+  block do
+  end
+  notifies :start, 'service[filebeat]'
+  not_if { node['filebeat']['disable_service'] }
+end
+
+service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:enable, :nothing]
 
 service 'filebeat' do
   supports :status => true, :restart => true

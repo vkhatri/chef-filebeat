@@ -56,6 +56,43 @@ This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work 
 - `filebeat::config` - configure filebeat
 
 
+## LWRP filebeat_prospector
+
+LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file under directory `node['filebeat']['prospectors_dir']` with file name `prospector-#{resource_name}.yml`.
+
+
+**LWRP example**
+
+	filebeat_prospector 'messages' do
+	  paths ['/var/log/messages']
+	  document_type 'apache'
+	  ignore_older '24h'
+	  scan_frequency '15s'
+	  harvester_buffer_size 16384
+	  fields 'type' => 'apacheLogs'
+	end
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :create, options: :create, :delete
+- *paths* (optional, String)	- filebeat propspector configuration attribute
+- *type* (optional, String)	- filebeat propspector configuration attribute
+- *encoding* (optional, String)	- filebeat propspector configuration attribute
+- *fields* (optional, Hash)	- filebeat propspector configuration attribute
+- *fields_under_root* (optional, TrueClass/FalseClass)	- filebeat propspector configuration attribute
+- *ignore_older* (optional, String)	- filebeat propspector configuration attribute
+- *document_type* (optional, String)	- filebeat propspector configuration attribute
+- *input_type* (optional, String)	- filebeat propspector configuration attribute
+- *scan_frequency* (optional, String)	- filebeat propspector configuration attribute
+- *harvester_buffer_size* (optional, Integer)	- filebeat propspector configuration attribute
+- *tail_files* (optional, TrueClass/FalseClass)	- filebeat propspector configuration attribute
+- *backoff* (optional, String)	- filebeat propspector configuration attribute
+- *max_backoff* (optional, String)	- filebeat propspector configuration attribute
+- *backoff_factor* (optional, Integer)	- filebeat propspector configuration attribute
+- *force_close_files* (optional, TrueClass/FalseClass)	- filebeat propspector configuration attribute
+
+
 ## Core Attributes
 
 

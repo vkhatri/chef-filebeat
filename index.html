@@ -1,100 +1,217 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="UTF-8">
     <title>Chef Filebeat by vkhatri</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Chef Filebeat</h1>
-        <p>Chef Cookbook to Manage Elastic Filebeat https://supermarket.chef.io/cookbooks/filebeat</p>
+    <section class="page-header">
+      <h1 class="project-name">Chef Filebeat</h1>
+      <h2 class="project-tagline">Chef Cookbook to Manage Elastic Filebeat https://supermarket.chef.io/cookbooks/filebeat</h2>
+      <a href="https://github.com/vkhatri/chef-filebeat" class="btn">View on GitHub</a>
+      <a href="https://github.com/vkhatri/chef-filebeat/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/vkhatri/chef-filebeat/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <p class="view"><a href="https://github.com/vkhatri/chef-filebeat">View the Project on GitHub <small>vkhatri/chef-filebeat</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/vkhatri/chef-filebeat/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/vkhatri/chef-filebeat/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/vkhatri/chef-filebeat">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
+    <section class="main-content">
+      <h1>
 <a id="filebeat-cookbook" class="anchor" href="#filebeat-cookbook" aria-hidden="true"><span class="octicon octicon-link"></span></a>filebeat Cookbook</h1>
 
-<p><a href="https://travis-ci.org/vkhatri/chef-filebeat"><img src="https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master" alt="Build Status"></a></p>
+<p><a href="https://github.com/vkhatri/chef-filebeat"><img src="http://img.shields.io/badge/cookbook-v0.2.6-green.svg" alt="Cookbook"></a> <a href="https://travis-ci.org/vkhatri/chef-filebeat"><img src="https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master" alt="Build Status"></a></p>
 
 <p>This is a <a href="https://www.chef.io/">Chef</a> cookbook to manage <a href="https://www.elastic.co/products/beats/filebeat">Filebeat</a>.</p>
+
+<blockquote>
+<blockquote>
+<p>For Production environment, always prefer the <a href="https://supermarket.chef.io/cookbooks/filebeat">most recent release</a>.</p>
+</blockquote>
+</blockquote>
+
+<h2>
+<a id="most-recent-release" class="anchor" href="#most-recent-release" aria-hidden="true"><span class="octicon octicon-link"></span></a>Most Recent Release</h2>
+
+<pre><code>cookbook 'filebeat', '~&gt; 0.2.6'
+</code></pre>
+
+<h2>
+<a id="from-git" class="anchor" href="#from-git" aria-hidden="true"><span class="octicon octicon-link"></span></a>From Git</h2>
+
+<pre><code>cookbook 'filebeat', github: 'vkhatri/chef-filebeat'
+</code></pre>
 
 <h2>
 <a id="repository" class="anchor" href="#repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository</h2>
 
-<p><a href="https://github.com/vkhatri/chef-filebeat">https://github.com/vkhatri/chef-filebeat</a></p>
+<pre><code>https://github.com/vkhatri/chef-filebeat
+</code></pre>
 
 <h2>
 <a id="supported-os" class="anchor" href="#supported-os" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported OS</h2>
 
-<p>This cookbook was tested on Amazon &amp; Ubuntu Linux and expected to work on other RHEL platforms.</p>
+<p>This cookbook was tested on Windows, Amazon &amp; Ubuntu Linux and expected to work on other RHEL platforms.</p>
+
+<h2>
+<a id="major-changes" class="anchor" href="#major-changes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Major Changes</h2>
+
+<h3>
+<a id="v025" class="anchor" href="#v025" aria-hidden="true"><span class="octicon octicon-link"></span></a>v0.2.5</h3>
+
+<ul>
+<li>Removed default output configuration attributes for <code>elasticsearch</code>, <code>logstash</code> and <code>file</code>
+</li>
+<li>Removed attributed <code>default['filebeat']['enable_localhost_output']</code> as default <code>output</code> attributes are disabled</li>
+</ul>
+
+<h2>
+<a id="cookbook-dependency" class="anchor" href="#cookbook-dependency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cookbook Dependency</h2>
+
+<ul>
+<li>windows</li>
+<li>powershell</li>
+<li>apt</li>
+<li>yum</li>
+</ul>
 
 <h2>
 <a id="recipes" class="anchor" href="#recipes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recipes</h2>
 
 <ul>
 <li><p><code>filebeat::default</code> - default recipe (use it for run_list)</p></li>
-<li><p><code>filebeat::install</code> - install filebeat</p></li>
+<li><p><code>filebeat::install_windows</code> - install filebeat for windows platform</p></li>
+<li><p><code>filebeat::install_package</code> - install filebeat package for linux platform</p></li>
 <li><p><code>filebeat::config</code> - configure filebeat</p></li>
 </ul>
 
 <h2>
-<a id="core-attributes" class="anchor" href="#core-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Core Attributes</h2>
+<a id="lwrp-filebeat_prospector" class="anchor" href="#lwrp-filebeat_prospector" aria-hidden="true"><span class="octicon octicon-link"></span></a>LWRP filebeat_prospector</h2>
+
+<p>LWRP <code>filebeat_prospector</code> creates filebeat prospector configuration yaml file under directory <code>node['filebeat']['prospectors_dir']</code> with file name <code>prospector-#{resource_name}.yml</code>.</p>
+
+<p><strong>LWRP example</strong></p>
+
+<pre><code>filebeat_prospector 'messages' do
+  paths ['/var/log/messages']
+  document_type 'apache'
+  ignore_older '24h'
+  scan_frequency '15s'
+  harvester_buffer_size 16384
+  fields 'type' =&gt; 'apacheLogs'
+end
+</code></pre>
+
+<p><strong>LWRP Options</strong></p>
 
 <ul>
-<li><p><code>default['filebeat']['version']</code> (default: <code>1.0.0-beta4</code>): filebeat version</p></li>
-<li><p><code>default['filebeat']['package_url']</code> (default: <code>calculated</code>): package download url</p></li>
-<li><p><code>default['filebeat']['conf_dir']</code> (default: <code>/etc/filebeat</code>): filebeat yaml configuration file directory</p></li>
-<li><p><code>default['filebeat']['conf_file']</code> (default: <code>/etc/filebeat/filebeat.yml</code>): filebeat configuration file</p></li>
-<li><p><code>default['filebeat']['notify_restart']</code> (default: <code>true</code>): whether to restart filebeat service on configuration file change</p></li>
-<li><p><code>default['filebeat']['disable_service']</code> (default: <code>false</code>): whether to stop and disable filebeat service</p></li>
-<li><p><code>default['filebeat']['enable_localhost_output']</code> (default: <code>true</code>): by default add localhost <code>hosts</code> for output <code>elasticsearch</code> and <code>logstash</code></p></li>
-<li><p><code>default['filebeat']['prospectors_dir']</code> (default: <code>/etc/filebeat/conf.d</code>): prospectors configuration file directory</p></li>
-<li><p><code>default['filebeat']['prospectors']</code> (default: <code>{}</code>): prospectors configuration file</p></li>
+<li>
+<em>action</em> (optional)   - default :create, options: :create, :delete</li>
+<li>
+<em>paths</em> (optional, String)    - filebeat propspector configuration attribute</li>
+<li>
+<em>type</em> (optional, String) - filebeat propspector configuration attribute</li>
+<li>
+<em>encoding</em> (optional, String) - filebeat propspector configuration attribute</li>
+<li>
+<em>fields</em> (optional, Hash) - filebeat propspector configuration attribute</li>
+<li>
+<em>fields_under_root</em> (optional, TrueClass/FalseClass)  - filebeat propspector configuration attribute</li>
+<li>
+<em>ignore_older</em> (optional, String) - filebeat propspector configuration attribute</li>
+<li>
+<em>document_type</em> (optional, String)    - filebeat propspector configuration attribute</li>
+<li>
+<em>input_type</em> (optional, String)   - filebeat propspector configuration attribute</li>
+<li>
+<em>scan_frequency</em> (optional, String)   - filebeat propspector configuration attribute</li>
+<li>
+<em>harvester_buffer_size</em> (optional, Integer)   - filebeat propspector configuration attribute</li>
+<li>
+<em>tail_files</em> (optional, TrueClass/FalseClass) - filebeat propspector configuration attribute</li>
+<li>
+<em>backoff</em> (optional, String)  - filebeat propspector configuration attribute</li>
+<li>
+<em>max_backoff</em> (optional, String)  - filebeat propspector configuration attribute</li>
+<li>
+<em>backoff_factor</em> (optional, Integer)  - filebeat propspector configuration attribute</li>
+<li>
+<em>force_close_files</em> (optional, TrueClass/FalseClass)  - filebeat propspector configuration attribute</li>
 </ul>
 
 <h2>
-<a id="configuration-file-filebeatyml-attributes" class="anchor" href="#configuration-file-filebeatyml-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File filebeat.yml Attributes</h2>
+<a id="how-to-add-filebeat-output-via-node-attribute" class="anchor" href="#how-to-add-filebeat-output-via-node-attribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Add Filebeat Output via Node Attribute</h2>
 
-<ul>
-<li><p><code>default['filebeat']['config']['filebeat']['prospectors']</code> (default: <code>[]</code>): filebeat interface device name</p></li>
-<li><p><code>default['filebeat']['config']['filebeat']['registry_file']</code> (default: <code>/var/lib/filebeat/registry</code>): filebeat services to capture packets</p></li>
-<li><p><code>default['filebeat']['config']['filebeat']['config_dir']</code> (default: <code>node['filebeat']['prospectors_dir']</code>): filebeat prospectors configuration files folder</p></li>
-<li><p><code>default['filebeat']['config']['output']['elasticsearch']['enabled']</code> (default: <code>true</code>): enable elasticsearch output</p></li>
-<li><p><code>default['filebeat']['config']['output']['elasticsearch']['hosts']</code> (default: <code>[]</code>): elasticsearch hosts</p></li>
-<li><p><code>default['filebeat']['config']['output']['elasticsearch']['save_topology']</code> (default: <code>false</code>):</p></li>
-<li><p><code>default['filebeat']['config']['output']['logstash']['enabled']</code> (default: <code>true</code>): enable logstash output</p></li>
-<li><p><code>default['filebeat']['config']['output']['logstash']['hosts']</code> (default: <code>[]</code>): logstash hosts</p></li>
-<li><p><code>default['filebeat']['config']['output']['logstash']['loadbalance']</code> (default: <code>true</code>): set true to load balance between logstash hosts</p></li>
-<li><p><code>default['filebeat']['config']['output']['logstash']['index']</code> (default: <code>filebeat</code>): logstash index name</p></li>
-<li><p><code>default['filebeat']['config']['output']['logstash']['tls']['enabled']</code> (default: <code>false</code>):</p></li>
-<li><p><code>default['filebeat']['config']['output']['logstash']['save_topology']</code> (default: <code>false</code>):</p></li>
-<li><p><code>default['filebeat']['config']['output']['file']['enabled']</code> (default: <code>false</code>):</p></li>
-<li><p><code>default['filebeat']['config']['output']['file']['path']</code> (default: <code>/tmp/filebeat</code>):</p></li>
-<li><p><code>default['filebeat']['config']['output']['file']['filename']</code> (default: <code>filebeat</code>):</p></li>
-<li><p><code>default['filebeat']['config']['output']['file']['rotate_every_kb']</code> (default: <code>10240</code>):</p></li>
-<li><p><code>default['filebeat']['config']['output']['file']['number_of_files']</code> (default: <code>7</code>):</p></li>
-</ul>
+<h3>
+<a id="elasticsearch-output" class="anchor" href="#elasticsearch-output" aria-hidden="true"><span class="octicon octicon-link"></span></a>ElasticSearch Output</h3>
 
-<p>For more attribute info, visit below links:</p>
+<pre><code>  "default_attributes": {
+    "filebeat": {
+      "config": {
+        "output": {
+          "elasticsearch": {
+            "enabled": true,
+            "hosts": ["127.0.0.1:9200"],
+            "save_topology": false,
+            "max_retries": 3,
+            "bulk_max_size": 1000,
+            "flush_interval": null,
+            "protocol": "http",
+            "username": null,
+            "password": null,
+            "index": "filebeat",
+            "path": "/elasticsearch"
+          }
+        }
+      }
+    }
+  }
 
-<p><a href="https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml">https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml</a></p>
+</code></pre>
+
+<h3>
+<a id="logstash-output" class="anchor" href="#logstash-output" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logstash Output</h3>
+
+<pre><code>  "default_attributes": {
+    "filebeat": {
+      "config": {
+        "output": {
+          "logstash": {
+            "enabled": true,
+            "hosts": ["127.0.0.1:5000"],
+            "loadbalance": true,
+            "save_topology": false,
+            "index": "filebeat"
+          }
+        }
+      }
+    }
+  }
+
+</code></pre>
+
+<h3>
+<a id="file-output" class="anchor" href="#file-output" aria-hidden="true"><span class="octicon octicon-link"></span></a>File Output</h3>
+
+<pre><code>  "default_attributes": {
+    "filebeat": {
+      "config": {
+        "output": {
+          "file": {
+            "enabled": true,
+            "path": "/tmp/filebeat",
+            "filename": "filebeat",
+            "rotate_every_kb": 1000,
+            "number_of_files": 7
+          }
+        }
+      }
+    }
+  }
+
+</code></pre>
 
 <h2>
 <a id="how-to-add-filebeat-prospectors-via-node-attribute" class="anchor" href="#how-to-add-filebeat-prospectors-via-node-attribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Add Filebeat Prospectors via Node Attribute</h2>
@@ -164,6 +281,51 @@ be created as a different yaml file under <code>default['filebeat']['prospector_
 <p>Above configuration will create three different prospector files - <code>prospector-system_logs.yml, prospector-secure_logs.yml and prospector-apache_logs.yml</code></p>
 
 <h2>
+<a id="core-attributes" class="anchor" href="#core-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Core Attributes</h2>
+
+<ul>
+<li><p><code>default['filebeat']['version']</code> (default: <code>1.0.0</code>): filebeat version</p></li>
+<li><p><code>default['filebeat']['package_url']</code> (default: <code>auto</code>): package url for windows installation</p></li>
+<li><p><code>default['filebeat']['conf_dir']</code> (default: <code>/etc/filebeat</code>): filebeat yaml configuration file directory</p></li>
+<li><p><code>default['filebeat']['conf_file']</code> (default: <code>/etc/filebeat/filebeat.yml</code>): filebeat configuration file</p></li>
+<li><p><code>default['filebeat']['notify_restart']</code> (default: <code>true</code>): whether to restart filebeat service on configuration file change</p></li>
+<li><p><code>default['filebeat']['disable_service']</code> (default: <code>false</code>): whether to stop and disable filebeat service</p></li>
+<li><p><code>default['filebeat']['prospectors_dir']</code> (default: <code>/etc/filebeat/conf.d</code>): prospectors configuration file directory</p></li>
+<li><p><code>default['filebeat']['prospectors']</code> (default: <code>{}</code>): prospectors configuration file</p></li>
+</ul>
+
+<h2>
+<a id="configuration-file-filebeatyml-attributes" class="anchor" href="#configuration-file-filebeatyml-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File filebeat.yml Attributes</h2>
+
+<ul>
+<li><p><code>default['filebeat']['config']['filebeat']['prospectors']</code> (default: <code>[]</code>): filebeat interface device name</p></li>
+<li><p><code>default['filebeat']['config']['filebeat']['registry_file']</code> (default: <code>/var/lib/filebeat/registry</code>): filebeat services to capture packets</p></li>
+<li><p><code>default['filebeat']['config']['filebeat']['config_dir']</code> (default: <code>node['filebeat']['prospectors_dir']</code>): filebeat prospectors configuration files folder</p></li>
+<li><p><code>default['filebeat']['config']['output']</code> (default: <code>{}</code>): configure elasticsearch. logstash, file etc.  output</p></li>
+</ul>
+
+<p>For more attribute info, visit below links:</p>
+
+<p><a href="https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml">https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml</a></p>
+
+<h2>
+<a id="filebeat-yumapt-repository-attributes" class="anchor" href="#filebeat-yumapt-repository-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filebeat YUM/APT Repository Attributes</h2>
+
+<ul>
+<li><p><code>default['filebeat']['yum']['description']</code> (default: ``): beats yum reporitory attribute</p></li>
+<li><p><code>default['filebeat']['yum']['gpgcheck']</code> (default: <code>true</code>): beats yum reporitory attribute</p></li>
+<li><p><code>default['filebeat']['yum']['enabled']</code> (default: <code>true</code>): beats yum reporitory attribute</p></li>
+<li><p><code>default['filebeat']['yum']['baseurl']</code> (default: <code>https://packages.elastic.co/beats/yum/el/$basearch</code>): beatsyum reporitory attribute</p></li>
+<li><p><code>default['filebeat']['yum']['gpgkey']</code> (default: <code>https://packages.elasticsearch.org/GPG-KEY-elasticsearch</code>): beats yum reporitory attribute</p></li>
+<li><p><code>default['filebeat']['yum']['action']</code> (default: <code>:create</code>): beats yum reporitory attribute</p></li>
+<li><p><code>default['filebeat']['apt']['description']</code> (default: <code>calculated</code>): beats apt reporitory attribute</p></li>
+<li><p><code>default['filebeat']['apt']['components']</code> (default: <code>['stable', 'main']</code>): beats apt reporitory attribute</p></li>
+<li><p><code>default['filebeat']['apt']['uri']</code> (default: <code>https://packages.elastic.co/beats/apt</code>): beats apt reporitory attribute</p></li>
+<li><p><code>default['filebeat']['apt']['key']</code> (default: <code>http://packages.elasticsearch.org/GPG-KEY-elasticsearch</code>): beats apt reporitory attribute</p></li>
+<li><p><code>default['filebeat']['apt']['action']</code> (default: <code>:add</code>): filebeat apt reporitory attribute</p></li>
+</ul>
+
+<h2>
 <a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
 
 <ol>
@@ -196,13 +358,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 </pre>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/vkhatri">vkhatri</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/vkhatri/chef-filebeat">Chef Filebeat</a> is maintained by <a href="https://github.com/vkhatri">vkhatri</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+
+    </section>
+
+  
   </body>
 </html>

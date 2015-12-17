@@ -282,6 +282,8 @@ https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml
 
 * `default['filebeat']['yum']['gpgkey']` (default: `https://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats yum reporitory attribute
 
+* `default['filebeat']['yum']['metadata_expire']` (default: `3h`): beats yum reporitory attribute
+
 * `default['filebeat']['yum']['action']` (default: `:create`): beats yum reporitory attribute
 
 

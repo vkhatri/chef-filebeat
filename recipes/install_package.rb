@@ -34,6 +34,7 @@ when 'rhel'
     gpgcheck node['filebeat']['yum']['gpgcheck']
     gpgkey node['filebeat']['yum']['gpgkey']
     enabled node['filebeat']['yum']['enabled']
+    metadata_expire node['filebeat']['yum']['metadata_expire']
     action node['filebeat']['yum']['action']
   end
 end

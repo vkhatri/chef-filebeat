@@ -22,7 +22,7 @@
       <h1>
 <a id="filebeat-cookbook" class="anchor" href="#filebeat-cookbook" aria-hidden="true"><span class="octicon octicon-link"></span></a>filebeat Cookbook</h1>
 
-<p><a href="https://github.com/vkhatri/chef-filebeat"><img src="http://img.shields.io/badge/cookbook-v0.2.6-green.svg" alt="Cookbook"></a> <a href="https://travis-ci.org/vkhatri/chef-filebeat"><img src="https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master" alt="Build Status"></a></p>
+<p><a href="https://github.com/vkhatri/chef-filebeat"><img src="http://img.shields.io/badge/cookbook-v0.2.7-green.svg" alt="Cookbook"></a> <a href="https://travis-ci.org/vkhatri/chef-filebeat"><img src="https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master" alt="Build Status"></a></p>
 
 <p>This is a <a href="https://www.chef.io/">Chef</a> cookbook to manage <a href="https://www.elastic.co/products/beats/filebeat">Filebeat</a>.</p>
 
@@ -35,7 +35,7 @@
 <h2>
 <a id="most-recent-release" class="anchor" href="#most-recent-release" aria-hidden="true"><span class="octicon octicon-link"></span></a>Most Recent Release</h2>
 
-<pre><code>cookbook 'filebeat', '~&gt; 0.2.6'
+<pre><code>cookbook 'filebeat', '~&gt; 0.2.7'
 </code></pre>
 
 <h2>
@@ -317,6 +317,7 @@ be created as a different yaml file under <code>default['filebeat']['prospector_
 <li><p><code>default['filebeat']['yum']['enabled']</code> (default: <code>true</code>): beats yum reporitory attribute</p></li>
 <li><p><code>default['filebeat']['yum']['baseurl']</code> (default: <code>https://packages.elastic.co/beats/yum/el/$basearch</code>): beatsyum reporitory attribute</p></li>
 <li><p><code>default['filebeat']['yum']['gpgkey']</code> (default: <code>https://packages.elasticsearch.org/GPG-KEY-elasticsearch</code>): beats yum reporitory attribute</p></li>
+<li><p><code>default['filebeat']['yum']['metadata_expire']</code> (default: <code>3h</code>): beats yum reporitory attribute</p></li>
 <li><p><code>default['filebeat']['yum']['action']</code> (default: <code>:create</code>): beats yum reporitory attribute</p></li>
 <li><p><code>default['filebeat']['apt']['description']</code> (default: <code>calculated</code>): beats apt reporitory attribute</p></li>
 <li><p><code>default['filebeat']['apt']['components']</code> (default: <code>['stable', 'main']</code>): beats apt reporitory attribute</p></li>

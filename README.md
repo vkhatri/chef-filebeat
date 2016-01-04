@@ -18,7 +18,7 @@ cookbook 'filebeat', '~> 0.2.7'
 ## From Git
 
 ```
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: "v0.2.7"
 ```
 
 ## Repository

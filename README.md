@@ -63,14 +63,14 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
 
 **LWRP example**
 
-	filebeat_prospector 'messages' do
-	  paths ['/var/log/messages']
-	  document_type 'apache'
-	  ignore_older '24h'
-	  scan_frequency '15s'
-	  harvester_buffer_size 16384
-	  fields 'type' => 'apacheLogs'
-	end
+filebeat_prospector 'messages' do
+  paths ['/var/log/messages']
+  document_type 'apache'
+  ignore_older '24h'
+  scan_frequency '15s'
+  harvester_buffer_size 16384
+  fields 'type' => 'apacheLogs'
+end
 
 
 **LWRP Options**

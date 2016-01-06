@@ -63,34 +63,34 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
 
 **LWRP example**
 
-	filebeat_prospector 'messages' do
-	  paths ['/var/log/messages']
-	  document_type 'apache'
-	  ignore_older '24h'
-	  scan_frequency '15s'
-	  harvester_buffer_size 16384
-	  fields 'type' => 'apacheLogs'
-	end
+filebeat_prospector 'messages' do
+  paths ['/var/log/messages']
+  document_type 'apache'
+  ignore_older '24h'
+  scan_frequency '15s'
+  harvester_buffer_size 16384
+  fields 'type' => 'apacheLogs'
+end
 
 
 **LWRP Options**
 
 - *action* (optional)	- default :create, options: :create, :delete
-- *paths* (optional, String)	- filebeat propspector configuration attribute
-- *type* (optional, String)	- filebeat propspector configuration attribute
-- *encoding* (optional, String)	- filebeat propspector configuration attribute
-- *fields* (optional, Hash)	- filebeat propspector configuration attribute
-- *fields_under_root* (optional, TrueClass/FalseClass)	- filebeat propspector configuration attribute
-- *ignore_older* (optional, String)	- filebeat propspector configuration attribute
-- *document_type* (optional, String)	- filebeat propspector configuration attribute
-- *input_type* (optional, String)	- filebeat propspector configuration attribute
-- *scan_frequency* (optional, String)	- filebeat propspector configuration attribute
-- *harvester_buffer_size* (optional, Integer)	- filebeat propspector configuration attribute
-- *tail_files* (optional, TrueClass/FalseClass)	- filebeat propspector configuration attribute
-- *backoff* (optional, String)	- filebeat propspector configuration attribute
-- *max_backoff* (optional, String)	- filebeat propspector configuration attribute
-- *backoff_factor* (optional, Integer)	- filebeat propspector configuration attribute
-- *force_close_files* (optional, TrueClass/FalseClass)	- filebeat propspector configuration attribute
+- *paths* (optional, String)	- filebeat prospector configuration attribute
+- *type* (optional, String)	- filebeat prospector configuration attribute
+- *encoding* (optional, String)	- filebeat prospector configuration attribute
+- *fields* (optional, Hash)	- filebeat prospector configuration attribute
+- *fields_under_root* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
+- *ignore_older* (optional, String)	- filebeat prospector configuration attribute
+- *document_type* (optional, String)	- filebeat prospector configuration attribute
+- *input_type* (optional, String)	- filebeat prospector configuration attribute
+- *scan_frequency* (optional, String)	- filebeat prospector configuration attribute
+- *harvester_buffer_size* (optional, Integer)	- filebeat prospector configuration attribute
+- *tail_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
+- *backoff* (optional, String)	- filebeat prospector configuration attribute
+- *max_backoff* (optional, String)	- filebeat prospector configuration attribute
+- *backoff_factor* (optional, Integer)	- filebeat prospector configuration attribute
+- *force_close_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
 
 
 ## How to Add Filebeat Output via Node Attribute
@@ -103,17 +103,17 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
       "config": {
         "output": {
           "elasticsearch": {
-		    "enabled": true,
-          	"hosts": ["127.0.0.1:9200"],
-			"save_topology": false,
-			"max_retries": 3,
-			"bulk_max_size": 1000,
-			"flush_interval": null,
-			"protocol": "http",
-			"username": null,
-			"password": null,
-			"index": "filebeat",
-			"path": "/elasticsearch"
+            "enabled": true,
+            "hosts": ["127.0.0.1:9200"],
+            "save_topology": false,
+            "max_retries": 3,
+            "bulk_max_size": 1000,
+            "flush_interval": null,
+            "protocol": "http",
+            "username": null,
+            "password": null,
+            "index": "filebeat",
+            "path": "/elasticsearch"
           }
         }
       }
@@ -131,11 +131,11 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
       "config": {
         "output": {
           "logstash": {
-			"enabled": true,
-			"hosts": ["127.0.0.1:5000"],
-			"loadbalance": true,
-			"save_topology": false,
-			"index": "filebeat"
+            "enabled": true,
+            "hosts": ["127.0.0.1:5000"],
+            "loadbalance": true,
+            "save_topology": false,
+            "index": "filebeat"
           }
         }
       }
@@ -152,11 +152,11 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
       "config": {
         "output": {
           "file": {
-			"enabled": true,
-			"path": "/tmp/filebeat",
-			"filename": "filebeat",
-			"rotate_every_kb": 1000,
-			"number_of_files": 7
+            "enabled": true,
+            "path": "/tmp/filebeat",
+            "filename": "filebeat",
+            "rotate_every_kb": 1000,
+            "number_of_files": 7
           }
         }
       }
@@ -167,7 +167,7 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
 
 ## How to Add Filebeat Prospectors via Node Attribute
 
-Individual propspectors configuration file can be added using attribute `default['filebeat']['prospectors']`. Each prospector configuration will
+Individual prospectors configuration file can be added using attribute `default['filebeat']['prospectors']`. Each prospector configuration will
 be created as a different yaml file under `default['filebeat']['prospector_dir']` with prefix `prospector-`
 
 ```

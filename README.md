@@ -11,13 +11,13 @@ This is a [Chef] cookbook to manage [Filebeat].
 
 ## Most Recent Release
 
-```
+```ruby
 cookbook 'filebeat', '~> 0.2.7'
 ```
 
 ## From Git
 
-```
+```ruby
 cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: "v0.2.7"
 ```
 
@@ -98,7 +98,7 @@ end
 
 ### ElasticSearch Output
 
-```
+```json
   "default_attributes": {
     "filebeat": {
       "config": {
@@ -126,7 +126,7 @@ end
 
 ### Logstash Output
 
-```
+```json
   "default_attributes": {
     "filebeat": {
       "config": {
@@ -147,7 +147,7 @@ end
 
 ### File Output
 
-```
+```json
   "default_attributes": {
     "filebeat": {
       "config": {
@@ -171,7 +171,7 @@ end
 Individual prospectors configuration file can be added using attribute `default['filebeat']['prospectors']`. Each prospector configuration will
 be created as a different yaml file under `default['filebeat']['prospector_dir']` with prefix `prospector-`
 
-```
+```json
   "default_attributes": {
     "filebeat": {
       "prospectors": {

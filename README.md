@@ -63,6 +63,7 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
 
 **LWRP example**
 
+```ruby
 filebeat_prospector 'messages' do
   paths ['/var/log/messages']
   document_type 'apache'
@@ -71,7 +72,7 @@ filebeat_prospector 'messages' do
   harvester_buffer_size 16384
   fields 'type' => 'apacheLogs'
 end
-
+```
 
 **LWRP Options**
 

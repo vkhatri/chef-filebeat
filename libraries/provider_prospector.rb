@@ -1,6 +1,6 @@
 class Chef
   class Provider
-    # provides consul_check
+    # provides filebeat_prospector
     class FilebeatProspector < Chef::Provider
       provides :filebeat_prospector if respond_to?(:provides)
 

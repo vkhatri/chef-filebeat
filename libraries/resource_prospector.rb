@@ -137,6 +137,22 @@ class Chef
           :default => nil
         )
       end
+
+      def include_lines(arg = nil)
+        set_or_return(
+          :include_lines, arg,
+          :kind_of => Array,
+          :default => nil
+        )
+      end
+
+      def exclude_lines(arg = nil)
+        set_or_return(
+          :exclude_lines, arg,
+          :kind_of => Array,
+          :default => nil
+        )
+      end
     end
   end
 end

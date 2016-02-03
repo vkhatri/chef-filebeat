@@ -44,6 +44,8 @@ class Chef
           content['backoff_factor'] = new_resource.backoff_factor if new_resource.backoff_factor
           content['force_close_files'] = new_resource.force_close_files if new_resource.force_close_files
           content['fields'] = new_resource.fields if new_resource.fields
+          content['include_lines'] = new_resource.include_lines if new_resource.include_lines
+          content['exclude_lines'] = new_resource.exclude_lines if new_resource.exclude_lines
         end
 
         t = Chef::Resource::File.new("prospector_#{new_resource.name}", run_context)

@@ -92,6 +92,8 @@ end
 - *max_backoff* (optional, String)	- filebeat prospector configuration attribute
 - *backoff_factor* (optional, Integer)	- filebeat prospector configuration attribute
 - *force_close_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
+- *include_lines* (optional, Array)  - A list of regular expressions to match the lines that you want Filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
+- *exclude_lines* (optional, Array)  - A list of regular expressions to match the lines that you want Filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
 
 
 ## How to Add Filebeat Output via Node Attribute

@@ -48,9 +48,11 @@ class Chef
           content['exclude_lines'] = new_resource.exclude_lines if new_resource.exclude_lines
         end
 
+        file_content = ({ 'filebeat' => { 'prospectors' => [content] } }).to_yaml
+
         t = Chef::Resource::File.new("prospector_#{new_resource.name}", run_context)
         t.path ::File.join(node['filebeat']['prospectors_dir'], "prospector-#{new_resource.name}.yml")
-        t.content(({ 'filebeat' => { 'prospectors' => [content] } }).to_yaml)
+        t.content file_content
         t.notifies :restart, 'service[filebeat]'
         t.run_action new_resource.action
         t.updated?

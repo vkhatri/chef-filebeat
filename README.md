@@ -94,6 +94,7 @@ end
 - *force_close_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
 - *include_lines* (optional, Array)  - A list of regular expressions to match the lines that you want Filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
 - *exclude_lines* (optional, Array)  - A list of regular expressions to match the lines that you want Filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
+- *multiline* (optional, Hash)  - Multiline configuration hash. Options: `pattern`: <regex pattern to match>, `negate`: [true/false], `match`: [before/after]
 
 
 ## How to Add Filebeat Output via Node Attribute

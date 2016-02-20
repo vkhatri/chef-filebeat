@@ -46,6 +46,7 @@ class Chef
           content['fields'] = new_resource.fields if new_resource.fields
           content['include_lines'] = new_resource.include_lines if new_resource.include_lines
           content['exclude_lines'] = new_resource.exclude_lines if new_resource.exclude_lines
+          content['multiline'] = new_resource.multiline if new_resource.multiline
         end
 
         file_content = ({ 'filebeat' => { 'prospectors' => [content] } }).to_yaml

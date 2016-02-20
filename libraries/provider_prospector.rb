@@ -46,9 +46,10 @@ class Chef
           content['fields'] = new_resource.fields if new_resource.fields
           content['include_lines'] = new_resource.include_lines if new_resource.include_lines
           content['exclude_lines'] = new_resource.exclude_lines if new_resource.exclude_lines
+          content['multiline'] = new_resource.multiline if new_resource.multiline
         end
 
-        file_content = ({ 'filebeat' => { 'prospectors' => [content] } }).to_yaml
+        file_content = { 'filebeat' => { 'prospectors' => [content] } }.to_yaml
 
         t = Chef::Resource::File.new("prospector_#{new_resource.name}", run_context)
         t.path ::File.join(node['filebeat']['prospectors_dir'], "prospector-#{new_resource.name}.yml")

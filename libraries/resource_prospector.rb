@@ -153,6 +153,14 @@ class Chef
           :default => nil
         )
       end
+
+      def multiline(arg = nil)
+        set_or_return(
+          :multiline, arg,
+          :kind_of => Hash,
+          :default => nil
+        )
+      end
     end
   end
 end

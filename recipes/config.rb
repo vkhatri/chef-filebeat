@@ -17,6 +17,12 @@
 # limitations under the License.
 #
 
+# Filebeat and psych v1.x don't get along.
+if(Psych::VERSION.start_with?("1"))
+  defaultengine = YAML::ENGINE.yamler
+  YAML::ENGINE.yamler = 'syck'
+end
+
 directory node['filebeat']['prospectors_dir'] do
   recursive true
   action :create
@@ -54,4 +60,9 @@ service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:ena
 service 'filebeat' do
   supports :status => true, :restart => true
   action service_action
+end
+
+#and put this back the way we found them.
+if(Psych::VERSION.start_with?("1"))
+  YAML::ENGINE.yamler = defaultengine 
 end

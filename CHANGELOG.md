@@ -3,6 +3,11 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+next version
+-----
+
+- Seva Orlov - #34, restart filebeat on upgrade
+
 0.2.7
 -----
 

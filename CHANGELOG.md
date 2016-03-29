@@ -3,10 +3,24 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
-next version
+0.2.8
 -----
 
+- Spencer Owen - Adds a tag to berksfile
+
+- Chris Barber - cleaning up mixmatch of tabs and spaces. fixed spelling error on prospector
+
+- Eric Herot - Fix the formatting on the LWRP example in the README
+
+- Roberto Rivera - Add include_lines and exclude lines.
+
+- Sean Nolen - #33 added multiline support for LWRP
+
+- Sean Nolen - #30 fixed rubocop error
+
 - Seva Orlov - #34, restart filebeat on upgrade
+
+- Virender Khatri - update to beat v1.1.2
 
 0.2.7
 -----

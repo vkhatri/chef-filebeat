@@ -4,22 +4,17 @@
 
 # prospector configuration files
 default['filebeat']['prospectors'] = {}
-
 # prospector configuration
 default['filebeat']['config']['filebeat']['prospectors'] = []
 # default['filebeat']['config']['filebeat']['spool_size'] = 1024
 # default['filebeat']['config']['filebeat']['idle_timeout'] =  '5s'
-
 case node['platform']
   when 'windows'
     default['filebeat']['config']['filebeat']['registry_file'] = "#{node['filebeat']['conf_dir']}/registry"
   else
     default['filebeat']['config']['filebeat']['registry_file'] = '/var/lib/filebeat/registry'
 end
-
 default['filebeat']['config']['filebeat']['config_dir'] = node['filebeat']['prospectors_dir']
-
-
 =begin
 # Add Prospectors using Node Attribute Example
 apache_logs = {
@@ -31,7 +26,6 @@ apache_logs = {
 }
 default['filebeat']['prospectors']['access']['filebeat']['prospectors'] = [apache_logs]
 =end
-
 default['filebeat']['config']['output'] = {}
 # elasticsearch host info
 # default['filebeat']['config']['output']['elasticsearch']['enabled'] = true
@@ -53,14 +47,13 @@ default['filebeat']['config']['output'] = {}
 # default['filebeat']['config']['output']['logstash']['save_topology'] = true
 # default['filebeat']['config']['output']['logstash']['index'] = 'filebeat'
 
-
 # Logging Output configs
-#default['filebeat']['config']['logging']['to_files'] = true
-#if node['platform'] == 'windows'
+# default['filebeat']['config']['logging']['to_files'] = true
+# if node['platform'] == 'windows'
 #  default['filebeat']['config']['logging']['files']['path'] = '"#{node['filebeat']['conf_dir']}/logs"'
-#end
-#default['filebeat']['config']['logging']['files']['rotateeverybytes'] = 10485760
-#default['filebeat']['config']['logging']['level'] = 'info'
+# end
+# default['filebeat']['config']['logging']['files']['rotateeverybytes'] = 10485760
+# default['filebeat']['config']['logging']['level'] = 'info'
 
 # default['filebeat']['config']['output']['file']['enabled'] = false
 # default['filebeat']['config']['output']['file']['path'] = '/tmp/filebeat'

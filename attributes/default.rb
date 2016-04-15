@@ -6,7 +6,6 @@ default['filebeat']['notify_restart'] = true
 default['filebeat']['windows'] = {
     'base_dir' => 'C:/opt/filebeat'
 }
-
 if node['platform'] == 'windows'
   default['filebeat']['conf_dir'] = "#{node['filebeat']['windows']['base_dir']}/filebeat-#{node['filebeat']['version']}-windows"
   default['filebeat']['conf_file'] = "#{node['filebeat']['conf_dir']}/filebeat.yml"
@@ -16,10 +15,6 @@ else
   default['filebeat']['prospectors_dir'] = ::File.join(node['filebeat']['conf_dir'], 'conf.d')
   default['filebeat']['conf_file'] = ::File.join(node['filebeat']['conf_dir'], 'filebeat.yml')
 end
-
-
-
-
 default['filebeat']['yum']['baseurl'] = 'https://packages.elastic.co/beats/yum/el/$basearch'
 default['filebeat']['yum']['description'] = 'Elastic Beats Repository'
 default['filebeat']['yum']['gpgcheck'] = true

@@ -8,8 +8,7 @@ default['filebeat']['prospectors'] = {}
 default['filebeat']['config']['filebeat']['prospectors'] = []
 # default['filebeat']['config']['filebeat']['spool_size'] = 1024
 # default['filebeat']['config']['filebeat']['idle_timeout'] =  '5s'
-case node['platform']
-  when 'windows'
+if node['platform'] == 'windows'
     default['filebeat']['config']['filebeat']['registry_file'] = "#{node['filebeat']['conf_dir']}/registry"
   else
     default['filebeat']['config']['filebeat']['registry_file'] = '/var/lib/filebeat/registry'

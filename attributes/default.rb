@@ -1,15 +1,24 @@
-default['filebeat']['version'] = '1.1.2'
+default['filebeat']['version'] = '1.2.1'
 default['filebeat']['disable_service'] = false
 default['filebeat']['package_url'] = 'auto'
 
 default['filebeat']['notify_restart'] = true
-default['filebeat']['conf_dir'] = '/etc/filebeat'
-default['filebeat']['prospectors_dir'] = ::File.join(node['filebeat']['conf_dir'], 'conf.d')
-default['filebeat']['conf_file'] = ::File.join(node['filebeat']['conf_dir'], 'filebeat.yml')
-
 default['filebeat']['windows'] = {
-  'base_dir' => 'C:/opt/filebeat/'
+    'base_dir' => 'C:/opt/filebeat'
 }
+
+if node['platform'] == 'windows'
+  default['filebeat']['conf_dir'] = "#{node['filebeat']['windows']['base_dir']}/filebeat-#{node['filebeat']['version']}-windows"
+  default['filebeat']['conf_file'] = "#{node['filebeat']['conf_dir']}/filebeat.yml"
+  default['filebeat']['prospectors_dir'] = "#{node['filebeat']['conf_dir']}/conf.d"
+else
+  default['filebeat']['conf_dir'] = '/etc/filebeat'
+  default['filebeat']['prospectors_dir'] = ::File.join(node['filebeat']['conf_dir'], 'conf.d')
+  default['filebeat']['conf_file'] = ::File.join(node['filebeat']['conf_dir'], 'filebeat.yml')
+end
+
+
+
 
 default['filebeat']['yum']['baseurl'] = 'https://packages.elastic.co/beats/yum/el/$basearch'
 default['filebeat']['yum']['description'] = 'Elastic Beats Repository'

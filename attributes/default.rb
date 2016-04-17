@@ -22,5 +22,6 @@ default['filebeat']['yum']['action'] = :create
 default['filebeat']['apt']['uri'] = 'https://packages.elastic.co/beats/apt'
 default['filebeat']['apt']['description'] = 'Elastic Beats Repository'
 default['filebeat']['apt']['components'] = %w(stable main)
+default['filebeat']['apt']['distribution'] = ''
 default['filebeat']['apt']['action'] = :add
 default['filebeat']['apt']['key'] = 'https://packages.elasticsearch.org/GPG-KEY-elasticsearch'

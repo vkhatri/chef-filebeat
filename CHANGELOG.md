@@ -3,6 +3,15 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.3.1
+-----
+
+- Virender Khatri - fix for #41
+
+- Virender Khatri - added apt-get options, fix for #39
+
+- Virender Khatri - bump filebeat version to v1.2.1
+
 0.2.8
 -----
 

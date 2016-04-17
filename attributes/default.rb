@@ -23,5 +23,7 @@ default['filebeat']['apt']['uri'] = 'https://packages.elastic.co/beats/apt'
 default['filebeat']['apt']['description'] = 'Elastic Beats Repository'
 default['filebeat']['apt']['components'] = %w(stable main)
 default['filebeat']['apt']['distribution'] = ''
+# apt package install options
+default['filebeat']['apt']['options'] = "-o Dpkg::Options::='--force-confnew'"
 default['filebeat']['apt']['action'] = :add
 default['filebeat']['apt']['key'] = 'https://packages.elasticsearch.org/GPG-KEY-elasticsearch'

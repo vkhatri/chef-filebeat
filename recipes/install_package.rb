@@ -42,5 +42,6 @@ end
 
 package 'filebeat' do
   version node['platform_family'] == 'rhel' ? node['filebeat']['version'] + '-1' : node['filebeat']['version']
+  options node['filebeat']['apt']['options'] if node['filebeat']['apt']['options']
   notifies :restart, 'service[filebeat]'
 end

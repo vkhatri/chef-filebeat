@@ -3,14 +3,6 @@ require 'spec_helper'
 describe 'filebeat::default' do
   shared_examples_for 'filebeat' do
     context 'all_platforms' do
-      it 'create prospector directory /etc/filebeat/conf.d' do
-        expect(chef_run).to create_directory('/etc/filebeat/conf.d')
-      end
-
-      it 'configure /etc/filebeat/filebeat.yml' do
-        expect(chef_run).to create_file('/etc/filebeat/filebeat.yml')
-      end
-
       it 'run ruby_block delay filebeat service start' do
         expect(chef_run).to run_ruby_block('delay filebeat service start')
       end

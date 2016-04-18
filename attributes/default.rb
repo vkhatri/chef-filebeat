@@ -7,14 +7,14 @@ default['filebeat']['windows'] = {
     'base_dir' => 'C:/opt/filebeat'
 }
 default['filebeat']['conf_dir'] = if node['platform'] == 'windows'
-                                      "#{node['filebeat']['windows']['base_dir']}/filebeat-#{node['filebeat']['version']}-windows"
+                                     "#{node['filebeat']['windows']['base_dir']}/filebeat-#{node['filebeat']['version']}-windows"
                                   else
-                                      '/etc/filebeat'
+                                     '/etc/filebeat'
                                   end
 default['filebeat']['conf_file'] = if node['platform'] == 'windows'
-                                      "#{node['filebeat']['conf_dir']}/filebeat.yml"
+                                     "#{node['filebeat']['conf_dir']}/filebeat.yml"
                                   else
-                                      ::File.join(node['filebeat']['conf_dir'], 'filebeat.yml')
+                                     ::File.join(node['filebeat']['conf_dir'], 'filebeat.yml')
                                   end
 default['filebeat']['prospectors_dir'] = if node['platform'] == 'windows'
                                             "#{node['filebeat']['conf_dir']}/conf.d"

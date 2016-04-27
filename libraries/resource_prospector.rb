@@ -161,7 +161,7 @@ class Chef
           :default => nil
         )
       end
-      
+
       def exclude_files(arg = nil)
         set_or_return(
           :exclude_files, arg,
@@ -169,7 +169,6 @@ class Chef
           :default => nil
         )
       end
-      
     end
   end
 end

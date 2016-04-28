@@ -161,6 +161,14 @@ class Chef
           :default => nil
         )
       end
+
+      def exclude_files(arg = nil)
+        set_or_return(
+          :exclude_files, arg,
+          :kind_of => Array,
+          :default => nil
+        )
+      end
     end
   end
 end

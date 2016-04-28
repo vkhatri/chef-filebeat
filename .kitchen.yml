@@ -26,11 +26,20 @@ suites:
             filebeat:
               prospectors:
               - paths:
-                - var/log/messages
+                - /var/log/messages
                 - /var/log/syslog
                 type: log
                 fields:
                   type: system_logs
+              - paths:
+                - /var/log/*.log
+                type: log
+                fields:
+                  type: undefined
+                exclude_files:
+                - /var/log/messages
+                - /var/log/syslog
+                  
         config:
           output:
             elasticsearch:

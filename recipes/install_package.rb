@@ -43,5 +43,5 @@ end
 package 'filebeat' do
   version node['platform_family'] == 'rhel' ? node['filebeat']['version'] + '-1' : node['filebeat']['version']
   options node['filebeat']['apt']['options'] if node['filebeat']['apt']['options'] && node['platform_family'] == 'debian'
-  notifies :restart, 'service[filebeat]'
+  notifies :restart, 'service[filebeat]' if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
 end

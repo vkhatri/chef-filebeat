@@ -241,7 +241,7 @@ Above configuration will create three different prospector files - `prospector-s
 ## Core Attributes
 
 
-* `default['filebeat']['version']` (default: `1.2.1`): filebeat version
+* `default['filebeat']['version']` (default: `1.2.3`): filebeat version
 
 * `default['filebeat']['package_url']` (default: `auto`): package url for windows installation
 

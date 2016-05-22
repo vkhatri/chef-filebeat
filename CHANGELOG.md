@@ -3,6 +3,26 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.3.2
+-----
+
+- Prerak Shah - Fixed Travis Errors
+
+- Prerak Shah - Fixed Unit Tests
+
+- Al Lefebvre - Added missing attribute for exclude_files
+
+- Luke Lowery - Fixing issue with patterns and older versions of Ruby
+                Updated YAML engine to adhere to ruby style guide
+
+- Prerak Shah - Fixed default Install paths for windows
+
+- Martin Smith - Respect service flags on package installation
+
+- Azat Khadiev - Support spaces in file path for Windows
+
+
+
 0.3.1
 -----
 

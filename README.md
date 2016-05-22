@@ -1,7 +1,7 @@
 filebeat Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.3.1-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.3.2-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
 
 This is a [Chef] cookbook to manage [Filebeat].
 
@@ -12,13 +12,13 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 0.3.1'
+cookbook 'filebeat', '~> 0.3.2'
 ```
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: "v0.3.1"
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: "v0.3.2"
 ```
 
 ## Repository
@@ -95,7 +95,7 @@ end
 - *include_lines* (optional, Array)  - A list of regular expressions to match the lines that you want Filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
 - *exclude_lines* (optional, Array)  - A list of regular expressions to match the lines that you want Filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
 - *multiline* (optional, Hash)  - Multiline configuration hash. Options: `pattern`: <regex pattern to match>, `negate`: [true/false], `match`: [before/after]
-- *exclude_files* (optional, Array)  - A list of regular expressions to match the files that you want Filebeat prospector instance to exclude. 
+- *exclude_files* (optional, Array)  - A list of regular expressions to match the files that you want Filebeat prospector instance to exclude.
 
 ## How to Add Filebeat Output via Node Attribute
 

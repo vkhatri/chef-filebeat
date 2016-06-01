@@ -36,6 +36,7 @@ class Chef
           content['ignore_older'] = new_resource.ignore_older if new_resource.ignore_older
           content['document_type'] = new_resource.document_type if new_resource.document_type
           content['input_type'] = new_resource.input_type if new_resource.input_type
+          content['close_older'] = new_resource.close_older if new_resource.close_older
           content['scan_frequency'] = new_resource.scan_frequency if new_resource.scan_frequency
           content['harvester_buffer_size'] = new_resource.harvester_buffer_size if new_resource.harvester_buffer_size
           content['tail_files'] = new_resource.tail_files if new_resource.tail_files
@@ -46,8 +47,13 @@ class Chef
           content['fields'] = new_resource.fields if new_resource.fields
           content['include_lines'] = new_resource.include_lines if new_resource.include_lines
           content['exclude_lines'] = new_resource.exclude_lines if new_resource.exclude_lines
+          content['max_bytes'] = new_resource.max_bytes if new_resource.max_bytes
           content['multiline'] = new_resource.multiline if new_resource.multiline
           content['exclude_files'] = new_resource.exclude_files if new_resource.exclude_files
+          content['spool_size'] = new_resource.exclude_files if new_resource.exclude_files
+          content['publish_async'] = new_resource.publish_async if new_resource.publish_async
+          content['idle_timeout'] = new_resource.idle_timeout if new_resource.idle_timeout
+          content['registry_file'] = new_resource.registry_file if new_resource.registry_file
         end
 
         file_content = { 'filebeat' => { 'prospectors' => [content] } }.to_yaml

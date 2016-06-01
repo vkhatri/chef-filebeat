@@ -82,6 +82,14 @@ class Chef
         )
       end
 
+      def close_older(arg = nil)
+        set_or_return(
+          :close_older, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
       def scan_frequency(arg = nil)
         set_or_return(
           :scan_frequency, arg,
@@ -154,6 +162,14 @@ class Chef
         )
       end
 
+      def max_bytes(arg = nil)
+        set_or_return(
+          :max_bytes, arg,
+          :kind_of => Integer,
+          :default => nil
+        )
+      end
+
       def multiline(arg = nil)
         set_or_return(
           :multiline, arg,
@@ -166,6 +182,38 @@ class Chef
         set_or_return(
           :exclude_files, arg,
           :kind_of => Array,
+          :default => nil
+        )
+      end
+
+      def spool_size(arg = nil)
+        set_or_return(
+          :spool_size, arg,
+          :kind_of => Integer,
+          :default => nil
+        )
+      end
+
+      def publish_async(arg = nil)
+        set_or_return(
+          :publish_async, arg,
+          :kind_of => [TrueClass, FalseClass],
+          :default => nil
+        )
+      end
+
+      def idle_timeout(arg = nil)
+        set_or_return(
+          :idle_timeout, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def registry_file(arg = nil)
+        set_or_return(
+          :registry_file, arg,
+          :kind_of => String,
           :default => nil
         )
       end

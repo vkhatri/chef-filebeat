@@ -3,6 +3,16 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.3.4
+-----
+
+- Samuel Sampaio - added new filebeat prospector attributes
+
+0.3.3
+-----
+
+- Virender Khatri - updated beats version to v1.2.3
+
 0.3.2
 -----
 

@@ -85,6 +85,7 @@ end
 - *ignore_older* (optional, String)	- filebeat prospector configuration attribute
 - *document_type* (optional, String)	- filebeat prospector configuration attribute
 - *input_type* (optional, String)	- filebeat prospector configuration attribute
+- *close_older* (optional, String)	- filebeat prospector configuration attribute
 - *scan_frequency* (optional, String)	- filebeat prospector configuration attribute
 - *harvester_buffer_size* (optional, Integer)	- filebeat prospector configuration attribute
 - *tail_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
@@ -92,10 +93,15 @@ end
 - *max_backoff* (optional, String)	- filebeat prospector configuration attribute
 - *backoff_factor* (optional, Integer)	- filebeat prospector configuration attribute
 - *force_close_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
-- *include_lines* (optional, Array)  - A list of regular expressions to match the lines that you want Filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
-- *exclude_lines* (optional, Array)  - A list of regular expressions to match the lines that you want Filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
-- *multiline* (optional, Hash)  - Multiline configuration hash. Options: `pattern`: <regex pattern to match>, `negate`: [true/false], `match`: [before/after]
-- *exclude_files* (optional, Array)  - A list of regular expressions to match the files that you want Filebeat prospector instance to exclude.
+- *include_lines* (optional, Array)	- A list of regular expressions to match the lines that you want Filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
+- *exclude_lines* (optional, Array)	- A list of regular expressions to match the lines that you want Filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
+- *max_bytes* (optional, Integer)	- filebeat prospector configuration attribute
+- *multiline* (optional, Hash)	- Multiline configuration hash. Options: `pattern`: <regex pattern to match>, `negate`: [true/false], `match`: [before/after]
+- *exclude_files* (optional, Array)	- A list of regular expressions to match the files that you want Filebeat prospector instance to exclude.
+- *spool_size* (optional, Integer)	- ilebeat prospector configuration attribute
+- *publish_async* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
+- *idle_timeout* (optional, String)	- filebeat prospector configuration attribute
+- *registry_file* (optional, String)	- filebeat prospector configuration attribute
 
 ## How to Add Filebeat Output via Node Attribute
 

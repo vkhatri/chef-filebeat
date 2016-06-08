@@ -27,7 +27,6 @@ default['filebeat']['prospectors']['access']['filebeat']['prospectors'] = [apach
 =end
 default['filebeat']['config']['output'] = {}
 # elasticsearch host info
-# default['filebeat']['config']['output']['elasticsearch']['enabled'] = true
 # default['filebeat']['config']['output']['elasticsearch']['hosts'] = []
 # default['filebeat']['config']['output']['elasticsearch']['save_topology'] = false
 # default['filebeat']['config']['output']['elasticsearch']['max_retries'] = 3
@@ -40,7 +39,6 @@ default['filebeat']['config']['output'] = {}
 # default['filebeat']['config']['output']['elasticsearch']['path'] = '/elasticsearch'
 
 # Logstash Output config info
-# default['filebeat']['config']['output']['logstash']['enabled'] = false
 # default['filebeat']['config']['output']['logstash']['hosts'] = []
 # default['filebeat']['config']['output']['logstash']['loadbalance'] = true
 # default['filebeat']['config']['output']['logstash']['save_topology'] = true
@@ -54,7 +52,6 @@ default['filebeat']['config']['output'] = {}
 # default['filebeat']['config']['logging']['files']['rotateeverybytes'] = 10485760
 # default['filebeat']['config']['logging']['level'] = 'info'
 
-# default['filebeat']['config']['output']['file']['enabled'] = false
 # default['filebeat']['config']['output']['file']['path'] = '/tmp/filebeat'
 # default['filebeat']['config']['output']['file']['filename'] = 'filebeat'
 # default['filebeat']['config']['output']['file']['rotate_every_kb'] = 1_000

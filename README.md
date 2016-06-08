@@ -113,7 +113,6 @@ end
       "config": {
         "output": {
           "elasticsearch": {
-            "enabled": true,
             "hosts": ["127.0.0.1:9200"],
             "save_topology": false,
             "max_retries": 3,
@@ -141,7 +140,6 @@ end
       "config": {
         "output": {
           "logstash": {
-            "enabled": true,
             "hosts": ["127.0.0.1:5000"],
             "loadbalance": true,
             "save_topology": false,
@@ -162,7 +160,6 @@ end
       "config": {
         "output": {
           "file": {
-            "enabled": true,
             "path": "/tmp/filebeat",
             "filename": "filebeat",
             "rotate_every_kb": 1000,

@@ -3,6 +3,11 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.3.5
+-----
+
+- Scott Nelson Windels - Remove enabled attribute for now, as it isn't a feature in filebeat beyond the rc versions
+
 0.3.4
 -----
 

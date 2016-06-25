@@ -31,6 +31,8 @@ https://github.com/vkhatri/chef-filebeat
 
 This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work on other RHEL platforms.
 
+This also works on Solaris zones given a physical Solaris 11.2 server. For that, use the .kitchen.zone.yml file. Check usage at (https://github.com/criticalmass/kitchen-zone). You will need an url to a filebeat package that works on Solaris 11.2. Checkout Building-Filebeat-On-Solaris11.md for instructions to build a filebeat package.
+
 ## Major Changes
 
 ### v0.2.5

@@ -1,0 +1,44 @@
+driver:
+  name: zone
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: solaris-11-i86pc
+    provisioner:
+      sudo_command: 'sudo -E'
+    verifier:
+      sudo_command: 'sudo -E'
+    driver:
+      global_zone_hostname: '<your-global-zone-hostname>'
+      global_zone_user: '<your-global-zone-username>'
+      global_zone_password: '<your-global-zone-password>'
+      test_zone_ip: '<test-zone-ip-you-want>'
+suites:
+  - name: filebeat
+    run_list:
+      - recipe[cm-monitor-collection::filebeat]
+    attributes:
+      filebeat:
+        version: '<filebeat-version>'
+        package_url: '<filebeat-for-solaris-package-url>'
+        package_force_overwrite: true
+        config:
+          logging:
+            to_syslog: false
+            to_files: true
+            files:
+              path: /var/log/filebeat
+              name: filebeat.log
+              keepfiles: 7
+              rotateeverybytes: 10485760
+            level: info
+          output:
+            logstash:
+              hosts: ["<host-or-ip:port>"]
+              tls:
+                insecure: true
+  - name: test
+    run_list:
+      - recipe[cm-monitor-collection::filebeat]

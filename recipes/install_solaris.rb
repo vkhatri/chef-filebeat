@@ -66,12 +66,6 @@ smf_standard_locations = [
 
 load_manifest_command = smf_standard_locations.any? { |i| node['filebeat']['solaris']['manifest_directory'].start_with? i } ? 'svcadm restart svc:/system/manifest-import' : "svccfg import #{node['filebeat']['solaris']['manifest_directory']}/filebeat.xml"
 
-# if smf_standard_locations.any? { |i| node['filebeat']['solaris']['manifest_directory'].start_with? i }
-# load_manifest_command = 'svcadm restart svc:/system/manifest-import'
-# else
-# load_manifest_command = "svccfg import #{node['filebeat']['solaris']['manifest_directory']}/filebeat.xml"
-# end
-
 execute 'load filebeat manifest' do
   action :nothing
   command load_manifest_command

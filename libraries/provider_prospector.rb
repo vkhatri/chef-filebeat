@@ -27,8 +27,16 @@ class Chef
       protected
 
       def prospector_file
+        # When action is set it is an array.  Using is_a because symbols respond to []
+        action = if new_resource.action.is_a?(Array)
+                   raise("Unexpected number of actions: #{new_resource.action}") if new_resource.action.length != 1
+                   new_resource.action[0]
+                 else
+                   new_resource.action
+                 end
+
         content = {}
-        if new_resource.action == :create
+        if action == :create
           content['paths'] = new_resource.paths if new_resource.paths
           content['type'] = new_resource.type if new_resource.type
           content['encoding'] = new_resource.encoding if new_resource.encoding
@@ -62,7 +70,7 @@ class Chef
         t.path ::File.join(node['filebeat']['prospectors_dir'], "prospector-#{new_resource.name}.yml")
         t.content file_content
         t.notifies :restart, 'service[filebeat]'
-        t.run_action new_resource.action
+        t.run_action action
         t.updated?
       end
     end

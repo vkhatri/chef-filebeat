@@ -107,6 +107,32 @@ end
 
 ## How to Add Filebeat Output via Node Attribute
 
+
+### Redis Output
+
+```json
+  "default_attributes": {
+    "filebeat": {
+      "config": {
+        "output": {
+          "redis": {
+            "host": "127.0.0.1",
+            "port": 6379,
+            "save_topology": false,
+            "index": "filebeat",
+            "db": 0,
+            "db_topology": 1,
+            "password": "",
+            "timeout": 5,
+            "reconnect_interval": 1
+          }
+        }
+      }
+    }
+  }
+
+```
+
 ### ElasticSearch Output
 
 ```json
@@ -124,7 +150,13 @@ end
             "username": null,
             "password": null,
             "index": "filebeat",
-            "path": "/elasticsearch"
+            "path": "/elasticsearch",
+            "tls": {
+              "certificate_authorities": ["/etc/ca.crt"],
+              "certificate": "/etc/client.crt",
+              "certificate_key": "/etc/client.key",
+              "insecure": false
+            }
           }
         }
       }
@@ -132,7 +164,6 @@ end
   }
 
 ```
-
 
 ### Logstash Output
 
@@ -145,7 +176,13 @@ end
             "hosts": ["127.0.0.1:5000"],
             "loadbalance": true,
             "save_topology": false,
-            "index": "filebeat"
+            "index": "filebeat",
+            "tls": {
+              "certificate_authorities": ["/etc/ca.crt"],
+              "certificate": "/etc/client.crt",
+              "certificate_key": "/etc/client.key",
+              "insecure": false
+            }
           }
         }
       }

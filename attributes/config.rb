@@ -23,8 +23,9 @@ apache_logs = {
 }
 default['filebeat']['prospectors']['access']['filebeat']['prospectors'] = [apache_logs]
 =end
+
 default['filebeat']['config']['output'] = {}
-# elasticsearch host info
+# Elasticsearch host attributes
 # default['filebeat']['config']['output']['elasticsearch']['hosts'] = []
 # default['filebeat']['config']['output']['elasticsearch']['save_topology'] = false
 # default['filebeat']['config']['output']['elasticsearch']['max_retries'] = 3
@@ -35,14 +36,33 @@ default['filebeat']['config']['output'] = {}
 # default['filebeat']['config']['output']['elasticsearch']['password'] = nil
 # default['filebeat']['config']['output']['elasticsearch']['index'] = 'filebeat'
 # default['filebeat']['config']['output']['elasticsearch']['path'] = '/elasticsearch'
+# default['filebeat']['config']['output']['elasticsearch']['tls']['certificate_authorities'] = ['/etc/ca.crt']
+# default['filebeat']['config']['output']['elasticsearch']['tls']['certificate'] = '/etc/client.crt'
+# default['filebeat']['config']['output']['elasticsearch']['tls']['certificate_key'] = '/etc/client.key'
+# default['filebeat']['config']['output']['elasticsearch']['tls']['insecure'] = false
 
-# Logstash Output config info
+# Logstash Output config attributes
 # default['filebeat']['config']['output']['logstash']['hosts'] = []
 # default['filebeat']['config']['output']['logstash']['loadbalance'] = true
 # default['filebeat']['config']['output']['logstash']['save_topology'] = true
 # default['filebeat']['config']['output']['logstash']['index'] = 'filebeat'
+# default['filebeat']['config']['output']['logstash']['tls']['certificate_authorities'] = ['/etc/ca.crt']
+# default['filebeat']['config']['output']['logstash']['tls']['certificate'] = '/etc/client.crt'
+# default['filebeat']['config']['output']['logstash']['tls']['certificate_key'] = '/etc/client.key'
+# default['filebeat']['config']['output']['logstash']['tls']['insecure'] = false
 
-# Logging Output configs
+# Redis Output config attributes
+# default['filebeat']['config']['output']['redis']['host'] = 'locahost'
+# default['filebeat']['config']['output']['redis']['port'] = 6379
+# default['filebeat']['config']['output']['redis']['save_topology'] = false
+# default['filebeat']['config']['output']['redis']['index'] = 'filebeat'
+# default['filebeat']['config']['output']['redis']['db'] = 0
+# default['filebeat']['config']['output']['redis']['db_topology'] = 1
+# default['filebeat']['config']['output']['redis']['password'] = ''
+# default['filebeat']['config']['output']['redis']['timeout'] = 5
+# default['filebeat']['config']['output']['redis']['reconnect_interval'] = 1
+
+# Logging Output attributes
 # default['filebeat']['config']['logging']['to_files'] = true
 # if node['platform'] == 'windows'
 #  default['filebeat']['config']['logging']['files']['path'] = '"#{node['filebeat']['conf_dir']}/logs"'

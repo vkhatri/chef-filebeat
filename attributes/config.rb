@@ -1,6 +1,4 @@
-# https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml
-# https://www.elastic.co/guide/en/beats/filebeat/current/configuration.html
-#
+# https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-configuration-details.html
 
 # prospector configuration files
 default['filebeat']['prospectors'] = {}

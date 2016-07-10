@@ -20,6 +20,8 @@
 # install filebeat
 if node['platform'] == 'windows'
   include_recipe 'filebeat::install_windows'
+elsif node['platform_family'] == 'solaris2'
+  include_recipe 'filebeat::install_solaris'
 else
   include_recipe 'filebeat::install_package'
 end

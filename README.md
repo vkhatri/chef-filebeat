@@ -344,6 +344,13 @@ https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml
 * `default['filebeat']['apt']['action']` (default: `:add`): filebeat apt reporitory attribute
 
 
+## Other Attributes
+
+* `default['filebeat']['service']['retries']` (default: `:0`): filebeat service resource attribute
+
+* `default['filebeat']['service']['retry_delay']` (default: `:2`): filebeat service resource attribute
+
+
 ## Contributing
 
 1. Fork the repository on Github

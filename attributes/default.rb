@@ -40,3 +40,5 @@ default['filebeat']['apt']['distribution'] = ''
 default['filebeat']['apt']['options'] = "-o Dpkg::Options::='--force-confnew'"
 default['filebeat']['apt']['action'] = :add
 default['filebeat']['apt']['key'] = 'https://packages.elasticsearch.org/GPG-KEY-elasticsearch'
+default['filebeat']['service']['retries'] = 0
+default['filebeat']['service']['retry_delay'] = 2

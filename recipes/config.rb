@@ -59,8 +59,8 @@ service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:ena
 
 service 'filebeat' do
   provider Chef::Provider::Service::Solaris if node['platform_family'] == 'solaris2'
-  retries 30
-  retry_delay 4
+  retries node['filebeat']['service']['retries']
+  retry_delay node['filebeat']['service']['retry_delay']
   supports :status => true, :restart => true
   action service_action
 end

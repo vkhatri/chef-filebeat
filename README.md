@@ -116,6 +116,7 @@ end
       "config": {
         "output": {
           "redis": {
+            "enable": true,
             "host": "127.0.0.1",
             "port": 6379,
             "save_topology": false,
@@ -141,6 +142,7 @@ end
       "config": {
         "output": {
           "elasticsearch": {
+            "enable": true,
             "hosts": ["127.0.0.1:9200"],
             "save_topology": false,
             "max_retries": 3,
@@ -173,6 +175,7 @@ end
       "config": {
         "output": {
           "logstash": {
+            "enable": true,
             "hosts": ["127.0.0.1:5000"],
             "loadbalance": true,
             "save_topology": false,

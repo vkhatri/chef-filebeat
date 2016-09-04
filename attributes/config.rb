@@ -26,6 +26,7 @@ default['filebeat']['prospectors']['access']['filebeat']['prospectors'] = [apach
 
 default['filebeat']['config']['output'] = {}
 # Elasticsearch host attributes
+# default['filebeat']['config']['output']['elasticsearch']['enable'] = true
 # default['filebeat']['config']['output']['elasticsearch']['hosts'] = []
 # default['filebeat']['config']['output']['elasticsearch']['save_topology'] = false
 # default['filebeat']['config']['output']['elasticsearch']['max_retries'] = 3
@@ -42,6 +43,7 @@ default['filebeat']['config']['output'] = {}
 # default['filebeat']['config']['output']['elasticsearch']['tls']['insecure'] = false
 
 # Logstash Output config attributes
+# default['filebeat']['config']['output']['logstash']['enable'] = true
 # default['filebeat']['config']['output']['logstash']['hosts'] = []
 # default['filebeat']['config']['output']['logstash']['loadbalance'] = true
 # default['filebeat']['config']['output']['logstash']['save_topology'] = true
@@ -52,6 +54,7 @@ default['filebeat']['config']['output'] = {}
 # default['filebeat']['config']['output']['logstash']['tls']['insecure'] = false
 
 # Redis Output config attributes
+# default['filebeat']['config']['output']['redis']['enable'] = true
 # default['filebeat']['config']['output']['redis']['host'] = 'locahost'
 # default['filebeat']['config']['output']['redis']['port'] = 6379
 # default['filebeat']['config']['output']['redis']['save_topology'] = false

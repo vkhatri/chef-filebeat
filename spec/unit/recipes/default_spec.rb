@@ -15,7 +15,7 @@ describe 'filebeat::default' do
 
   context 'rhel' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.4') do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
         node.automatic['platform_family'] = 'rhel'
       end.converge(described_recipe)
     end
@@ -45,7 +45,7 @@ describe 'filebeat::default' do
 
   context 'ubuntu' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '12.04') do |node|
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '14.04') do |node|
         node.automatic['platform_family'] = 'debian'
       end.converge(described_recipe)
     end
@@ -75,7 +75,7 @@ describe 'filebeat::default' do
 
   context 'windows' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
         node.automatic['platform_family'] = 'windows'
       end.converge(described_recipe)
     end
@@ -104,6 +104,10 @@ describe 'filebeat::default' do
 
     it 'unzip filebeat package file to C:/opt/filebeat' do
       expect(chef_run).to unzip_windows_zipfile_to('C:/opt/filebeat')
+    end
+
+    it 'run powershell_script to install filebeat as service' do
+      expect(chef_run).to run_powershell_script('install filebeat as service')
     end
   end
 end

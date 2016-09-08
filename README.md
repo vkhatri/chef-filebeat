@@ -42,7 +42,6 @@ This also works on Solaris zones given a physical Solaris 11.2 server. For that,
 ## Cookbook Dependency
 
 - windows
-- powershell
 - apt
 - yum
 

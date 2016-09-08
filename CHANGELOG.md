@@ -3,8 +3,24 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
-0.3.5
+0.3.6
 -----
+
+- Arif Khan - Added Solaris Support
+
+- Tom Noonan - Handle when new_resource.action is an array
+
+- Virender Khatri - Updated filebeat config deprecated url reference
+
+- Virender Khatri - Added service resource configurable attributes with default values
+
+- Scott Nelson Windels - Add enable attribute back (used to be enabled, not it has been brought back as enable)
+
+- Eric Herot - Only call powershell resource on windows machines
+
+- Virender Khatri - Fix Travis
+
+- Virender Khatri - Use powershell_script instead
 
 - Scott Nelson Windels - Remove enabled attribute for now, as it isn't a feature in filebeat beyond the rc versions
 

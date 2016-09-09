@@ -82,12 +82,12 @@ describe 'filebeat::default' do
 
     include_examples 'filebeat'
 
-    it 'create prospector directory C:/opt/filebeat/filebeat-1.2.3-windows/conf.d' do
-      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-1.2.3-windows/conf.d')
+    it 'create prospector directory C:/opt/filebeat/filebeat-1.3.0-windows/conf.d' do
+      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-1.3.0-windows/conf.d')
     end
 
-    it 'configure C:/opt/filebeat/filebeat-1.2.3-windows/filebeat.yml' do
-      expect(chef_run).to create_file('C:/opt/filebeat/filebeat-1.2.3-windows/filebeat.yml')
+    it 'configure C:/opt/filebeat/filebeat-1.3.0-windows/filebeat.yml' do
+      expect(chef_run).to create_file('C:/opt/filebeat/filebeat-1.3.0-windows/filebeat.yml')
     end
 
     it 'include recipe filebeat::install_windows' do

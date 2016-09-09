@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe 'filebeat::attributes'
+
 # install filebeat
 case node['platform']
 when 'windows'

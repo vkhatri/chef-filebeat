@@ -3,6 +3,13 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.3.7
+-----
+
+- Virender Khatri - Move derived attributes to recipe attributes
+
+- Virender Khatri - Update filebeat version to v1.3.0
+
 0.3.6
 -----
 

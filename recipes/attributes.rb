@@ -32,3 +32,10 @@ node.default['filebeat']['prospectors_dir'] = if node['platform'] == 'windows'
                                               else
                                                 ::File.join(node['filebeat']['conf_dir'], 'conf.d')
                                               end
+
+node.default['filebeat']['config']['filebeat']['registry_file'] = if node['platform'] == 'windows'
+                                                                    "#{node['filebeat']['conf_dir']}/registry"
+                                                                  else
+                                                                    '/var/lib/filebeat/registry'
+                                                                  end
+node.default['filebeat']['config']['filebeat']['config_dir'] = node['filebeat']['prospectors_dir']

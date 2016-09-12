@@ -3,6 +3,11 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.3.8
+-----
+
+- Virender Khatri - #68, config_dir attribute not getting set
+
 0.3.7
 -----
 

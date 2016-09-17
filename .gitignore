@@ -26,3 +26,5 @@ coverage/
 
 .kitchen/
 .kitchen.local.yml
+
+.ignore/

@@ -109,5 +109,4 @@ Gemfile.lock
 # Data Bag Sample Files
 databag/
 
-# Icinga2 LWRP examples
-examples/
+.ignore/

@@ -10,6 +10,9 @@ nohup.out
 ehthumbs.db
 Thumbs.db
 
+.kitchen/
+.kitchen.local.yml
+
 # SASS #
 ########
 .sass-cache

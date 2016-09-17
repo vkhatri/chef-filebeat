@@ -1,7 +1,7 @@
 filebeat Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.3.8-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.3.9-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
 
 This is a [Chef] cookbook to manage [Filebeat].
 
@@ -12,13 +12,13 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 0.3.8'
+cookbook 'filebeat', '~> 0.3.9'
 ```
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: "v0.3.8"
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v0.3.9'
 ```
 
 ## Repository
@@ -289,7 +289,7 @@ Above configuration will create three different prospector files - `prospector-s
 ## Core Attributes
 
 
-* `default['filebeat']['version']` (default: `1.3.0`): filebeat version
+* `default['filebeat']['version']` (default: `1.3.1`): filebeat version
 
 * `default['filebeat']['release']` (default: `1`): filebeat release for yum package
 

@@ -3,6 +3,13 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.3.9
+-----
+
+- Virender Khatri - fix for #65, added yum apt version lock
+
+- Virender Khatri - updated beats version to v1.3.1
+
 0.3.8
 -----
 

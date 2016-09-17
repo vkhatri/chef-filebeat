@@ -120,12 +120,12 @@ describe 'filebeat::default' do
 
     include_examples 'filebeat'
 
-    it 'create prospector directory C:/opt/filebeat/filebeat-1.3.0-windows/conf.d' do
-      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-1.3.0-windows/conf.d')
+    it 'create prospector directory C:/opt/filebeat/filebeat-1.3.1-windows/conf.d' do
+      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-1.3.1-windows/conf.d')
     end
 
-    it 'configure C:/opt/filebeat/filebeat-1.3.0-windows/filebeat.yml' do
-      expect(chef_run).to create_file('C:/opt/filebeat/filebeat-1.3.0-windows/filebeat.yml')
+    it 'configure C:/opt/filebeat/filebeat-1.3.1-windows/filebeat.yml' do
+      expect(chef_run).to create_file('C:/opt/filebeat/filebeat-1.3.1-windows/filebeat.yml')
     end
 
     it 'include recipe filebeat::install_windows' do
@@ -149,15 +149,15 @@ describe 'filebeat::default' do
     end
 
     it "has correct default['filebeat']['conf_dir']" do
-      expect(node['filebeat']['conf_dir']).to eq('C:/opt/filebeat/filebeat-1.3.0-windows')
+      expect(node['filebeat']['conf_dir']).to eq('C:/opt/filebeat/filebeat-1.3.1-windows')
     end
 
     it "has correct default['filebeat']['config']['filebeat']['registry_file']" do
-      expect(node['filebeat']['config']['filebeat']['registry_file']).to eq('C:/opt/filebeat/filebeat-1.3.0-windows/registry')
+      expect(node['filebeat']['config']['filebeat']['registry_file']).to eq('C:/opt/filebeat/filebeat-1.3.1-windows/registry')
     end
 
     it "has correct default['filebeat']['config']['filebeat']['config_dir']" do
-      expect(node['filebeat']['config']['filebeat']['config_dir']).to eq('C:/opt/filebeat/filebeat-1.3.0-windows/conf.d')
+      expect(node['filebeat']['config']['filebeat']['config_dir']).to eq('C:/opt/filebeat/filebeat-1.3.1-windows/conf.d')
     end
   end
 end

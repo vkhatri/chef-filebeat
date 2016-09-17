@@ -48,13 +48,17 @@ This also works on Solaris zones given a physical Solaris 11.2 server. For that,
 
 ## Recipes
 
-- `filebeat::default` - default recipe (use it for run_list)
+- `filebeat::attributes` - cookbook derived default attributes
 
-- `filebeat::install_windows` - install filebeat for windows platform
+- `filebeat::config` - configure filebeat
+
+- `filebeat::default` - default recipe (use it for run_list)
 
 - `filebeat::install_package` - install filebeat package for linux platform
 
-- `filebeat::config` - configure filebeat
+- `filebeat::install_solaris` - install filebeat package for solaris platform
+
+- `filebeat::install_windows` - install filebeat for windows platform
 
 
 ## LWRP filebeat_prospector
@@ -286,6 +290,8 @@ Above configuration will create three different prospector files - `prospector-s
 
 
 * `default['filebeat']['version']` (default: `1.3.0`): filebeat version
+
+* `default['filebeat']['release']` (default: `1`): filebeat release for yum package
 
 * `default['filebeat']['package_url']` (default: `auto`): package url for windows installation
 

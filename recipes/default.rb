@@ -19,6 +19,8 @@
 
 include_recipe 'filebeat::attributes'
 
+include_recipe 'yum-plugin-versionlock::default' if node['platform'] == 'rhel' || node['platform'] == 'centos'
+
 # install filebeat
 case node['platform']
 when 'windows'

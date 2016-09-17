@@ -11,6 +11,7 @@ issues_url 'https://github.com/vkhatri/chef-filebeat/issues' if respond_to?(:iss
 depends 'windows'
 depends 'apt'
 depends 'yum'
+depends 'yum-plugin-versionlock', '>= 0.1.2'
 
 %w(windows ubuntu centos amazon redhat fedora).each do |os|
   supports os

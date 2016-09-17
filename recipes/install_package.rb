@@ -29,6 +29,12 @@ when 'debian'
     distribution node['filebeat']['apt']['distribution']
     action node['filebeat']['apt']['action']
   end
+
+  apt_preference 'filebeat' do
+    pin          "version #{node['filebeat']['version']}"
+    pin_priority '700'
+  end
+
 when 'rhel'
   # yum repository configuration
   yum_repository 'beats' do
@@ -40,10 +46,18 @@ when 'rhel'
     metadata_expire node['filebeat']['yum']['metadata_expire']
     action node['filebeat']['yum']['action']
   end
+
+  yum_version_lock 'filebeat' do
+    version node['filebeat']['version']
+    release node['filebeat']['release']
+    action :update
+  end
 end
 
-package 'filebeat' do
+package 'filebeat' do # ~FC009
   version version_string
   options node['filebeat']['apt']['options'] if node['filebeat']['apt']['options'] && node['platform_family'] == 'debian'
   notifies :restart, 'service[filebeat]' if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
+  flush_cache(:before => true) if node['platform_family'] == 'rhel'
+  allow_downgrade true if node['platform_family'] == 'rhel'
 end

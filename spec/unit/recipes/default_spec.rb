@@ -55,6 +55,10 @@ describe 'filebeat::default' do
     it "has correct default['filebeat']['conf_dir']" do
       expect(node['filebeat']['conf_dir']).to eq('/etc/filebeat')
     end
+
+    it 'add yum_version_lock filebeat' do
+      expect(chef_run).to update_yum_version_lock('filebeat')
+    end
   end
 
   context 'ubuntu' do
@@ -78,6 +82,10 @@ describe 'filebeat::default' do
 
     it 'adds beats apt repository' do
       expect(chef_run).to add_apt_repository('beats')
+    end
+
+    it 'add apt_preference filebeat' do
+      expect(chef_run).to add_apt_preference('filebeat')
     end
 
     it 'include recipe filebeat::install_package' do

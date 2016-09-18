@@ -3,6 +3,11 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.4.0
+-----
+
+- Virender Khatri - fix for #60, HWRP does not restart filebeat service
+
 0.3.9
 -----
 

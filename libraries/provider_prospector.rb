@@ -1,26 +1,18 @@
 class Chef
   class Provider
     # provides filebeat_prospector
-    class FilebeatProspector < Chef::Provider
+    class FilebeatProspector < Chef::Provider::LWRPBase
       provides :filebeat_prospector if respond_to?(:provides)
-
-      def initialize(*args)
-        super
-      end
 
       def whyrun_supported?
         true
       end
 
-      def load_current_resource
-        true
-      end
-
-      def action_create
+      action :create do
         new_resource.updated_by_last_action(prospector_file)
       end
 
-      def action_delete
+      action :delete do
         new_resource.updated_by_last_action(prospector_file)
       end
 
@@ -66,11 +58,12 @@ class Chef
 
         file_content = { 'filebeat' => { 'prospectors' => [content] } }.to_yaml
 
-        t = Chef::Resource::File.new("prospector_#{new_resource.name}", run_context)
-        t.path ::File.join(node['filebeat']['prospectors_dir'], "prospector-#{new_resource.name}.yml")
-        t.content file_content
-        t.notifies :restart, 'service[filebeat]'
-        t.run_action action
+        t = file "prospector_#{new_resource.name}" do
+          path ::File.join(node['filebeat']['prospectors_dir'], "prospector-#{new_resource.name}.yml")
+          content file_content
+          notifies :restart, 'service[filebeat]'
+          action action
+        end
         t.updated?
       end
     end

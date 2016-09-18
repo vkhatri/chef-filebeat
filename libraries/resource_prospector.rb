@@ -1,15 +1,13 @@
-require 'chef/resource'
 # https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-configuration-details.html
-
 class Chef
   class Resource
-    # filebeat prospector resource
+    # provides filebeat_prospector
     class FilebeatProspector < Chef::Resource
       identity_attr :name
 
       def initialize(name, run_context = nil)
         super
-        @resource_name = :filebeat_prospector
+        @resource_name = :filebeat_prospector if respond_to?(:resource_name)
         @provides = :filebeat_prospector
         @provider = Chef::Provider::FilebeatProspector
         @action = :create
@@ -20,6 +18,7 @@ class Chef
       def paths(arg = nil)
         set_or_return(
           :paths, arg,
+          :required => true,
           :kind_of => Array,
           :default => nil
         )

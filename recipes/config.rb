@@ -49,6 +49,8 @@ if node['platform'] == 'windows' # ~FC023
   end
 end
 
+include_recipe 'runit::default' if node['filebeat']['service']['init_style'] == 'runit'
+
 ruby_block 'delay filebeat service start' do
   block do
   end
@@ -58,12 +60,24 @@ end
 
 service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:enable, :nothing]
 
-service 'filebeat' do
-  provider Chef::Provider::Service::Solaris if node['platform_family'] == 'solaris2'
-  retries node['filebeat']['service']['retries']
-  retry_delay node['filebeat']['service']['retry_delay']
-  supports :status => true, :restart => true
-  action service_action
+if node['filebeat']['service']['init_style'] == 'runit'
+  runit_service 'filebeat' do
+    options(
+      'user' => 'root',
+      'conf_path' => node['filebeat']['conf_file'],
+      'binary_path' => '/usr/bin/filebeat'
+    )
+    default_logger true
+    action service_action
+  end
+else
+  service 'filebeat' do
+    provider Chef::Provider::Service::Solaris if node['platform_family'] == 'solaris2'
+    retries node['filebeat']['service']['retries']
+    retry_delay node['filebeat']['service']['retry_delay']
+    supports :status => true, :restart => true
+    action service_action
+  end
 end
 
 # ...and put this back the way we found them.

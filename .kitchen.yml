@@ -48,7 +48,39 @@ suites:
                 exclude_files:
                 - /var/log/messages
                 - /var/log/syslog
+        config:
+          output:
+            elasticsearch:
+              hosts: ["127.0.0.1:9200"]
 
+  - name: runit
+    require_chef_omnibus: 12.14.60
+    excludes:
+      - windows-2012R2 
+    run_list:
+      - recipe[filebeat::default]
+    attributes:
+      filebeat:
+        service:
+          init_style: 'runit'
+        prospectors:
+          system_logs:
+            filebeat:
+              prospectors:
+              - paths:
+                - /var/log/messages
+                - /var/log/syslog
+                type: log
+                fields:
+                  type: system_logs
+              - paths:
+                - /var/log/*.log
+                type: log
+                fields:
+                  type: undefined
+                exclude_files:
+                - /var/log/messages
+                - /var/log/syslog
         config:
           output:
             elasticsearch:

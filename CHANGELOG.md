@@ -3,6 +3,11 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.4.1
+-----
+
+- Jesse Cotton - Add support for using runit instead of the default init system
+
 0.4.0
 -----
 

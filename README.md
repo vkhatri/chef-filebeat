@@ -293,6 +293,8 @@ Above configuration will create three different prospector files - `prospector-s
 
 * `default['filebeat']['release']` (default: `1`): filebeat release for yum package
 
+* `default['filebeat']['service']['init_style']` (default: `init`): filebeat service init system, options: init, runit
+
 * `default['filebeat']['package_url']` (default: `auto`): package url for windows installation
 
 * `default['filebeat']['conf_dir']` (default: `/etc/filebeat`): filebeat yaml configuration file directory

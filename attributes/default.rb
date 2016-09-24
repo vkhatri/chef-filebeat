@@ -11,5 +11,6 @@ default['filebeat']['solaris'] = {
   'manifest_directory' => '/var/svc/manifest/application'
 }
 
+default['filebeat']['service']['init_style'] = 'init' # or runit
 default['filebeat']['service']['retries'] = 0
 default['filebeat']['service']['retry_delay'] = 2

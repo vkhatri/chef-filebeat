@@ -13,6 +13,25 @@ describe 'filebeat::default' do
     end
   end
 
+  context 'runit' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
+        node.automatic['platform_family'] = 'rhel'
+        node.override['filebeat']['service']['init_style'] = 'runit'
+      end.converge(described_recipe)
+    end
+
+    let(:node) { chef_run.node }
+
+    it 'include runit::default recipe' do
+      expect(chef_run).to include_recipe('runit::default')
+    end
+
+    it 'enable filebeat runit service' do
+      expect(chef_run).to enable_runit_service('filebeat')
+    end
+  end
+
   context 'rhel' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|

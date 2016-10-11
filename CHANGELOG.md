@@ -3,6 +3,11 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.4.2
+-----
+
+- Andrei Scopenco - include yum-plugin-versionlock recipe for platform_family instead
+
 0.4.1
 -----
 

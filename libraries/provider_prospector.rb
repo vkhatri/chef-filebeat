@@ -54,6 +54,10 @@ class Chef
           content['publish_async'] = new_resource.publish_async if new_resource.publish_async
           content['idle_timeout'] = new_resource.idle_timeout if new_resource.idle_timeout
           content['registry_file'] = new_resource.registry_file if new_resource.registry_file
+          content['json.message_key'] = new_resource.json_message_key if new_resource.json_message_key
+          content['json.keys_under_root'] = new_resource.json_keys_under_root if new_resource.json_keys_under_root
+          content['json.overwrite_keys'] = new_resource.json_overwrite_keys if new_resource.json_overwrite_keys
+          content['json.add_error_key'] = new_resource.json_add_error_key if new_resource.json_add_error_key
         end
 
         file_content = { 'filebeat' => { 'prospectors' => [content] } }.to_yaml

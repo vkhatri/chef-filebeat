@@ -39,3 +39,16 @@ node.default['filebeat']['config']['filebeat']['registry_file'] = if node['platf
                                                                     '/var/lib/filebeat/registry'
                                                                   end
 node.default['filebeat']['config']['filebeat']['config_dir'] = node['filebeat']['prospectors_dir']
+
+if node['filebeat']['version'] < '5.0'
+	node.default['filebeat']['yum']['baseurl'] = 'https://packages.elastic.co/beats/yum/el/$basearch'
+	node.default['filebeat']['yum']['gpgkey'] = 'https://packages.elastic.co/GPG-KEY-elasticsearch'
+	node.default['filebeat']['apt']['uri'] = 'https://packages.elastic.co/beats/apt'
+	node.default['filebeat']['apt']['key'] = 'https://packages.elastic.co/GPG-KEY-elasticsearch'
+else
+  major_version = node['filebeat']['version'].split('.')[0]
+	node.default['filebeat']['yum']['baseurl'] = "https://artifacts.elastic.co/packages/#{major_version}.x/yum"
+	node.default['filebeat']['yum']['gpgkey'] = 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
+	node.default['filebeat']['apt']['uri'] = "https://artifacts.elastic.co/packages/#{major_version}.x/apt"
+	node.default['filebeat']['apt']['key'] = 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
+end

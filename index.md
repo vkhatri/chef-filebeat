@@ -1,7 +1,7 @@
 filebeat Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.2.7-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.4.3-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
 
 This is a [Chef] cookbook to manage [Filebeat].
 
@@ -11,14 +11,14 @@ This is a [Chef] cookbook to manage [Filebeat].
 
 ## Most Recent Release
 
-```
-cookbook 'filebeat', '~> 0.2.7'
+```ruby
+cookbook 'filebeat', '~> 0.4.3'
 ```
 
 ## From Git
 
-```
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat'
+```ruby
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v0.4.3'
 ```
 
 ## Repository
@@ -31,6 +31,8 @@ https://github.com/vkhatri/chef-filebeat
 
 This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work on other RHEL platforms.
 
+This also works on Solaris zones given a physical Solaris 11.2 server. For that, use the .kitchen.zone.yml file. Check usage at (https://github.com/criticalmass/kitchen-zone). You will need an url to a filebeat package that works on Solaris 11.2. Checkout Building-Filebeat-On-Solaris11.md for instructions to build a filebeat package.
+
 ## Major Changes
 
 ### v0.2.5
@@ -40,20 +42,23 @@ This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work 
 ## Cookbook Dependency
 
 - windows
-- powershell
 - apt
 - yum
 
 
 ## Recipes
 
-- `filebeat::default` - default recipe (use it for run_list)
+- `filebeat::attributes` - cookbook derived default attributes
 
-- `filebeat::install_windows` - install filebeat for windows platform
+- `filebeat::config` - configure filebeat
+
+- `filebeat::default` - default recipe (use it for run_list)
 
 - `filebeat::install_package` - install filebeat package for linux platform
 
-- `filebeat::config` - configure filebeat
+- `filebeat::install_solaris` - install filebeat package for solaris platform
+
+- `filebeat::install_windows` - install filebeat for windows platform
 
 
 ## LWRP filebeat_prospector
@@ -63,57 +68,71 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
 
 **LWRP example**
 
-	filebeat_prospector 'messages' do
-	  paths ['/var/log/messages']
-	  document_type 'apache'
-	  ignore_older '24h'
-	  scan_frequency '15s'
-	  harvester_buffer_size 16384
-	  fields 'type' => 'apacheLogs'
-	end
-
+```ruby
+filebeat_prospector 'messages' do
+  paths ['/var/log/messages']
+  document_type 'apache'
+  ignore_older '24h'
+  scan_frequency '15s'
+  harvester_buffer_size 16384
+  fields 'type' => 'apacheLogs'
+end
+```
 
 **LWRP Options**
 
 - *action* (optional)	- default :create, options: :create, :delete
-- *paths* (optional, String)	- filebeat propspector configuration attribute
-- *type* (optional, String)	- filebeat propspector configuration attribute
-- *encoding* (optional, String)	- filebeat propspector configuration attribute
-- *fields* (optional, Hash)	- filebeat propspector configuration attribute
-- *fields_under_root* (optional, TrueClass/FalseClass)	- filebeat propspector configuration attribute
-- *ignore_older* (optional, String)	- filebeat propspector configuration attribute
-- *document_type* (optional, String)	- filebeat propspector configuration attribute
-- *input_type* (optional, String)	- filebeat propspector configuration attribute
-- *scan_frequency* (optional, String)	- filebeat propspector configuration attribute
-- *harvester_buffer_size* (optional, Integer)	- filebeat propspector configuration attribute
-- *tail_files* (optional, TrueClass/FalseClass)	- filebeat propspector configuration attribute
-- *backoff* (optional, String)	- filebeat propspector configuration attribute
-- *max_backoff* (optional, String)	- filebeat propspector configuration attribute
-- *backoff_factor* (optional, Integer)	- filebeat propspector configuration attribute
-- *force_close_files* (optional, TrueClass/FalseClass)	- filebeat propspector configuration attribute
-
+- *paths* (optional, String)	- filebeat prospector configuration attribute
+- *type* (optional, String)	- filebeat prospector configuration attribute
+- *encoding* (optional, String)	- filebeat prospector configuration attribute
+- *fields* (optional, Hash)	- filebeat prospector configuration attribute
+- *fields_under_root* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
+- *ignore_older* (optional, String)	- filebeat prospector configuration attribute
+- *document_type* (optional, String)	- filebeat prospector configuration attribute
+- *input_type* (optional, String)	- filebeat prospector configuration attribute
+- *close_older* (optional, String)	- filebeat prospector configuration attribute
+- *scan_frequency* (optional, String)	- filebeat prospector configuration attribute
+- *harvester_buffer_size* (optional, Integer)	- filebeat prospector configuration attribute
+- *tail_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
+- *backoff* (optional, String)	- filebeat prospector configuration attribute
+- *max_backoff* (optional, String)	- filebeat prospector configuration attribute
+- *backoff_factor* (optional, Integer)	- filebeat prospector configuration attribute
+- *force_close_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
+- *include_lines* (optional, Array)	- A list of regular expressions to match the lines that you want Filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
+- *exclude_lines* (optional, Array)	- A list of regular expressions to match the lines that you want Filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
+- *max_bytes* (optional, Integer)	- filebeat prospector configuration attribute
+- *multiline* (optional, Hash)	- Multiline configuration hash. Options: `pattern`: <regex pattern to match>, `negate`: [true/false], `match`: [before/after]
+- *exclude_files* (optional, Array)	- A list of regular expressions to match the files that you want Filebeat prospector instance to exclude.
+- *spool_size* (optional, Integer)	- ilebeat prospector configuration attribute
+- *publish_async* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
+- *idle_timeout* (optional, String)	- filebeat prospector configuration attribute
+- *registry_file* (optional, String)	- filebeat prospector configuration attribute
+- *json_message_key* (optional, String)	- filebeat prospector configuration attribute `json.message_key`
+- *json_keys_under_root* (optional, String)	- filebeat prospector configuration attribute `json.keys_under_root`
+- *json_overwrite_keys* (optional, String)	- filebeat prospector configuration attribute `json.overwrite_keys`
+- *json_add_error_key* (optional, String)	- filebeat prospector configuration attribute `json.add_error_key`
 
 ## How to Add Filebeat Output via Node Attribute
 
-### ElasticSearch Output
 
-```
+### Redis Output
+
+```json
   "default_attributes": {
     "filebeat": {
       "config": {
         "output": {
-          "elasticsearch": {
-		    "enabled": true,
-          	"hosts": ["127.0.0.1:9200"],
-			"save_topology": false,
-			"max_retries": 3,
-			"bulk_max_size": 1000,
-			"flush_interval": null,
-			"protocol": "http",
-			"username": null,
-			"password": null,
-			"index": "filebeat",
-			"path": "/elasticsearch"
+          "redis": {
+            "enable": true,
+            "host": "127.0.0.1",
+            "port": 6379,
+            "save_topology": false,
+            "index": "filebeat",
+            "db": 0,
+            "db_topology": 1,
+            "password": "",
+            "timeout": 5,
+            "reconnect_interval": 1
           }
         }
       }
@@ -122,20 +141,58 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
 
 ```
 
+### ElasticSearch Output
+
+```json
+  "default_attributes": {
+    "filebeat": {
+      "config": {
+        "output": {
+          "elasticsearch": {
+            "enable": true,
+            "hosts": ["127.0.0.1:9200"],
+            "save_topology": false,
+            "max_retries": 3,
+            "bulk_max_size": 1000,
+            "flush_interval": null,
+            "protocol": "http",
+            "username": null,
+            "password": null,
+            "index": "filebeat",
+            "path": "/elasticsearch",
+            "tls": {
+              "certificate_authorities": ["/etc/ca.crt"],
+              "certificate": "/etc/client.crt",
+              "certificate_key": "/etc/client.key",
+              "insecure": false
+            }
+          }
+        }
+      }
+    }
+  }
+
+```
 
 ### Logstash Output
 
-```
+```json
   "default_attributes": {
     "filebeat": {
       "config": {
         "output": {
           "logstash": {
-			"enabled": true,
-			"hosts": ["127.0.0.1:5000"],
-			"loadbalance": true,
-			"save_topology": false,
-			"index": "filebeat"
+            "enable": true,
+            "hosts": ["127.0.0.1:5000"],
+            "loadbalance": true,
+            "save_topology": false,
+            "index": "filebeat",
+            "tls": {
+              "certificate_authorities": ["/etc/ca.crt"],
+              "certificate": "/etc/client.crt",
+              "certificate_key": "/etc/client.key",
+              "insecure": false
+            }
           }
         }
       }
@@ -146,17 +203,16 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
 
 ### File Output
 
-```
+```json
   "default_attributes": {
     "filebeat": {
       "config": {
         "output": {
           "file": {
-			"enabled": true,
-			"path": "/tmp/filebeat",
-			"filename": "filebeat",
-			"rotate_every_kb": 1000,
-			"number_of_files": 7
+            "path": "/tmp/filebeat",
+            "filename": "filebeat",
+            "rotate_every_kb": 1000,
+            "number_of_files": 7
           }
         }
       }
@@ -167,10 +223,10 @@ LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file u
 
 ## How to Add Filebeat Prospectors via Node Attribute
 
-Individual propspectors configuration file can be added using attribute `default['filebeat']['prospectors']`. Each prospector configuration will
+Individual prospectors configuration file can be added using attribute `default['filebeat']['prospectors']`. Each prospector configuration will
 be created as a different yaml file under `default['filebeat']['prospector_dir']` with prefix `prospector-`
 
-```
+```json
   "default_attributes": {
     "filebeat": {
       "prospectors": {
@@ -237,7 +293,11 @@ Above configuration will create three different prospector files - `prospector-s
 ## Core Attributes
 
 
-* `default['filebeat']['version']` (default: `1.0.0`): filebeat version
+* `default['filebeat']['version']` (default: `5.1.1`): filebeat version
+
+* `default['filebeat']['release']` (default: `1`): filebeat release for yum package
+
+* `default['filebeat']['service']['init_style']` (default: `init`): filebeat service init system, options: init, runit
 
 * `default['filebeat']['package_url']` (default: `auto`): package url for windows installation
 
@@ -296,6 +356,13 @@ https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml
 * `default['filebeat']['apt']['key']` (default: `http://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats apt reporitory attribute
 
 * `default['filebeat']['apt']['action']` (default: `:add`): filebeat apt reporitory attribute
+
+
+## Other Attributes
+
+* `default['filebeat']['service']['retries']` (default: `:0`): filebeat service resource attribute
+
+* `default['filebeat']['service']['retry_delay']` (default: `:2`): filebeat service resource attribute
 
 
 ## Contributing

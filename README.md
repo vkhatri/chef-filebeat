@@ -107,6 +107,10 @@ end
 - *publish_async* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
 - *idle_timeout* (optional, String)	- filebeat prospector configuration attribute
 - *registry_file* (optional, String)	- filebeat prospector configuration attribute
+- *json_message_key* (optional, String)	- filebeat prospector configuration attribute `json.message_key`
+- *json_keys_under_root* (optional, String)	- filebeat prospector configuration attribute `json.keys_under_root`
+- *json_overwrite_keys* (optional, String)	- filebeat prospector configuration attribute `json.overwrite_keys`
+- *json_add_error_key* (optional, String)	- filebeat prospector configuration attribute `json.add_error_key`
 
 ## How to Add Filebeat Output via Node Attribute
 

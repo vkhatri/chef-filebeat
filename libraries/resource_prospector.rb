@@ -216,6 +216,35 @@ class Chef
           :default => nil
         )
       end
+
+      def json_message_key(arg = nil)
+        set_or_return(
+          :json_message_key, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def json_keys_under_root(arg = nil)
+        set_or_return(
+          :json_keys_under_root, arg,
+          :kind_of => [TrueClass, FalseClass]
+        )
+      end
+
+      def json_overwrite_keys(arg = nil)
+        set_or_return(
+          :json_overwrite_keys, arg,
+          :kind_of => [TrueClass, FalseClass]
+        )
+      end
+
+      def json_add_error_key(arg = nil)
+        set_or_return(
+          :json_add_error_key, arg,
+          :kind_of => [TrueClass, FalseClass]
+        )
+      end
     end
   end
 end

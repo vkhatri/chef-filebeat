@@ -3,6 +3,15 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.4.3
+-----
+
+- Michael Mosher - added json attributes to filebeat_prospector
+
+- Virender Khatri - added v5.x support
+
+- Virender Khatri - updated default filebeat version to v5.1.1
+
 0.4.2
 -----
 

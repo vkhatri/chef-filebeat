@@ -132,6 +132,7 @@ describe 'filebeat::default' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
         node.automatic['platform_family'] = 'windows'
+        node.automatic['kernel']['machine'] = 'x86_64'
       end.converge(described_recipe)
     end
 

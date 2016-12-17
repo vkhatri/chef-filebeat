@@ -1,0 +1,8 @@
+title: Chef Filebeat
+description: Chef Cookbook to Manage Elastic Filebeat https://supermarket.chef.io/cookbooks/filebeat
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-cayman
+
+gems:
+  - jekyll-mentions

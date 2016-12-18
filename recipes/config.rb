@@ -61,11 +61,11 @@ end
 service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:enable, :nothing]
 
 if node['filebeat']['service']['init_style'] == 'runit'
+  runit_cmd = "/usr/share/filebeat/bin/filebeat -c #{node['filebeat']['conf_file']} -path.home /usr/share/filebeat -path.config #{node['filebeat']['conf_dir']} -path.data /var/lib/filebeat -path.logs /var/log/filebeat"
   runit_service 'filebeat' do
     options(
       'user' => 'root',
-      'conf_path' => node['filebeat']['conf_file'],
-      'binary_path' => '/usr/bin/filebeat'
+      'cmd' => runit_cmd
     )
     default_logger true
     action service_action

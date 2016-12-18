@@ -1,7 +1,7 @@
 filebeat Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.4.3-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.4.4-green.svg)](https://github.com/vkhatri/chef-filebeat) [![Build Status](https://travis-ci.org/vkhatri/chef-filebeat.svg?branch=master)](https://travis-ci.org/vkhatri/chef-filebeat)
 
 This is a [Chef] cookbook to manage [Filebeat].
 
@@ -18,7 +18,7 @@ cookbook 'filebeat', '~> 0.4.3'
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v0.4.3'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v0.4.4'
 ```
 
 ## Repository

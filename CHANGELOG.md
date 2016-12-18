@@ -3,6 +3,11 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.4.4
+-----
+
+- Virender Khatri - fixed runit service
+
 0.4.3
 -----
 

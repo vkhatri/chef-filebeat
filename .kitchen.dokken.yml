@@ -1,0 +1,66 @@
+# settings:
+#  parallel: true
+
+driver:
+  name: dokken
+  privileged: true
+  chef_image: chef/chef
+  chef_version: current
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+
+platforms:
+- name: ubuntu-14.04
+  driver:
+    image: ubuntu:14.04
+    intermediate_instructions:
+      - RUN /usr/bin/apt-get update
+      - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts
+
+- name: centos-6.8
+  driver:
+    image: centos:6.8
+    platform: rhel
+    intermediate_instructions:
+      - RUN yum install -y net-tools initscripts
+
+- name: centos-7
+  driver:
+    image: centos:7
+    pid_one_command: /usr/lib/systemd/systemd
+    platform: rhel
+    intermediate_instructions:
+      - RUN yum install -y net-tools initscripts systemd-sysv
+
+suites:
+  - name: default
+    run_list:
+      - recipe[filebeat::default]
+    attributes:
+      filebeat:
+        prospectors:
+          system_logs:
+            filebeat:
+              prospectors:
+              - paths:
+                - /var/log/messages
+                - /var/log/syslog
+                type: log
+                fields:
+                  type: system_logs
+              - paths:
+                - /var/log/*.log
+                type: log
+                fields:
+                  type: undefined
+                exclude_files:
+                - /var/log/messages
+                - /var/log/syslog
+        config:
+          output:
+            elasticsearch:
+              hosts: ["127.0.0.1:9200"]

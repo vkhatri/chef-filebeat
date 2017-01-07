@@ -1,4 +1,4 @@
-sudo: false
+sudo: required
 dist: trusty
 
 addons:
@@ -8,7 +8,6 @@ addons:
     packages:
       - chefdk
 
-# skip bundle install
 install: echo "skip bundle install"
 
 branches:
@@ -16,12 +15,26 @@ branches:
     - master
     - /^(?i:travis)-.*$/
 
-before_script:
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-  - /opt/chefdk/embedded/bin/bundle install --without solaris
-  - /opt/chefdk/embedded/bin/chef --version
-  - /opt/chefdk/embedded/bin/cookstyle --version
-  - /opt/chefdk/embedded/bin/foodcritic --version
+env:
+  matrix:
+    - INSTANCE=default-centos-68
+    - INSTANCE=default-centos-7
+    - INSTANCE=default-ubuntu-1404
 
-script:
-  - /opt/chefdk/bin/chef exec rake
+script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
+
+before_script:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+
+
+matrix:
+  include:
+    - before_script:
+      - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+      - /opt/chefdk/embedded/bin/chef --version
+      - /opt/chefdk/embedded/bin/cookstyle --version
+      - /opt/chefdk/embedded/bin/foodcritic --version
+    - script:
+      - /opt/chefdk/bin/chef exec rake
+      env: UNIT_AND_LINT=1

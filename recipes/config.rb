@@ -45,7 +45,7 @@ end
 
 if node['platform'] == 'windows' # ~FC023
   powershell_script 'install filebeat as service' do
-    code "& '#{node['filebeat']['windows']['base_dir']}/filebeat-#{node['filebeat']['version']}-windows/install-service-filebeat.ps1'"
+    code "& '#{node['filebeat']['conf_dir']}/install-service-filebeat.ps1'"
   end
 end
 

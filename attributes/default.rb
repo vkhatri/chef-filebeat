@@ -14,3 +14,5 @@ default['filebeat']['solaris'] = {
 default['filebeat']['service']['init_style'] = 'init' # or runit
 default['filebeat']['service']['retries'] = 0
 default['filebeat']['service']['retry_delay'] = 2
+
+default['filebeat']['arch'] = node['kernel']['machine'] =~ /x86_64/ ? 'x86_64' : 'x86'

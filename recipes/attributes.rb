@@ -18,7 +18,11 @@
 #
 
 node.default['filebeat']['conf_dir'] = if node['platform'] == 'windows'
-                                         "#{node['filebeat']['windows']['base_dir']}/filebeat-#{node['filebeat']['version']}-windows"
+                                         if node['filebeat']['version'] < '5.0'
+                                           "#{node['filebeat']['windows']['base_dir']}/filebeat-#{node['filebeat']['version']}-windows"
+                                         else
+                                           "#{node['filebeat']['windows']['base_dir']}/filebeat-#{node['filebeat']['version']}-windows-#{node['filebeat']['arch']}"
+                                         end
                                        else
                                          '/etc/filebeat'
                                        end

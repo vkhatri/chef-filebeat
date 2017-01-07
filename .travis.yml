@@ -1,11 +1,27 @@
-language: ruby
-bundler_args: --without integration
-rvm:
-  - 2.2.2
+sudo: false
+dist: trusty
+
+addons:
+  apt:
+    sources:
+      - chef-current-trusty
+    packages:
+      - chefdk
+
+# skip bundle install
+install: echo "skip bundle install"
+
 branches:
   only:
     - master
-# uncomment this line if your project needs to run something other than `rake`:
-# script: bundle exec rspec spec
+    - /^(?i:travis)-.*$/
+
+before_script:
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/embedded/bin/bundle install --without solaris
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/cookstyle --version
+  - /opt/chefdk/embedded/bin/foodcritic --version
+
 script:
-  - bundle exec rake lint
+  - /opt/chefdk/bin/chef exec rake

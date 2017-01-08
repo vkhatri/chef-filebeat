@@ -3,6 +3,15 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.4.5
+-----
+
+- Virender Khatri - issue #78, fixed windows filebeat directory issue for v5.x
+
+- Virender Khatri - use chefdk
+
+- Virender Khatri - added kitchen dokken
+
 0.4.4
 -----
 

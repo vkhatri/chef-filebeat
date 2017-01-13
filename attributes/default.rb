@@ -1,4 +1,4 @@
-default['filebeat']['version'] = '5.1.1'
+default['filebeat']['version'] = '5.1.2'
 default['filebeat']['release'] = '1'
 default['filebeat']['disable_service'] = false
 default['filebeat']['package_url'] = 'auto'

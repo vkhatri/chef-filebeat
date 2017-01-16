@@ -3,6 +3,11 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.4.6
+-----
+
+- William Soula - PR #83, upgrade to filebeat 5.1.2, fix for #84
+
 0.4.5
 -----
 

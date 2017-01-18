@@ -58,6 +58,7 @@ class Chef
           content['json.keys_under_root'] = new_resource.json_keys_under_root if new_resource.json_keys_under_root
           content['json.overwrite_keys'] = new_resource.json_overwrite_keys if new_resource.json_overwrite_keys
           content['json.add_error_key'] = new_resource.json_add_error_key if new_resource.json_add_error_key
+	  content['tags'] = new_resource.tags if new_resource.tags
         end
 
         file_content = { 'filebeat' => { 'prospectors' => [content] } }.to_yaml

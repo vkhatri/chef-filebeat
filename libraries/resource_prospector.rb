@@ -245,6 +245,14 @@ class Chef
           :kind_of => [TrueClass, FalseClass]
         )
       end
+
+      def tags(arg = nil)
+        set_or_return(
+          :tags, arg,
+          :kind_of => Array,
+          :default => nil
+        )
+      end
     end
   end
 end

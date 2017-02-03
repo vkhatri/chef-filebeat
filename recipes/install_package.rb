@@ -21,6 +21,8 @@ version_string = node['platform_family'] == 'rhel' ? "#{node['filebeat']['versio
 
 case node['platform_family']
 when 'debian'
+  package 'apt-transport-https'
+
   # apt repository configuration
   apt_repository 'beats' do
     uri node['filebeat']['apt']['uri']

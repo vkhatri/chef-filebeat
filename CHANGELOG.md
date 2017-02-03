@@ -3,6 +3,15 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.4.7
+-----
+
+- Tom Michaud - PR #86, Supports prospector 'tags' attribute
+
+- Virender Khatri - Fixed Issue #88, Filebeat 5.2.0 Released, Unable to Install on Ubuntu
+
+- Virender Khatri - Updated default version to v5.2.0
+
 0.4.6
 -----
 

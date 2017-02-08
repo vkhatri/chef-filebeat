@@ -50,7 +50,7 @@ class Chef
           content['max_bytes'] = new_resource.max_bytes if new_resource.max_bytes
           content['multiline'] = new_resource.multiline if new_resource.multiline
           content['exclude_files'] = new_resource.exclude_files if new_resource.exclude_files
-          content['spool_size'] = new_resource.exclude_files if new_resource.exclude_files
+          content['spool_size'] = new_resource.spool_size if new_resource.spool_size
           content['publish_async'] = new_resource.publish_async if new_resource.publish_async
           content['idle_timeout'] = new_resource.idle_timeout if new_resource.idle_timeout
           content['registry_file'] = new_resource.registry_file if new_resource.registry_file

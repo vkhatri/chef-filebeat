@@ -36,6 +36,7 @@ describe 'filebeat::default' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
         node.automatic['platform_family'] = 'rhel'
+        node.override['filebeat']['ignore_version'] = true
       end.converge(described_recipe)
     end
 
@@ -76,7 +77,7 @@ describe 'filebeat::default' do
     end
 
     it 'add yum_version_lock filebeat' do
-      expect(chef_run).to update_yum_version_lock('filebeat')
+      expect(chef_run).not_to update_yum_version_lock('filebeat')
     end
   end
 
@@ -84,6 +85,7 @@ describe 'filebeat::default' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '14.04') do |node|
         node.automatic['platform_family'] = 'debian'
+        node.override['filebeat']['ignore_version'] = true
       end.converge(described_recipe)
     end
 
@@ -104,7 +106,7 @@ describe 'filebeat::default' do
     end
 
     it 'add apt_preference filebeat' do
-      expect(chef_run).to add_apt_preference('filebeat')
+      expect(chef_run).not_to add_apt_preference('filebeat')
     end
 
     it 'include recipe filebeat::install_package' do
@@ -141,12 +143,12 @@ describe 'filebeat::default' do
 
     include_examples 'filebeat'
 
-    it 'create prospector directory C:/opt/filebeat/filebeat-5.1.2-windows-x86_64/conf.d' do
-      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-5.1.2-windows-x86_64/conf.d')
+    it 'create prospector directory C:/opt/filebeat/filebeat-5.2.0-windows-x86_64/conf.d' do
+      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-5.2.0-windows-x86_64/conf.d')
     end
 
-    it 'configure C:/opt/filebeat/filebeat-5.1.2-windows/filebeat.yml' do
-      expect(chef_run).to create_file('C:/opt/filebeat/filebeat-5.1.2-windows-x86_64/filebeat.yml')
+    it 'configure C:/opt/filebeat/filebeat-5.2.0-windows/filebeat.yml' do
+      expect(chef_run).to create_file('C:/opt/filebeat/filebeat-5.2.0-windows-x86_64/filebeat.yml')
     end
 
     it 'include recipe filebeat::install_windows' do
@@ -170,15 +172,15 @@ describe 'filebeat::default' do
     end
 
     it "has correct default['filebeat']['conf_dir']" do
-      expect(node['filebeat']['conf_dir']).to eq('C:/opt/filebeat/filebeat-5.1.2-windows-x86_64')
+      expect(node['filebeat']['conf_dir']).to eq('C:/opt/filebeat/filebeat-5.2.0-windows-x86_64')
     end
 
     it "has correct default['filebeat']['config']['filebeat']['registry_file']" do
-      expect(node['filebeat']['config']['filebeat']['registry_file']).to eq('C:/opt/filebeat/filebeat-5.1.2-windows-x86_64/registry')
+      expect(node['filebeat']['config']['filebeat']['registry_file']).to eq('C:/opt/filebeat/filebeat-5.2.0-windows-x86_64/registry')
     end
 
     it "has correct default['filebeat']['config']['filebeat']['config_dir']" do
-      expect(node['filebeat']['config']['filebeat']['config_dir']).to eq('C:/opt/filebeat/filebeat-5.1.2-windows-x86_64/conf.d')
+      expect(node['filebeat']['config']['filebeat']['config_dir']).to eq('C:/opt/filebeat/filebeat-5.2.0-windows-x86_64/conf.d')
     end
   end
 end

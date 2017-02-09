@@ -4,6 +4,7 @@ default['filebeat']['disable_service'] = false
 default['filebeat']['package_url'] = 'auto'
 default['filebeat']['package_force_overwrite'] = true
 
+default['filebeat']['ignore_version'] = false
 default['filebeat']['notify_restart'] = true
 default['filebeat']['windows'] = { 'base_dir' => 'C:/opt/filebeat' }
 default['filebeat']['solaris'] = {

@@ -32,7 +32,7 @@ when 'debian'
     action node['filebeat']['apt']['action']
   end
 
-  unless node['filebeat']['ignore_version']
+  unless node['filebeat']['ignore_version'] # ~FC023
     apt_preference 'filebeat' do
       pin          "version #{node['filebeat']['version']}"
       pin_priority '700'
@@ -51,7 +51,7 @@ when 'rhel'
     action node['filebeat']['yum']['action']
   end
 
-  unless node['filebeat']['ignore_version']
+  unless node['filebeat']['ignore_version'] # ~FC023
     yum_version_lock 'filebeat' do
       version node['filebeat']['version']
       release node['filebeat']['release']

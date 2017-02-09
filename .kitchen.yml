@@ -56,7 +56,7 @@ suites:
   - name: runit
     require_chef_omnibus: 12.14.60
     excludes:
-      - windows-2012R2 
+      - windows-2012R2
     run_list:
       - recipe[filebeat::default]
     attributes:

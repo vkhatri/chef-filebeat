@@ -296,6 +296,8 @@ Above configuration will create three different prospector files - `prospector-s
 
 * `default['filebeat']['version']` (default: `5.2.0`): filebeat version
 
+* `default['filebeat']['ignore_version']` (default: `false`): ignore filebeat version for `package` install
+
 * `default['filebeat']['release']` (default: `1`): filebeat release for yum package
 
 * `default['filebeat']['service']['init_style']` (default: `init`): filebeat service init system, options: init, runit

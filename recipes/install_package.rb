@@ -32,9 +32,11 @@ when 'debian'
     action node['filebeat']['apt']['action']
   end
 
-  apt_preference 'filebeat' do
-    pin          "version #{node['filebeat']['version']}"
-    pin_priority '700'
+  unless node['filebeat']['ignore_version']
+    apt_preference 'filebeat' do
+      pin          "version #{node['filebeat']['version']}"
+      pin_priority '700'
+    end
   end
 
 when 'rhel'
@@ -49,15 +51,18 @@ when 'rhel'
     action node['filebeat']['yum']['action']
   end
 
-  yum_version_lock 'filebeat' do
-    version node['filebeat']['version']
-    release node['filebeat']['release']
-    action :update
+  unless node['filebeat']['ignore_version']
+    yum_version_lock 'filebeat' do
+      version node['filebeat']['version']
+      release node['filebeat']['release']
+      action :update
+      only_if { node['filebeat']['ignore_version'] == true }
+    end
   end
 end
 
 package 'filebeat' do # ~FC009
-  version version_string
+  version version_string unless node['filebeat']['ignore_version']
   options node['filebeat']['apt']['options'] if node['filebeat']['apt']['options'] && node['platform_family'] == 'debian'
   notifies :restart, 'service[filebeat]' if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
   flush_cache(:before => true) if node['platform_family'] == 'rhel'

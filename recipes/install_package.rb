@@ -56,7 +56,6 @@ when 'rhel'
       version node['filebeat']['version']
       release node['filebeat']['release']
       action :update
-      only_if { node['filebeat']['ignore_version'] == true }
     end
   end
 end

@@ -12,7 +12,7 @@ Encoding:
   Enabled: false
 HashSyntax:
   Enabled: false
-LineLength:
+Metrics/LineLength:
   Enabled: false
 Metrics/MethodLength:
   Max: 75
@@ -26,7 +26,10 @@ Metrics/PerceivedComplexity:
   Max: 50
 ClassLength:
   Enabled: false
-MethodLength:
+Metrics/MethodLength:
   Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - "**/*_spec.rb"
 AbcSize:
   Enabled: false

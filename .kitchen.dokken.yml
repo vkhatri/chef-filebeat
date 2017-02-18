@@ -1,10 +1,6 @@
-# settings:
-#  parallel: true
-
 driver:
   name: dokken
   privileged: true
-  chef_image: chef/chef
   chef_version: current
 
 transport:
@@ -13,20 +9,23 @@ transport:
 provisioner:
   name: dokken
 
+# verifier:
+#  name: inspec
+
 platforms:
 - name: ubuntu-14.04
   driver:
     image: ubuntu:14.04
     intermediate_instructions:
       - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts
+      - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
 
 - name: centos-6.8
   driver:
     image: centos:6.8
     platform: rhel
     intermediate_instructions:
-      - RUN yum install -y net-tools initscripts
+      - RUN yum install -y net-tools initscripts which
 
 - name: centos-7
   driver:
@@ -34,7 +33,7 @@ platforms:
     pid_one_command: /usr/lib/systemd/systemd
     platform: rhel
     intermediate_instructions:
-      - RUN yum install -y net-tools initscripts systemd-sysv
+      - RUN yum install -y net-tools initscripts systemd-sysv which lsof
 
 suites:
   - name: default

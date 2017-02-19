@@ -3,6 +3,17 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.4.8
+-----
+
+- Kyle Gochenour - PR #89, correct spool_size to use the correct parameter
+
+- Virender Khatri - Issue #91, allow to ignore package verson in favor of pre installed filebeat packages
+
+- Virender Khatri - PR #94, Travis CI Fix
+
+- Len Smith - PR #93, Added check to avoid restart if service is disabled or notify restart is set to false
+
 0.4.7
 -----
 

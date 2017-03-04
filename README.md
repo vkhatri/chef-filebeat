@@ -12,13 +12,13 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 0.4.8'
+cookbook 'filebeat', '~> 0.4.9'
 ```
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v0.4.8'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v0.4.9'
 ```
 
 ## Repository
@@ -294,7 +294,7 @@ Above configuration will create three different prospector files - `prospector-s
 ## Core Attributes
 
 
-* `default['filebeat']['version']` (default: `5.2.0`): filebeat version
+* `default['filebeat']['version']` (default: `5.2.2`): filebeat version
 
 * `default['filebeat']['ignore_version']` (default: `false`): ignore filebeat version for `package` install
 

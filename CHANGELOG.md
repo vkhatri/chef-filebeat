@@ -3,6 +3,11 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.4.9
+-----
+
+- Virender Khatri - Updated Beats Version to v5.2.2
+
 0.4.8
 -----
 

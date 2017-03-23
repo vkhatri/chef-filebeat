@@ -23,39 +23,43 @@ case node['platform_family']
 when 'debian'
   package 'apt-transport-https'
 
-  # apt repository configuration
-  apt_repository 'beats' do
-    uri node['filebeat']['apt']['uri']
-    components node['filebeat']['apt']['components']
-    key node['filebeat']['apt']['key']
-    distribution node['filebeat']['apt']['distribution']
-    action node['filebeat']['apt']['action']
-  end
+  if node['filebeat']['setup_repo']
+    # apt repository configuration
+    apt_repository 'beats' do
+      uri node['filebeat']['apt']['uri']
+      components node['filebeat']['apt']['components']
+      key node['filebeat']['apt']['key']
+      distribution node['filebeat']['apt']['distribution']
+      action node['filebeat']['apt']['action']
+    end
 
-  unless node['filebeat']['ignore_version'] # ~FC023
-    apt_preference 'filebeat' do
-      pin          "version #{node['filebeat']['version']}"
-      pin_priority '700'
+    unless node['filebeat']['ignore_version'] # ~FC023
+      apt_preference 'filebeat' do
+        pin          "version #{node['filebeat']['version']}"
+        pin_priority '700'
+      end
     end
   end
 
 when 'rhel'
-  # yum repository configuration
-  yum_repository 'beats' do
-    description node['filebeat']['yum']['description']
-    baseurl node['filebeat']['yum']['baseurl']
-    gpgcheck node['filebeat']['yum']['gpgcheck']
-    gpgkey node['filebeat']['yum']['gpgkey']
-    enabled node['filebeat']['yum']['enabled']
-    metadata_expire node['filebeat']['yum']['metadata_expire']
-    action node['filebeat']['yum']['action']
-  end
+  if node['filebeat']['setup_repo']
+    # yum repository configuration
+    yum_repository 'beats' do
+      description node['filebeat']['yum']['description']
+      baseurl node['filebeat']['yum']['baseurl']
+      gpgcheck node['filebeat']['yum']['gpgcheck']
+      gpgkey node['filebeat']['yum']['gpgkey']
+      enabled node['filebeat']['yum']['enabled']
+      metadata_expire node['filebeat']['yum']['metadata_expire']
+      action node['filebeat']['yum']['action']
+    end
 
-  unless node['filebeat']['ignore_version'] # ~FC023
-    yum_version_lock 'filebeat' do
-      version node['filebeat']['version']
-      release node['filebeat']['release']
-      action :update
+    unless node['filebeat']['ignore_version'] # ~FC023
+      yum_version_lock 'filebeat' do
+        version node['filebeat']['version']
+        release node['filebeat']['release']
+        action :update
+      end
     end
   end
 end

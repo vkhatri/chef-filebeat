@@ -66,7 +66,7 @@ class Chef
         t = file "prospector_#{new_resource.name}" do
           path ::File.join(node['filebeat']['prospectors_dir'], "prospector-#{new_resource.name}.yml")
           content file_content
-          notifies :restart, 'service[filebeat]' if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
+          notifies :restart, "service[#{node['filebeat']['service']['name']}]" if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
           action action
         end
         t.updated?

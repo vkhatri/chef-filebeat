@@ -363,6 +363,8 @@ https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml
 
 ## Other Attributes
 
+* `default['filebeat']['service']['name']` (default: `filebeat`): filebeat service name
+
 * `default['filebeat']['service']['retries']` (default: `:0`): filebeat service resource attribute
 
 * `default['filebeat']['service']['retry_delay']` (default: `:2`): filebeat service resource attribute

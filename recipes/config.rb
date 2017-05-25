@@ -30,7 +30,7 @@ end
 
 file node['filebeat']['conf_file'] do
   content JSON.parse(node['filebeat']['config'].to_json).to_yaml.lines.to_a[1..-1].join
-  notifies :restart, 'service[filebeat]' if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
+  notifies :restart, "service[#{node['filebeat']['service']['name']}]" if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
 end
 
 prospectors = node['filebeat']['prospectors']
@@ -39,7 +39,7 @@ prospectors.each do |prospector, configuration|
   file "prospector-#{prospector}" do
     path ::File.join(node['filebeat']['prospectors_dir'], "prospector-#{prospector}.yml")
     content JSON.parse(configuration.to_json).to_yaml.lines.to_a[1..-1].join
-    notifies :restart, 'service[filebeat]' if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
+    notifies :restart, "service[#{node['filebeat']['service']['name']}]" if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
   end
 end
 
@@ -54,7 +54,7 @@ include_recipe 'runit::default' if node['filebeat']['service']['init_style'] == 
 ruby_block 'delay filebeat service start' do
   block do
   end
-  notifies :start, 'service[filebeat]'
+  notifies :start, "service[#{node['filebeat']['service']['name']}]"
   not_if { node['filebeat']['disable_service'] }
 end
 
@@ -62,7 +62,7 @@ service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:ena
 
 if node['filebeat']['service']['init_style'] == 'runit'
   runit_cmd = "/usr/share/filebeat/bin/filebeat -c #{node['filebeat']['conf_file']} -path.home /usr/share/filebeat -path.config #{node['filebeat']['conf_dir']} -path.data /var/lib/filebeat -path.logs /var/log/filebeat"
-  runit_service 'filebeat' do
+  runit_service node['filebeat']['service']['name'] do
     options(
       'user' => 'root',
       'cmd' => runit_cmd
@@ -71,7 +71,7 @@ if node['filebeat']['service']['init_style'] == 'runit'
     action service_action
   end
 else
-  service 'filebeat' do
+  service node['filebeat']['service']['name'] do
     provider Chef::Provider::Service::Solaris if node['platform_family'] == 'solaris2'
     retries node['filebeat']['service']['retries']
     retry_delay node['filebeat']['service']['retry_delay']

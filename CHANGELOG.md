@@ -3,6 +3,13 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+0.5.0
+-----
+
+- Virender Khatri - Updated Beats Version to v5.4.2
+
+- Virender Khatri - Updated config file permissions to 0600
+
 0.4.9
 -----
 

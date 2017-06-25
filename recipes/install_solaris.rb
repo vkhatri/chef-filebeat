@@ -33,7 +33,7 @@ ark 'filebeat' do
   path node['filebeat']['solaris']['base_dir']
   action :put
   only_if { !Dir.exist?("#{node['filebeat']['solaris']['base_dir']}/filebeat") || node['filebeat']['package_force_overwrite'] }
-  notifies :restart, 'service[filebeat]'
+  notifies :restart, "service[#{node['filebeat']['service']['name']}]"
 end
 
 directory node['filebeat']['solaris']['manifest_directory'] do
@@ -47,7 +47,7 @@ template "#{node['filebeat']['solaris']['base_dir']}/filebeat/start-stop-filebea
     daemon_path: "#{node['filebeat']['solaris']['base_dir']}/filebeat/filebeat",
     conf_path: node['filebeat']['conf_file']
   )
-  notifies :restart, 'service[filebeat]'
+  notifies :restart, "service[#{node['filebeat']['service']['name']}]"
 end
 
 template "#{node['filebeat']['solaris']['manifest_directory']}/filebeat.xml" do
@@ -69,5 +69,5 @@ load_manifest_command = smf_standard_locations.any? { |i| node['filebeat']['sola
 execute 'load filebeat manifest' do
   action :nothing
   command load_manifest_command
-  notifies :restart, 'service[filebeat]'
+  notifies :restart, "service[#{node['filebeat']['service']['name']}]"
 end

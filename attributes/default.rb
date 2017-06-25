@@ -14,6 +14,7 @@ default['filebeat']['solaris'] = {
 }
 
 default['filebeat']['service']['init_style'] = 'init' # or runit
+default['filebeat']['service']['name'] = 'filebeat'
 default['filebeat']['service']['retries'] = 0
 default['filebeat']['service']['retry_delay'] = 2
 

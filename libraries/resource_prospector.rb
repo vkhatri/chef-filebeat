@@ -11,7 +11,7 @@ class Chef
         @provides = :filebeat_prospector
         @provider = Chef::Provider::FilebeatProspector
         @action = :create
-        @allowed_actions = [:create, :delete, :nothing]
+        @allowed_actions = %i[create delete nothing]
         @name = name
       end
 
@@ -76,7 +76,7 @@ class Chef
         set_or_return(
           :input_type, arg,
           :kind_of => String,
-          :equal_to => %w(log stdin),
+          :equal_to => %w[log stdin],
           :default => nil
         )
       end

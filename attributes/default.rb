@@ -1,5 +1,7 @@
 default['filebeat']['version'] = '5.4.2'
 default['filebeat']['release'] = '1'
+default['filebeat']['delete_prospectors_dir'] = false
+default['filebeat']['purge_prospectors_dir'] = false
 default['filebeat']['disable_service'] = false
 default['filebeat']['package_url'] = 'auto'
 default['filebeat']['package_force_overwrite'] = true

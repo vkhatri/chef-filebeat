@@ -23,9 +23,11 @@ if Psych::VERSION.start_with?('1')
   YAML::ENGINE.yamler = 'syck'
 end
 
+prospectors_dir_action = node['filebeat']['delete_prospectors_dir'] ? %i[delete create] : %i[create]
+
 directory node['filebeat']['prospectors_dir'] do
   recursive true
-  action :create
+  action prospectors_dir_action
 end
 
 file node['filebeat']['conf_file'] do
@@ -37,8 +39,8 @@ end
 prospectors = node['filebeat']['prospectors']
 
 prospectors.each do |prospector, configuration|
-  file "prospector-#{prospector}" do
-    path ::File.join(node['filebeat']['prospectors_dir'], "prospector-#{prospector}.yml")
+  file "node-prospector-#{prospector}" do
+    path ::File.join(node['filebeat']['prospectors_dir'], "node-prospector-#{prospector}.yml")
     content JSON.parse(configuration.to_json).to_yaml.lines.to_a[1..-1].join
     notifies :restart, "service[#{node['filebeat']['service']['name']}]" if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
     mode 0o600
@@ -53,6 +55,20 @@ end
 
 include_recipe 'runit::default' if node['filebeat']['service']['init_style'] == 'runit'
 
+ruby_block 'delay run purge prospectors dir' do
+  block do
+  end
+  notifies :run, 'ruby_block[purge_prospectors_dir]'
+end
+
+ruby_block 'purge_prospectors_dir' do
+  block do
+    purge_prospectors_dir
+  end
+  only_if { node['filebeat']['purge_prospectors_dir'] }
+  action :nothing
+end
+
 ruby_block 'delay filebeat service start' do
   block do
   end
@@ -60,7 +76,7 @@ ruby_block 'delay filebeat service start' do
   not_if { node['filebeat']['disable_service'] }
 end
 
-service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:enable, :nothing]
+service_action = node['filebeat']['disable_service'] ? %i[disable stop] : %i[enable nothing]
 
 if node['filebeat']['service']['init_style'] == 'runit'
   runit_cmd = "/usr/share/filebeat/bin/filebeat -c #{node['filebeat']['conf_file']} -path.home /usr/share/filebeat -path.config #{node['filebeat']['conf_dir']} -path.data /var/lib/filebeat -path.logs /var/log/filebeat"

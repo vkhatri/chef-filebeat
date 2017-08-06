@@ -3,6 +3,10 @@ require 'spec_helper'
 describe 'filebeat::default' do
   shared_examples_for 'filebeat' do
     context 'all_platforms' do
+      it 'run ruby_block delay run purge prospectors dir' do
+        expect(chef_run).to run_ruby_block('delay run purge prospectors dir')
+      end
+
       it 'run ruby_block delay filebeat service start' do
         expect(chef_run).to run_ruby_block('delay filebeat service start')
       end
@@ -18,6 +22,7 @@ describe 'filebeat::default' do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
         node.automatic['platform_family'] = 'rhel'
         node.override['filebeat']['service']['init_style'] = 'runit'
+        node.override['filebeat']['purge_prospectors_dir'] = true
       end.converge(described_recipe)
     end
 
@@ -37,6 +42,7 @@ describe 'filebeat::default' do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
         node.automatic['platform_family'] = 'rhel'
         node.override['filebeat']['ignore_version'] = true
+        node.override['filebeat']['purge_prospectors_dir'] = true
       end.converge(described_recipe)
     end
 
@@ -86,6 +92,7 @@ describe 'filebeat::default' do
       ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '14.04') do |node|
         node.automatic['platform_family'] = 'debian'
         node.override['filebeat']['ignore_version'] = true
+        node.override['filebeat']['purge_prospectors_dir'] = true
       end.converge(described_recipe)
     end
 
@@ -117,6 +124,10 @@ describe 'filebeat::default' do
       expect(chef_run).to install_package('filebeat')
     end
 
+    it 'install apt-transport-https package' do
+      expect(chef_run).to install_package('apt-transport-https')
+    end
+
     it "has correct default['filebeat']['config']['filebeat']['registry_file']" do
       expect(node['filebeat']['config']['filebeat']['registry_file']).to eq('/var/lib/filebeat/registry')
     end
@@ -136,6 +147,7 @@ describe 'filebeat::default' do
         node.automatic['platform_family'] = 'windows'
         node.automatic['platform_family'] = 'windows'
         node.automatic['kernel']['machine'] = 'x86_64'
+        node.override['filebeat']['purge_prospectors_dir'] = true
       end.converge(described_recipe)
     end
 

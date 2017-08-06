@@ -8,12 +8,18 @@ class Chef
         true
       end
 
+      use_inline_resources
+
       action :create do
-        new_resource.updated_by_last_action(prospector_file)
+        converge_by "create filebeat prospector configuration #{new_resource.name}" do
+          prospector_file
+        end
       end
 
       action :delete do
-        new_resource.updated_by_last_action(prospector_file)
+        converge_by "delete filebeat prospector configuration #{new_resource.name}" do
+          prospector_file
+        end
       end
 
       protected
@@ -64,7 +70,7 @@ class Chef
         file_content = { 'filebeat' => { 'prospectors' => [content] } }.to_yaml
 
         t = file "prospector_#{new_resource.name}" do
-          path ::File.join(node['filebeat']['prospectors_dir'], "prospector-#{new_resource.name}.yml")
+          path ::File.join(node['filebeat']['prospectors_dir'], "lwrp-prospector-#{new_resource.name}.yml")
           content file_content
           notifies :restart, "service[#{node['filebeat']['service']['name']}]" if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
           mode 0o600

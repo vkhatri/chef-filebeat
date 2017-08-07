@@ -33,7 +33,26 @@ This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work 
 
 This also works on Solaris zones given a physical Solaris 11.2 server. For that, use the .kitchen.zone.yml file. Check usage at (https://github.com/criticalmass/kitchen-zone). You will need an url to a filebeat package that works on Solaris 11.2. Checkout Building-Filebeat-On-Solaris11.md for instructions to build a filebeat package.
 
+## Supported Chef
+
+- Chef 12 (last tested on 12.21.3)
+
+- Chef 13 (last tested on 13.2.20)
+
 ## Major Changes
+
+### v1.0.0 (Development)
+
+- Added new attribute `default['filebeat']['delete_prospectors_dir']` (default: `false`). If set to true, cookbook always delete and re-create prospectors configuration directory
+
+- Added new attribute `default['filebeat']['purge_prospectors_dir']` (default: `false`): If set to true, purge files under prospectors configuration directory, except `node-prospector-*` (created by node attribute) and `lwrp-prospector-` (created by LWRP)
+
+- Prospectors LWRP now creates configuration file with a prefix `lwrp-prospector-#{prospector lwrp resource_name}`
+
+- Prospectors via node attribute `node['filebeat']['prospectors']` now creates configuration file with a prefix `node-prospector-#{prospector lwrp resource name}`
+
+>>> Note: Set attribute `default['filebeat']['delete_prospectors_dir']` or `default['filebeat']['purge_prospectors_dir']` as per your requirement.
+
 
 ### v0.2.5
 - Removed default output configuration attributes for `elasticsearch`, `logstash` and `file`
@@ -298,6 +317,8 @@ Above configuration will create three different prospector files - `prospector-s
 
 * `default['filebeat']['ignore_version']` (default: `false`): ignore filebeat version for `package` install
 
+* `default['filebeat']['setup_repo']` (default: `true`): setup `apt` or `yum` repository if set to `true`
+
 * `default['filebeat']['release']` (default: `1`): filebeat release for yum package
 
 * `default['filebeat']['service']['init_style']` (default: `init`): filebeat service init system, options: init, runit
@@ -315,6 +336,10 @@ Above configuration will create three different prospector files - `prospector-s
 * `default['filebeat']['prospectors_dir']` (default: `/etc/filebeat/conf.d`): prospectors configuration file directory
 
 * `default['filebeat']['prospectors']` (default: `{}`): prospectors configuration file
+
+* `default['filebeat']['delete_prospectors_dir']` (default: `false`): delete and create prospectors configuration directory if set to true
+
+* `default['filebeat']['purge_prospectors_dir']` (default: `false`): purge files under prospectors configuration directory if set to true, except `node-prospector-*` (created by node attribute) and `lwrp-prospector-` (created by LWRP)
 
 
 ## Configuration File filebeat.yml Attributes

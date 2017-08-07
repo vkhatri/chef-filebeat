@@ -3,12 +3,32 @@ filebeat CHANGELOG
 
 This file is used to list changes made in each version of the filebeat cookbook.
 
+1.0.0
+-----
+
+- Virender Khatri - Added prospectors configuration files purge capability, #73
+
+  * Added new attribute `default['filebeat']['delete_prospectors_dir']` (default: `false`). If set to true, cookbook always delete and re-create prospectors configuration directory
+
+  * Added new attribute `default['filebeat']['purge_prospectors_dir']` (default: `false`): If set to true, purge files under prospectors configuration directory, except `node-prospector-*` (created by node attribute) and `lwrp-prospector-` (created by LWRP)
+
+  * Prospectors LWRP now creates configuration file with a prefix `lwrp-prospector-#{prospector lwrp resoruce name}`
+
+  * Prospectors via node attribute `node['filebeat']['prospectors']` now creates configuration file with a prefix `node-prospector-#{prospector lwrp resoruce name}`
+
+
+- Virender Khatri - Updated kitchen to run separate tests for Chef latest 12.x and 13.x versions
+
 0.5.0
 -----
 
 - Virender Khatri - Updated Beats Version to v5.4.2
 
 - Virender Khatri - Updated config file permissions to 0600
+
+- Virender Khatri - Optional apt/yum repository setup #98
+
+- Dmitry Krasnoukhov - Allow to customize filebeat service name
 
 0.4.9
 -----

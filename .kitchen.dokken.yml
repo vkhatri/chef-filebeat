@@ -1,3 +1,4 @@
+---
 driver:
   name: dokken
   privileged: true
@@ -35,30 +36,110 @@ platforms:
     intermediate_instructions:
       - RUN yum install -y net-tools initscripts systemd-sysv which lsof
 
+- name: amazonlinux
+  driver:
+    image: amazonlinux:2017.03
+    platform: amazon
+    intermediate_instructions:
+      - RUN yum install -y net-tools initscripts which
+    pid_one_command: /sbin/init
+
 suites:
-  - name: default
+  - name: default12
+    driver:
+      require_chef_omnibus: 12.21.3
     run_list:
       - recipe[filebeat::default]
+      - recipe[filebeat_test::default]
     attributes:
       filebeat:
         prospectors:
-          system_logs:
+          secure_logs:
+            filebeat:
+              prospectors:
+              - paths:
+                - /var/log/secure
+                type: log
+                fields:
+                  type: secure_logs
+          syslog_logs:
+            filebeat:
+              prospectors:
+              - paths:
+                - /var/log/syslog
+                type: log
+                fields:
+                  type: syslog_logs
+          messages_log:
             filebeat:
               prospectors:
               - paths:
                 - /var/log/messages
-                - /var/log/syslog
                 type: log
                 fields:
-                  type: system_logs
+                  type: messages_log
+          extra_log:
+            filebeat:
+              prospectors:
               - paths:
                 - /var/log/*.log
                 type: log
                 fields:
-                  type: undefined
+                  type: extra_log
                 exclude_files:
                 - /var/log/messages
                 - /var/log/syslog
+                - /var/log/secure
+        config:
+          output:
+            elasticsearch:
+              hosts: ["127.0.0.1:9200"]
+
+  - name: default13
+    driver:
+      require_chef_omnibus: 13.2.20
+    run_list:
+      - recipe[filebeat::default]
+      - recipe[filebeat_test::default]
+    attributes:
+      filebeat:
+        prospectors:
+          secure_logs:
+            filebeat:
+              prospectors:
+              - paths:
+                - /var/log/secure
+                type: log
+                fields:
+                  type: secure_logs
+          syslog_logs:
+            filebeat:
+              prospectors:
+              - paths:
+                - /var/log/syslog
+                type: log
+                fields:
+                  type: syslog_logs
+          messages_log:
+            filebeat:
+              prospectors:
+              - paths:
+                - /var/log/messages
+                type: log
+                fields:
+                  type: messages_log
+          extra_log:
+            filebeat:
+              prospectors:
+              - paths:
+                - /var/log/*.log
+                type: log
+                fields:
+                  type: extra_log
+                exclude_files:
+                - /var/log/messages
+                - /var/log/syslog
+                - /var/log/secure
         config:
           output:
             elasticsearch:

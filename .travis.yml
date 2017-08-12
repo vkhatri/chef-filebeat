@@ -23,9 +23,11 @@ env:
     - INSTANCE=default12-centos-68
     - INSTANCE=default12-centos-7
     - INSTANCE=default12-ubuntu-1404
+    - INSTANCE=default12-amazonlinux
     - INSTANCE=default13-centos-68
     - INSTANCE=default13-centos-7
     - INSTANCE=default13-ubuntu-1404
+    - INSTANCE=default13-amazonlinux
 
 script:
   - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
@@ -44,9 +46,11 @@ matrix:
     - env: INSTANCE=default12-centos-68
     - env: INSTANCE=default12-centos-7
     - env: INSTANCE=default12-ubuntu-1404
+    - env: INSTANCE=default12-amazonlinux
     - env: INSTANCE=default13-centos-68
     - env: INSTANCE=default13-centos-7
     - env: INSTANCE=default13-ubuntu-1404
+    - env: INSTANCE=default13-amazonlinux
   include:
     - script:
       - /opt/chefdk/bin/chef exec rake

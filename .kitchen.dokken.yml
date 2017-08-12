@@ -2,7 +2,7 @@
 driver:
   name: dokken
   privileged: true
-  chef_version: current
+  # chef_version: current
 
 transport:
   name: dokken
@@ -47,7 +47,7 @@ platforms:
 suites:
   - name: default12
     driver:
-      require_chef_omnibus: 12.21.3
+      chef_version: 12.21.3
     run_list:
       - recipe[filebeat::default]
       - recipe[filebeat_test::default]
@@ -97,7 +97,7 @@ suites:
 
   - name: default13
     driver:
-      require_chef_omnibus: 13.2.20
+      chef_version: 13.2.20
     run_list:
       - recipe[filebeat::default]
       - recipe[filebeat_test::default]

@@ -313,7 +313,7 @@ Above configuration will create three different prospector files - `prospector-s
 ## Core Attributes
 
 
-* `default['filebeat']['version']` (default: `5.4.2`): filebeat version
+* `default['filebeat']['version']` (default: `5.5.1`): filebeat version
 
 * `default['filebeat']['ignore_version']` (default: `false`): ignore filebeat version for `package` install
 

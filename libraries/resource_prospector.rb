@@ -15,6 +15,24 @@ class Chef
         @name = name
       end
 
+      def type(arg = nil)
+        set_or_return(
+          :type, arg,
+          :kind_of => String,
+          :equal_to => %w[log stdin redis],
+          :default => nil
+        )
+      end
+
+      def input_type(arg = nil)
+        set_or_return(
+          :input_type, arg,
+          :kind_of => String,
+          :equal_to => %w[log stdin],
+          :default => nil
+        )
+      end
+
       def paths(arg = nil)
         set_or_return(
           :paths, arg,
@@ -24,10 +42,10 @@ class Chef
         )
       end
 
-      def type(arg = nil)
+      def recursive_glob_enabled(arg = nil)
         set_or_return(
-          :type, arg,
-          :kind_of => String,
+          :recursive_glob_enabled, arg,
+          :kind_of => [TrueClass, FalseClass],
           :default => nil
         )
       end
@@ -36,6 +54,38 @@ class Chef
         set_or_return(
           :encoding, arg,
           :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def exclude_lines(arg = nil)
+        set_or_return(
+          :exclude_lines, arg,
+          :kind_of => Array,
+          :default => nil
+        )
+      end
+
+      def include_lines(arg = nil)
+        set_or_return(
+          :include_lines, arg,
+          :kind_of => Array,
+          :default => nil
+        )
+      end
+
+      def exclude_files(arg = nil)
+        set_or_return(
+          :exclude_files, arg,
+          :kind_of => Array,
+          :default => nil
+        )
+      end
+
+      def tags(arg = nil)
+        set_or_return(
+          :tags, arg,
+          :kind_of => Array,
           :default => nil
         )
       end
@@ -64,26 +114,57 @@ class Chef
         )
       end
 
-      def document_type(arg = nil)
+      def close_inactive(arg = nil)
         set_or_return(
-          :document_type, arg,
+          :close_inactive, arg,
           :kind_of => String,
           :default => nil
         )
       end
 
-      def input_type(arg = nil)
+      def close_renamed(arg = nil)
         set_or_return(
-          :input_type, arg,
+          :close_renamed, arg,
           :kind_of => String,
-          :equal_to => %w[log stdin],
           :default => nil
         )
       end
 
-      def close_older(arg = nil)
+      def close_removed(arg = nil)
         set_or_return(
-          :close_older, arg,
+          :close_removed, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def close_eof(arg = nil)
+        set_or_return(
+          :close_eof, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def close_timeout(arg = nil)
+        set_or_return(
+          :close_timeout, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def clean_inactive(arg = nil)
+        set_or_return(
+          :clean_inactive, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def clean_removed(arg = nil)
+        set_or_return(
+          :clean_removed, arg,
           :kind_of => String,
           :default => nil
         )
@@ -97,6 +178,32 @@ class Chef
         )
       end
 
+      def scan_sort(arg = nil)
+        set_or_return(
+          :scan_sort, arg,
+          :kind_of => String,
+          :equal_to => %w[modtime filename],
+          :default => nil
+        )
+      end
+
+      def scan_order(arg = nil)
+        set_or_return(
+          :scan_order, arg,
+          :kind_of => String,
+          :equal_to => %w[asc desc],
+          :default => nil
+        )
+      end
+
+      def document_type(arg = nil)
+        set_or_return(
+          :document_type, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
       def harvester_buffer_size(arg = nil)
         set_or_return(
           :harvester_buffer_size, arg,
@@ -105,9 +212,110 @@ class Chef
         )
       end
 
+      def max_bytes(arg = nil)
+        set_or_return(
+          :max_bytes, arg,
+          :kind_of => Integer,
+          :default => nil
+        )
+      end
+
+      def json_keys_under_root(arg = nil)
+        set_or_return(
+          :json_keys_under_root, arg,
+          :kind_of => [TrueClass, FalseClass]
+        )
+      end
+
+      def json_overwrite_keys(arg = nil)
+        set_or_return(
+          :json_overwrite_keys, arg,
+          :kind_of => [TrueClass, FalseClass]
+        )
+      end
+
+      def json_add_error_key(arg = nil)
+        set_or_return(
+          :json_add_error_key, arg,
+          :kind_of => [TrueClass, FalseClass]
+        )
+      end
+
+      def json_message_key(arg = nil)
+        set_or_return(
+          :json_message_key, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def multiline_pattern(arg = nil)
+        set_or_return(
+          :multiline_pattern, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def multiline_negate(arg = nil)
+        set_or_return(
+          :multiline_negate, arg,
+          :kind_of => [TrueClass, FalseClass]
+        )
+      end
+
+      def multiline_match(arg = nil)
+        set_or_return(
+          :multiline_match, arg,
+          :kind_of => String,
+          :equal_to => %w[before after],
+          :default => nil
+        )
+      end
+
+      def multiline_flush_pattern(arg = nil)
+        set_or_return(
+          :multiline_flush_pattern, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def multiline_max_lines(arg = nil)
+        set_or_return(
+          :multiline_max_lines, arg,
+          :kind_of => Integer,
+          :default => nil
+        )
+      end
+
+      def multiline_timeout(arg = nil)
+        set_or_return(
+          :multiline_timeout, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
       def tail_files(arg = nil)
         set_or_return(
           :tail_files, arg,
+          :kind_of => [TrueClass, FalseClass],
+          :default => nil
+        )
+      end
+
+      def pipeline(arg = nil)
+        set_or_return(
+          :pipeline, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def symlinks(arg = nil)
+        set_or_return(
+          :symlinks, arg,
           :kind_of => [TrueClass, FalseClass],
           :default => nil
         )
@@ -137,6 +345,31 @@ class Chef
         )
       end
 
+      def harvester_limit(arg = nil)
+        set_or_return(
+          :harvester_limit, arg,
+          :kind_of => Integer,
+          :default => nil
+        )
+      end
+
+      def enabled(arg = nil)
+        set_or_return(
+          :enabled, arg,
+          :kind_of => [TrueClass, FalseClass],
+          :default => true
+        )
+      end
+
+      # v1.x
+      def close_older(arg = nil)
+        set_or_return(
+          :close_older, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
       def force_close_files(arg = nil)
         set_or_return(
           :force_close_files, arg,
@@ -145,111 +378,10 @@ class Chef
         )
       end
 
-      def include_lines(arg = nil)
-        set_or_return(
-          :include_lines, arg,
-          :kind_of => Array,
-          :default => nil
-        )
-      end
-
-      def exclude_lines(arg = nil)
-        set_or_return(
-          :exclude_lines, arg,
-          :kind_of => Array,
-          :default => nil
-        )
-      end
-
-      def max_bytes(arg = nil)
-        set_or_return(
-          :max_bytes, arg,
-          :kind_of => Integer,
-          :default => nil
-        )
-      end
-
       def multiline(arg = nil)
         set_or_return(
           :multiline, arg,
           :kind_of => Hash,
-          :default => nil
-        )
-      end
-
-      def exclude_files(arg = nil)
-        set_or_return(
-          :exclude_files, arg,
-          :kind_of => Array,
-          :default => nil
-        )
-      end
-
-      def spool_size(arg = nil)
-        set_or_return(
-          :spool_size, arg,
-          :kind_of => Integer,
-          :default => nil
-        )
-      end
-
-      def publish_async(arg = nil)
-        set_or_return(
-          :publish_async, arg,
-          :kind_of => [TrueClass, FalseClass],
-          :default => nil
-        )
-      end
-
-      def idle_timeout(arg = nil)
-        set_or_return(
-          :idle_timeout, arg,
-          :kind_of => String,
-          :default => nil
-        )
-      end
-
-      def registry_file(arg = nil)
-        set_or_return(
-          :registry_file, arg,
-          :kind_of => String,
-          :default => nil
-        )
-      end
-
-      def json_message_key(arg = nil)
-        set_or_return(
-          :json_message_key, arg,
-          :kind_of => String,
-          :default => nil
-        )
-      end
-
-      def json_keys_under_root(arg = nil)
-        set_or_return(
-          :json_keys_under_root, arg,
-          :kind_of => [TrueClass, FalseClass]
-        )
-      end
-
-      def json_overwrite_keys(arg = nil)
-        set_or_return(
-          :json_overwrite_keys, arg,
-          :kind_of => [TrueClass, FalseClass]
-        )
-      end
-
-      def json_add_error_key(arg = nil)
-        set_or_return(
-          :json_add_error_key, arg,
-          :kind_of => [TrueClass, FalseClass]
-        )
-      end
-
-      def tags(arg = nil)
-        set_or_return(
-          :tags, arg,
-          :kind_of => Array,
           :default => nil
         )
       end

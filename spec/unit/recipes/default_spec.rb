@@ -37,6 +37,30 @@ describe 'filebeat::default' do
     end
   end
 
+  context 'preview' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
+        node.automatic['platform_family'] = 'rhel'
+        node.override['filebeat']['version'] = '6.0.0-beta1'
+        node.override['filebeat']['purge_prospectors_dir'] = true
+      end.converge(described_recipe)
+    end
+
+    let(:node) { chef_run.node }
+
+    it 'include filebeat::install_package_preview recipe' do
+      expect(chef_run).to include_recipe('filebeat::install_package_preview')
+    end
+
+    it 'install filebeat package' do
+      expect(chef_run).to install_package('filebeat')
+    end
+
+    it 'download filebeat package file' do
+      expect(chef_run).to create_remote_file('filebeat_package_file')
+    end
+  end
+
   context 'rhel' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|

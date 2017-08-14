@@ -19,8 +19,6 @@
 
 include_recipe 'filebeat::attributes'
 
-include_recipe 'yum-plugin-versionlock::default' if node['platform_family'] == 'rhel'
-
 # install filebeat
 case node['platform']
 when 'windows'
@@ -28,7 +26,12 @@ when 'windows'
 when 'solaris2'
   include_recipe 'filebeat::install_solaris'
 else
-  include_recipe 'filebeat::install_package'
+  if node['filebeat']['version'].scan(/beta|alpha/).empty?
+    include_recipe 'yum-plugin-versionlock::default' if node['platform_family'] == 'rhel'
+    include_recipe 'filebeat::install_package'
+  else
+    include_recipe 'filebeat::install_package_preview'
+  end
 end
 
 # configure filebeat

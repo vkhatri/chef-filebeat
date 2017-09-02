@@ -63,7 +63,8 @@ This also works on Solaris zones given a physical Solaris 11.2 server. For that,
 - windows
 - apt
 - yum
-
+- yum-plugin-versionlock
+- runit
 
 ## Recipes
 
@@ -75,6 +76,8 @@ This also works on Solaris zones given a physical Solaris 11.2 server. For that,
 
 - `filebeat::install_package` - install filebeat package for linux platform
 
+- `filebeat::install_package_preview` - install filebeat preview (alpha/beta) package for linux platform
+
 - `filebeat::install_solaris` - install filebeat package for solaris platform
 
 - `filebeat::install_windows` - install filebeat for windows platform
@@ -82,7 +85,7 @@ This also works on Solaris zones given a physical Solaris 11.2 server. For that,
 
 ## LWRP filebeat_prospector
 
-LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file under directory `node['filebeat']['prospectors_dir']` with file name `prospector-#{resource_name}.yml`.
+LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file under directory `node['filebeat']['prospectors_dir']` with file name `lwrp-prospector-#{resource_name}.yml`.
 
 
 **LWRP example**
@@ -101,36 +104,51 @@ end
 **LWRP Options**
 
 - *action* (optional)	- default :create, options: :create, :delete
+- *type* (optional, String) - filebeat prospector configuration attribute
+- *input_type* (optional, String) - filebeat prospector configuration attribute
 - *paths* (optional, String)	- filebeat prospector configuration attribute
-- *type* (optional, String)	- filebeat prospector configuration attribute
+- *recursive_glob_enabled* (optional, TrueClass/FalseClass) - filebeat prospector configuration attribute
 - *encoding* (optional, String)	- filebeat prospector configuration attribute
+- *exclude_lines* (optional, Array) - A list of regular expressions to match the lines that you want Filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
+- *include_lines* (optional, Array) - A list of regular expressions to match the lines that you want Filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
+- *exclude_files* (optional, Array) - A list of regular expressions to match the files that you want Filebeat prospector instance to exclude.
+- *tags* (optional, Array)   - filebeat prospector configuration attribute
 - *fields* (optional, Hash)	- filebeat prospector configuration attribute
 - *fields_under_root* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
 - *ignore_older* (optional, String)	- filebeat prospector configuration attribute
+- *close_inactive* (optional, String)  - filebeat prospector configuration attribute
+- *close_renamed* (optional, String)  - filebeat prospector configuration attribute
+- *close_eof* (optional, String)  - filebeat prospector configuration attribute
+- *close_timeout* (optional, String)  - filebeat prospector configuration attribute
+- *clean_inactive* (optional, String)  - filebeat prospector configuration attribute
+- *clean_removed* (optional, String)  - filebeat prospector configuration attribute
+- *scan_frequency* (optional, String) - filebeat prospector configuration attribute
+- *scan_sort* (optional, String) - filebeat prospector configuration attribute `scan.sort`
+- *scan_order* (optional, String) - filebeat prospector configuration attribute `sort.order`
 - *document_type* (optional, String)	- filebeat prospector configuration attribute
-- *input_type* (optional, String)	- filebeat prospector configuration attribute
-- *close_older* (optional, String)	- filebeat prospector configuration attribute
-- *scan_frequency* (optional, String)	- filebeat prospector configuration attribute
 - *harvester_buffer_size* (optional, Integer)	- filebeat prospector configuration attribute
+- *max_bytes* (optional, Integer) - filebeat prospector configuration attribute
+- *json_keys_under_root* (optional, String) - filebeat prospector configuration attribute `json.keys_under_root`
+- *json_overwrite_keys* (optional, String)  - filebeat prospector configuration attribute `json.overwrite_keys`
+- *json_add_error_key* (optional, String) - filebeat prospector configuration attribute `json.add_error_key`
+- *json_message_key* (optional, String) - filebeat prospector configuration attribute `json.message_key`
+- *multiline_pattern* (optional, String) - filebeat prospector configuration attribute `multiline.pattern`
+- *multiline_negate* (optional, String) - filebeat prospector configuration attribute `multiline.negate`
+- *multiline_match* (optional, String) - filebeat prospector configuration attribute `multiline.match`
+- *multiline_flush_pattern* (optional, String) - filebeat prospector configuration attribute `multiline.flush_pattern`
+- *multiline_max_lines* (optional, String) - filebeat prospector configuration attribute `multiline.max_lines`
+- *multiline_timeout* (optional, String) - filebeat prospector configuration attribute `multiline.timeout`
 - *tail_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
+- *pipeline* (optional, String)	- filebeat prospector configuration attribute
+- *symlinks* (optional, String)	- filebeat prospector configuration attribute
 - *backoff* (optional, String)	- filebeat prospector configuration attribute
 - *max_backoff* (optional, String)	- filebeat prospector configuration attribute
 - *backoff_factor* (optional, Integer)	- filebeat prospector configuration attribute
+- *harvester_limit* (optional, Integer)	- filebeat prospector configuration attribute
+- *enabled* (optional, TrueClass/FalseClass) - filebeat prospector configuration attribute
+- *close_older* (optional, String)  - filebeat prospector configuration attribute
 - *force_close_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
-- *include_lines* (optional, Array)	- A list of regular expressions to match the lines that you want Filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
-- *exclude_lines* (optional, Array)	- A list of regular expressions to match the lines that you want Filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
-- *max_bytes* (optional, Integer)	- filebeat prospector configuration attribute
 - *multiline* (optional, Hash)	- Multiline configuration hash. Options: `pattern`: <regex pattern to match>, `negate`: [true/false], `match`: [before/after]
-- *exclude_files* (optional, Array)	- A list of regular expressions to match the files that you want Filebeat prospector instance to exclude.
-- *spool_size* (optional, Integer)	- ilebeat prospector configuration attribute
-- *publish_async* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
-- *idle_timeout* (optional, String)	- filebeat prospector configuration attribute
-- *registry_file* (optional, String)	- filebeat prospector configuration attribute
-- *json_message_key* (optional, String)	- filebeat prospector configuration attribute `json.message_key`
-- *json_keys_under_root* (optional, String)	- filebeat prospector configuration attribute `json.keys_under_root`
-- *json_overwrite_keys* (optional, String)	- filebeat prospector configuration attribute `json.overwrite_keys`
-- *json_add_error_key* (optional, String)	- filebeat prospector configuration attribute `json.add_error_key`
-- *tags* (optional, Array)   - filebeat prospector configuration attribute
 
 ## How to Add Filebeat Output via Node Attribute
 
@@ -344,12 +362,11 @@ Above configuration will create three different prospector files - `prospector-s
 
 ## Configuration File filebeat.yml Attributes
 
-* `default['filebeat']['config']['filebeat']['prospectors']` (default: `[]`): filebeat interface device name
+* `default['filebeat']['config']['filebeat']['prospectors']` (default: `[]`): filebeat prospectors configuration
 
 * `default['filebeat']['config']['filebeat']['registry_file']` (default: `/var/lib/filebeat/registry`): filebeat services to capture packets
 
 * `default['filebeat']['config']['filebeat']['config_dir']` (default: `node['filebeat']['prospectors_dir']`): filebeat prospectors configuration files folder
-
 
 * `default['filebeat']['config']['output']` (default: `{}`): configure elasticsearch. logstash, file etc.  output
 

@@ -17,12 +17,14 @@
 # limitations under the License.
 #
 
-if node['platform_family'] == 'rhel'
+if %w[rhel amazon].include?(node['platform_family'])
   package_arch = node['kernel']['machine'] =~ /x86_64/ ? 'x86_64' : 'i686'
   package_family = 'rpm'
-else
+elsif node['platform_family'] == 'debian'
   package_arch = node['kernel']['machine'] =~ /x86_64/ ? 'amd64' : 'i386'
   package_family = 'deb'
+else
+  raise "platform_family #{node['platform_family']} not supported"
 end
 
 package_url = node['filebeat']['package_url'] == 'auto' ? "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-#{node['filebeat']['version']}-#{package_arch}.#{package_family}" : node['filebeat']['package_url']

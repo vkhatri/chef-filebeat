@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-version_string = node['platform_family'] == 'rhel' ? "#{node['filebeat']['version']}-#{node['filebeat']['release']}" : node['filebeat']['version']
+version_string = %w[rhel amazon].include?(node['platform_family']) ? "#{node['filebeat']['version']}-#{node['filebeat']['release']}" : node['filebeat']['version']
 
 case node['platform_family']
 when 'debian'
@@ -41,7 +41,7 @@ when 'debian'
     end
   end
 
-when 'rhel'
+when 'rhel', 'amazon'
   if node['filebeat']['setup_repo']
     # yum repository configuration
     yum_repository 'beats' do
@@ -62,12 +62,16 @@ when 'rhel'
       end
     end
   end
+else
+  raise "platform_family #{node['platform_family']} not supported"
 end
 
 package 'filebeat' do # ~FC009
   version version_string unless node['filebeat']['ignore_version']
   options node['filebeat']['apt']['options'] if node['filebeat']['apt']['options'] && node['platform_family'] == 'debian'
   notifies :restart, "service[#{node['filebeat']['service']['name']}]" if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
-  flush_cache(:before => true) if node['platform_family'] == 'rhel'
-  allow_downgrade true if node['platform_family'] == 'rhel'
+  if %w[rhel amazon].include?(node['platform_family'])
+    flush_cache(:before => true)
+    allow_downgrade true
+  end
 end

@@ -27,7 +27,7 @@ when 'solaris2'
   include_recipe 'filebeat::install_solaris'
 else
   if node['filebeat']['version'].scan(/beta|alpha/).empty?
-    include_recipe 'yum-plugin-versionlock::default' if node['platform_family'] == 'rhel'
+    include_recipe 'yum-plugin-versionlock::default' if %w[rhel amazon].include?(node['platform_family'])
     include_recipe 'filebeat::install_package'
   else
     include_recipe 'filebeat::install_package_preview'

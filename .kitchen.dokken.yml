@@ -2,52 +2,78 @@
 driver:
   name: dokken
   privileged: true
-  # chef_version: current
 
 transport:
   name: dokken
 
 provisioner:
   name: dokken
-
-# verifier:
-#  name: inspec
+  attributes:
+    apt:
+      confd:
+        install_recommends: false
 
 platforms:
-- name: ubuntu-14.04
-  driver:
-    image: ubuntu:14.04
-    intermediate_instructions:
-      - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
+  - name: ubuntu-14
+    driver:
+      image: ubuntu:14.04
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update -qq
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-- name: centos-6.8
-  driver:
-    image: centos:6.8
-    platform: rhel
-    intermediate_instructions:
-      - RUN yum install -y net-tools initscripts which
+  - name: ubuntu-16
+    driver:
+      image: ubuntu:16.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update -qq
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-- name: centos-7
-  driver:
-    image: centos:7
-    pid_one_command: /usr/lib/systemd/systemd
-    platform: rhel
-    intermediate_instructions:
-      - RUN yum install -y net-tools initscripts systemd-sysv which lsof
+  - name: debian-8
+    driver:
+      image: debian:8.9
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update -qq
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-- name: amazonlinux
-  driver:
-    image: amazonlinux:2017.03
-    platform: amazon
-    intermediate_instructions:
-      - RUN yum install -y net-tools initscripts which
-    pid_one_command: /sbin/init
+  - name: debian-9
+    driver:
+      image: dokken/debian-9
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update -qq
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
+
+  - name: centos-6
+    driver:
+      image: centos:6.9
+      pid_one_command: /sbin/init
+      platform: rhel
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts which curl
+
+  - name: centos-7
+    driver:
+      image: centos:7
+      pid_one_command: /usr/lib/systemd/systemd
+      platform: rhel
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts systemd-sysv which lsof curl
+
+  - name: amazon
+    driver:
+      image: amazonlinux:2017.03
+      pid_one_command: /sbin/init
+      platform: amazon
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts which
 
 suites:
-  - name: default12
+  - name: chef12
     driver:
-      chef_version: 12.21.3
+      chef_version: 12.21.4
     run_list:
       - recipe[filebeat::default]
       - recipe[filebeat_test::default]
@@ -95,9 +121,9 @@ suites:
             elasticsearch:
               hosts: ["127.0.0.1:9200"]
 
-  - name: default13
+  - name: chef13
     driver:
-      chef_version: 13.2.20
+      chef_version: 13.3.42
     run_list:
       - recipe[filebeat::default]
       - recipe[filebeat_test::default]
@@ -145,9 +171,9 @@ suites:
             elasticsearch:
               hosts: ["127.0.0.1:9200"]
 
-  - name: default13-preview
+  - name: chef13-preview
     driver:
-      chef_version: 13.2.20
+      chef_version: 13.3.42
     run_list:
       - recipe[filebeat::default]
       - recipe[filebeat_test::default]

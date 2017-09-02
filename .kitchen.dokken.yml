@@ -131,41 +131,33 @@ suites:
       filebeat:
         prospectors:
           secure_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/secure
-                type: log
-                fields:
-                  type: secure_logs
+            paths:
+              - /var/log/secure
+            type: log
+            fields:
+              type: secure_logs
           syslog_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/syslog
-                type: log
-                fields:
-                  type: syslog_logs
+            paths:
+              - /var/log/syslog
+            type: log
+            fields:
+              type: syslog_logs
           messages_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/messages
-                type: log
-                fields:
-                  type: messages_log
+            paths:
+              - /var/log/messages
+            type: log
+            fields:
+              type: messages_log
           extra_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/*.log
-                type: log
-                fields:
-                  type: extra_log
-                exclude_files:
-                - /var/log/messages
-                - /var/log/syslog
-                - /var/log/secure
+            paths:
+              - /var/log/*.log
+            type: log
+            fields:
+              type: extra_log
+            exclude_files:
+              - /var/log/messages
+              - /var/log/syslog
+              - /var/log/secure
         config:
           output:
             elasticsearch:
@@ -182,41 +174,35 @@ suites:
         version: 6.0.0-beta1
         prospectors:
           secure_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/secure
-                type: log
-                fields:
-                  type: secure_logs
+            recursive_glob_enabled: false
+            paths:
+              - /var/log/secure
+            type: log
+            fields:
+              type: secure_logs
           syslog_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/syslog
-                type: log
-                fields:
-                  type: syslog_logs
+            recursive_glob_enabled: true
+            paths:
+              - /var/log/syslog
+            type: log
+            fields:
+              type: syslog_logs
           messages_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/messages
-                type: log
-                fields:
-                  type: messages_log
+            paths:
+              - /var/log/messages
+            type: log
+            fields:
+              type: messages_log
           extra_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/*.log
-                type: log
-                fields:
-                  type: extra_log
-                exclude_files:
-                - /var/log/messages
-                - /var/log/syslog
-                - /var/log/secure
+            paths:
+              - /var/log/*.log
+            type: log
+            fields:
+              type: extra_log
+            exclude_files:
+              - /var/log/messages
+              - /var/log/syslog
+              - /var/log/secure
         config:
           output:
             elasticsearch:

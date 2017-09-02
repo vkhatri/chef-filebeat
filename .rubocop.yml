@@ -25,11 +25,14 @@ GuardClause:
   Enabled: false
 Metrics/PerceivedComplexity:
   Max: 50
+Metrics/ModuleLength:
+  Enabled: false
 ClassLength:
   Enabled: false
 Metrics/MethodLength:
   Enabled: false
 Metrics/BlockLength:
+  Max: 50
   Exclude:
     - "**/*_spec.rb"
 AbcSize:

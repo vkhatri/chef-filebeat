@@ -36,3 +36,5 @@ end
 
 # configure filebeat
 include_recipe 'filebeat::config'
+
+include_recipe 'filebeat::service'

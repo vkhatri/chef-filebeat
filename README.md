@@ -331,7 +331,7 @@ Above configuration will create three different prospector files - `prospector-s
 ## Core Attributes
 
 
-* `default['filebeat']['version']` (default: `5.5.1`): filebeat version
+* `default['filebeat']['version']` (default: `5.5.2`): filebeat version
 
 * `default['filebeat']['ignore_version']` (default: `false`): ignore filebeat version for `package` install
 
@@ -353,7 +353,9 @@ Above configuration will create three different prospector files - `prospector-s
 
 * `default['filebeat']['prospectors_dir']` (default: `/etc/filebeat/conf.d`): prospectors configuration file directory
 
-* `default['filebeat']['prospectors']` (default: `{}`): prospectors configuration file
+* `default['filebeat']['prospectors']` (default: `{}`): prospectors configuration via node attribute
+
+* `default['filebeat']['modules']` (default: `{}`): modules configuration via node attribute
 
 * `default['filebeat']['delete_prospectors_dir']` (default: `false`): delete and create prospectors configuration directory if set to true
 

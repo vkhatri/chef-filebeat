@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: filebeat
-# Recipe:: package
+# Recipe:: install_package
 #
 # Copyright 2015, Virender Khatri
 #

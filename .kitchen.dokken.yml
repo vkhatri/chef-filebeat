@@ -12,6 +12,43 @@ provisioner:
     apt:
       confd:
         install_recommends: false
+    filebeat:
+      config:
+        logging.level: info
+        logging.to_files: true
+        logging.files:
+          name: filebeat
+        output.elasticsearch:
+          hosts: ["127.0.0.1:9200"]
+      prospectors:
+        secure_logs:
+          paths:
+            - /var/log/secure
+          type: log
+          fields:
+            type: secure_logs
+        syslog_logs:
+          paths:
+            - /var/log/syslog
+          type: log
+          fields:
+            type: syslog_logs
+        messages_log:
+          paths:
+            - /var/log/messages
+          type: log
+          fields:
+            type: messages_log
+        extra_log:
+          paths:
+            - /var/log/*.log
+          type: log
+          fields:
+            type: extra_log
+          exclude_files:
+            - /var/log/messages
+            - /var/log/syslog
+            - /var/log/secure
 
 platforms:
   - name: ubuntu-14
@@ -77,49 +114,6 @@ suites:
     run_list:
       - recipe[filebeat::default]
       - recipe[filebeat_test::default]
-    attributes:
-      filebeat:
-        prospectors:
-          secure_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/secure
-                type: log
-                fields:
-                  type: secure_logs
-          syslog_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/syslog
-                type: log
-                fields:
-                  type: syslog_logs
-          messages_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/messages
-                type: log
-                fields:
-                  type: messages_log
-          extra_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/*.log
-                type: log
-                fields:
-                  type: extra_log
-                exclude_files:
-                - /var/log/messages
-                - /var/log/syslog
-                - /var/log/secure
-        config:
-          output:
-            elasticsearch:
-              hosts: ["127.0.0.1:9200"]
 
   - name: chef13
     driver:
@@ -127,41 +121,6 @@ suites:
     run_list:
       - recipe[filebeat::default]
       - recipe[filebeat_test::default]
-    attributes:
-      filebeat:
-        prospectors:
-          secure_logs:
-            paths:
-              - /var/log/secure
-            type: log
-            fields:
-              type: secure_logs
-          syslog_logs:
-            paths:
-              - /var/log/syslog
-            type: log
-            fields:
-              type: syslog_logs
-          messages_log:
-            paths:
-              - /var/log/messages
-            type: log
-            fields:
-              type: messages_log
-          extra_log:
-            paths:
-              - /var/log/*.log
-            type: log
-            fields:
-              type: extra_log
-            exclude_files:
-              - /var/log/messages
-              - /var/log/syslog
-              - /var/log/secure
-        config:
-          output:
-            elasticsearch:
-              hosts: ["127.0.0.1:9200"]
 
   - name: chef13-preview
     driver:
@@ -172,38 +131,3 @@ suites:
     attributes:
       filebeat:
         version: 6.0.0-beta2
-        prospectors:
-          secure_logs:
-            recursive_glob_enabled: false
-            paths:
-              - /var/log/secure
-            type: log
-            fields:
-              type: secure_logs
-          syslog_logs:
-            recursive_glob_enabled: true
-            paths:
-              - /var/log/syslog
-            type: log
-            fields:
-              type: syslog_logs
-          messages_log:
-            paths:
-              - /var/log/messages
-            type: log
-            fields:
-              type: messages_log
-          extra_log:
-            paths:
-              - /var/log/*.log
-            type: log
-            fields:
-              type: extra_log
-            exclude_files:
-              - /var/log/messages
-              - /var/log/syslog
-              - /var/log/secure
-        config:
-          output:
-            elasticsearch:
-              hosts: ["127.0.0.1:9200"]

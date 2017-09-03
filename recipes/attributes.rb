@@ -37,13 +37,22 @@ node.default['filebeat']['prospectors_dir'] = if node['platform'] == 'windows'
                                                 ::File.join(node['filebeat']['conf_dir'], 'conf.d')
                                               end
 
-node.default['filebeat']['config']['filebeat']['registry_file'] = if node['platform'] == 'windows'
-                                                                    "#{node['filebeat']['conf_dir']}/registry"
-                                                                  else
-                                                                    '/var/lib/filebeat/registry'
-                                                                  end
-node.default['filebeat']['config']['filebeat']['config_dir'] = node['filebeat']['prospectors_dir']
+# filebeat.yml configuration attributes
+node.default['filebeat']['config']['filebeat.registry_file'] = if node['platform'] == 'windows'
+                                                                 "#{node['filebeat']['conf_dir']}/registry"
+                                                               else
+                                                                 '/var/lib/filebeat/registry'
+                                                               end
 
+node.default['filebeat']['config']['filebeat.config_dir'] = node['filebeat']['prospectors_dir']
+
+node.default['filebeat']['config']['logging.files']['path'] = if node['platform'] == 'windows'
+                                                                "#{node['filebeat']['conf_dir']}/logs"
+                                                              else
+                                                                node['filebeat']['log_dir']
+                                                              end
+
+# filebeat repository attributes
 if node['filebeat']['version'] < '5.0'
   node.default['filebeat']['yum']['baseurl'] = 'https://packages.elastic.co/beats/yum/el/$basearch'
   node.default['filebeat']['yum']['gpgkey'] = 'https://packages.elastic.co/GPG-KEY-elasticsearch'

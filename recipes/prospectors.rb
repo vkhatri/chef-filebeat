@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: filebeat
-# Recipe:: config
+# Recipe:: prospectors
 #
 # Copyright 2015, Virender Khatri
 #

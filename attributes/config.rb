@@ -1,13 +1,27 @@
 # https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-configuration-details.html
 
-# prospector configuration files
+# ===== filebeat.yml configuration =====
+# https://www.elastic.co/guide/en/beats/filebeat/current/configuration-general.html
+# https://www.elastic.co/guide/en/beats/filebeat/current/configuration-global-options.html
+default['filebeat']['config']['filebeat.prospectors'] = []
+default['filebeat']['config']['filebeat.modules'] = []
+# default['filebeat']['config']['filebeat.spool_size'] = 2048
+# default['filebeat']['config']['filebeat.publish_async'] = false
+# default['filebeat']['config']['filebeat.idle_timeout'] =  '5s'
+# [evaluated] default['filebeat']['config']['filebeat.registry_file'] =  '${path.data}/registry'
+# [evaluated] default['filebeat']['config']['filebeat.config_dir'] =
+# default['filebeat']['config']['filebeat.shutdown_timeout'] = 0
+# default['filebeat']['config']['name'] =
+# default['filebeat']['config']['tags'] = ["service-X", "web-tier"]
+# default['filebeat']['config']['fields'] = {'env' => 'test'}
+# default['filebeat']['config']['fields_under_root'] = false
+# default['filebeat']['config']['queue_size'] = 1000
+# default['filebeat']['config']['bulk_queue_size'] = 0
+# default['filebeat']['config']['max_procs'] =
+
+# ===== add filebeat prospectors using node attribute example =====
 default['filebeat']['prospectors'] = {}
-# prospector configuration
-default['filebeat']['config']['filebeat']['prospectors'] = []
-# default['filebeat']['config']['filebeat']['spool_size'] = 1024
-# default['filebeat']['config']['filebeat']['idle_timeout'] =  '5s'
 =begin
-# Add Prospectors using Node Attribute Example
 apache_logs = {
     'paths' => ["/var/log/apache/*.log"],
     'input_type' => "log",
@@ -15,61 +29,49 @@ apache_logs = {
     'document_type' => "apache",
     'fields_under_root' => true
 }
-default['filebeat']['prospectors']['access']['filebeat']['prospectors'] = [apache_logs]
+default['filebeat']['prospectors']['access'] = apache_logs
 =end
 
-default['filebeat']['config']['output'] = {}
-# Elasticsearch host attributes
-# default['filebeat']['config']['output']['elasticsearch']['enable'] = true
-# default['filebeat']['config']['output']['elasticsearch']['hosts'] = []
-# default['filebeat']['config']['output']['elasticsearch']['save_topology'] = false
-# default['filebeat']['config']['output']['elasticsearch']['max_retries'] = 3
-# default['filebeat']['config']['output']['elasticsearch']['bulk_max_size'] = 1000
-# default['filebeat']['config']['output']['elasticsearch']['flush_interval'] = nil
-# default['filebeat']['config']['output']['elasticsearch']['protocol'] = 'http'
-# default['filebeat']['config']['output']['elasticsearch']['username'] = nil
-# default['filebeat']['config']['output']['elasticsearch']['password'] = nil
-# default['filebeat']['config']['output']['elasticsearch']['index'] = 'filebeat'
-# default['filebeat']['config']['output']['elasticsearch']['path'] = '/elasticsearch'
-# default['filebeat']['config']['output']['elasticsearch']['tls']['certificate_authorities'] = ['/etc/ca.crt']
-# default['filebeat']['config']['output']['elasticsearch']['tls']['certificate'] = '/etc/client.crt'
-# default['filebeat']['config']['output']['elasticsearch']['tls']['certificate_key'] = '/etc/client.key'
-# default['filebeat']['config']['output']['elasticsearch']['tls']['insecure'] = false
+# ===== filebeat output configration =====
+#
+# elasticsearch output
+# https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html
+# default['filebeat']['config']['output.elasticsearch']['enable'] = true
+# default['filebeat']['config']['output.elasticsearch']['hosts'] = ['127.0.0.1:9200']
 
-# Logstash Output config attributes
-# default['filebeat']['config']['output']['logstash']['enable'] = true
-# default['filebeat']['config']['output']['logstash']['hosts'] = []
-# default['filebeat']['config']['output']['logstash']['loadbalance'] = true
-# default['filebeat']['config']['output']['logstash']['save_topology'] = true
-# default['filebeat']['config']['output']['logstash']['index'] = 'filebeat'
-# default['filebeat']['config']['output']['logstash']['tls']['certificate_authorities'] = ['/etc/ca.crt']
-# default['filebeat']['config']['output']['logstash']['tls']['certificate'] = '/etc/client.crt'
-# default['filebeat']['config']['output']['logstash']['tls']['certificate_key'] = '/etc/client.key'
-# default['filebeat']['config']['output']['logstash']['tls']['insecure'] = false
+# logstash output
+# https://www.elastic.co/guide/en/beats/filebeat/current/logstash-output.html
+# default['filebeat']['config']['output.logstash']['enable'] = true
+# default['filebeat']['config']['output.logstash']['hosts'] = ['127.0.0.1:5044']
 
-# Redis Output config attributes
-# default['filebeat']['config']['output']['redis']['enable'] = true
-# default['filebeat']['config']['output']['redis']['host'] = 'locahost'
-# default['filebeat']['config']['output']['redis']['port'] = 6379
-# default['filebeat']['config']['output']['redis']['save_topology'] = false
-# default['filebeat']['config']['output']['redis']['index'] = 'filebeat'
-# default['filebeat']['config']['output']['redis']['db'] = 0
-# default['filebeat']['config']['output']['redis']['db_topology'] = 1
-# default['filebeat']['config']['output']['redis']['password'] = ''
-# default['filebeat']['config']['output']['redis']['timeout'] = 5
-# default['filebeat']['config']['output']['redis']['reconnect_interval'] = 1
+# redis output
+# https://www.elastic.co/guide/en/beats/filebeat/current/redis-output.html
+# default['filebeat']['config']['output.redis']['enable'] = true
+# default['filebeat']['config']['output.redis']['host'] = 'locahost'
 
-# Logging Output attributes
-# default['filebeat']['config']['logging']['to_files'] = true
-# if node['platform'] == 'windows'
-#  default['filebeat']['config']['logging']['files']['path'] = '"#{node['filebeat']['conf_dir']}/logs"'
-# end
-# default['filebeat']['config']['logging']['files']['rotateeverybytes'] = 10485760
-# default['filebeat']['config']['logging']['level'] = 'info'
+# kafka output
+# https://www.elastic.co/guide/en/beats/filebeat/current/kafka-output.html
+# default['filebeat']['config']['output.redis']['enable'] = true
+# default['filebeat']['config']['output.redis']['host'] = ['kafka1:9092', 'kafka2:9092', 'kafka3:9092']
 
-# default['filebeat']['config']['output']['file']['path'] = '/tmp/filebeat'
-# default['filebeat']['config']['output']['file']['filename'] = 'filebeat'
-# default['filebeat']['config']['output']['file']['rotate_every_kb'] = 1_000
-# default['filebeat']['config']['output']['file']['number_of_files'] = 7
-# default['filebeat']['config']['procs']['enabled'] = false
-# default['filebeat']['config']['procs']['enabled']['monitored'] = [{'process' => 'mysqld', 'cmdline_grep' => 'mysqld]
+# file output
+# https://www.elastic.co/guide/en/beats/filebeat/current/file-output.html
+# default['filebeat']['config']['output.file']['path'] = '/tmp/filebeat'
+# default['filebeat']['config']['output.file']['filename'] = 'filebeat'
+# default['filebeat']['config']['output.file']['rotate_every_kb'] = 1_000
+# default['filebeat']['config']['output.file']['number_of_files'] = 7
+
+# console output
+# https://www.elastic.co/guide/en/beats/filebeat/current/console-output.html
+# default['filebeat']['config']['output.console']['enable'] true
+
+# logging
+# https://www.elastic.co/guide/en/beats/filebeat/current/configuration-logging.html
+# default['filebeat']['config']['logging.metrics.enabled'] = true
+# default['filebeat']['config']['logging.metrics.period'] = '30s'
+# default['filebeat']['config']['logging.level'] = 'info'
+# default['filebeat']['config']['logging.to_files'] = true
+# [evaluated] default['filebeat']['config']['logging.files']['path'] =
+# default['filebeat']['config']['logging.files']['name'] = 'filebeat'
+# default['filebeat']['config']['logging.files']['rotateeverybytes'] = 10485760
+# default['filebeat']['config']['logging.files']['keepfiles'] = 7

@@ -1,4 +1,4 @@
-# https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-configuration-details.html
+# https://www.elastic.co/guide/en/beats/filebeat/current/configuration-filebeat-options.html
 class Chef
   class Resource
     # provides filebeat_prospector

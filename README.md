@@ -12,14 +12,14 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 0.5.0'
+cookbook 'filebeat', '~> 1.0.0'
 ```
 
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v0.5.0'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v1.0.0'
 ```
 
 
@@ -39,19 +39,19 @@ https://github.com/vkhatri/chef-filebeat
 - Ubuntu
 - Debian
 
-This also works on Solaris zones given a physical Solaris 11.2 server. For that, use the .kitchen.zone.yml file. Check usage at (https://github.com/criticalmass/kitchen-zone). You will need an url to a filebeat package that works on Solaris 11.2. Checkout Building-Filebeat-On-Solaris11.md for instructions to build a filebeat package.
+Also works on Solaris zones given a physical Solaris 11.2 server. For that, use the .kitchen.zone.yml file. Check usage at (https://github.com/criticalmass/kitchen-zone). You will need an url to a filebeat package that works on Solaris 11.2. Checkout Building-Filebeat-On-Solaris11.md for instructions to build a filebeat package.
 
 
 ## Supported Chef
 
-- Chef 12 (last tested on 12.21.3)
+- Chef 12 (last tested on 12.21.4)
 
-- Chef 13 (last tested on 13.2.20)
+- Chef 13 (last tested on 13.3.42)
 
 
 ## Supported Filebeat
 
-- 1.x (to be deprecated in cookbook version v1.0.0)
+- 1.x (dropped test support in cookbook version v1.0.0)
 - 5.x
 - 6.x
 
@@ -86,6 +86,10 @@ Refer CHANGELOG.md.
 
 - `filebeat::install_windows` - install filebeat for windows platform
 
+- `filebeat::prospectors` - configure filebeat prospectors via node attribute `node['filebeat']['prospectors']`
+
+- `filebeat::service` - configure filebeat service
+
 
 ## LWRP filebeat_prospector
 
@@ -113,9 +117,9 @@ end
 - *paths* (optional, String)	- filebeat prospector configuration attribute
 - *recursive_glob_enabled* (optional, TrueClass/FalseClass) - filebeat prospector configuration attribute
 - *encoding* (optional, String)	- filebeat prospector configuration attribute
-- *exclude_lines* (optional, Array) - A list of regular expressions to match the lines that you want Filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
-- *include_lines* (optional, Array) - A list of regular expressions to match the lines that you want Filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
-- *exclude_files* (optional, Array) - A list of regular expressions to match the files that you want Filebeat prospector instance to exclude.
+- *exclude_lines* (optional, Array) - A list of regular expressions to match the lines that you want filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
+- *include_lines* (optional, Array) - A list of regular expressions to match the lines that you want filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
+- *exclude_files* (optional, Array) - A list of regular expressions to match the files that you want filebeat prospector instance to exclude.
 - *tags* (optional, Array)   - filebeat prospector configuration attribute
 - *fields* (optional, Hash)	- filebeat prospector configuration attribute
 - *fields_under_root* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
@@ -155,7 +159,7 @@ end
 - *multiline* (optional, Hash)	- Multiline configuration hash. Options: `pattern`: <regex pattern to match>, `negate`: [true/false], `match`: [before/after]
 
 
-## How to Add Filebeat Output via Node Attribute
+## How to Add Filebeat Output Configuration via Node Attribute
 
 Filebeat output configuration can be added to attribute `node['filebeat']['config']`.
 
@@ -229,7 +233,7 @@ For more prospector options, check out LWRP `filebeat_prospector`
 
 ```
 
-Above configuration will create three different prospector files - `prospector-system_logs.yml, prospector-secure_logs.yml and prospector-apache_logs.yml` under `node['filebeat']['prospectors_dir']`.
+Above configuration will create three different prospector files - `lwrp-prospector-system_logs.yml, lwrp-prospector-secure_logs.yml and lwrp-prospector-apache_logs.yml` under `node['filebeat']['prospectors_dir']`.
 
 
 ## Core Attributes
@@ -282,30 +286,30 @@ For more attribute info check `attributes/config.rb`.
 
 ## Filebeat YUM/APT Repository Attributes
 
-* `default['filebeat']['yum']['description']` (default: ``): beats yum reporitory attribute
+* `default['filebeat']['yum']['description']` (default: ``): beats yum repository attribute
 
-* `default['filebeat']['yum']['gpgcheck']` (default: `true`): beats yum reporitory attribute
+* `default['filebeat']['yum']['gpgcheck']` (default: `true`): beats yum repository attribute
 
-* `default['filebeat']['yum']['enabled']` (default: `true`): beats yum reporitory attribute
+* `default['filebeat']['yum']['enabled']` (default: `true`): beats yum repository attribute
 
-* `default['filebeat']['yum']['baseurl']` (default: `https://packages.elastic.co/beats/yum/el/$basearch`): beatsyum reporitory attribute
+* `default['filebeat']['yum']['baseurl']` (default: `https://packages.elastic.co/beats/yum/el/$basearch`): beatsyum repository attribute
 
-* `default['filebeat']['yum']['gpgkey']` (default: `https://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats yum reporitory attribute
+* `default['filebeat']['yum']['gpgkey']` (default: `https://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats yum repository attribute
 
-* `default['filebeat']['yum']['metadata_expire']` (default: `3h`): beats yum reporitory attribute
+* `default['filebeat']['yum']['metadata_expire']` (default: `3h`): beats yum repository attribute
 
-* `default['filebeat']['yum']['action']` (default: `:create`): beats yum reporitory attribute
+* `default['filebeat']['yum']['action']` (default: `:create`): beats yum repository attribute
 
 
-* `default['filebeat']['apt']['description']` (default: `calculated`): beats apt reporitory attribute
+* `default['filebeat']['apt']['description']` (default: `calculated`): beats apt repository attribute
 
-* `default['filebeat']['apt']['components']` (default: `['stable', 'main']`): beats apt reporitory attribute
+* `default['filebeat']['apt']['components']` (default: `['stable', 'main']`): beats apt repository attribute
 
-* `default['filebeat']['apt']['uri']` (default: `https://packages.elastic.co/beats/apt`): beats apt reporitory attribute
+* `default['filebeat']['apt']['uri']` (default: `https://packages.elastic.co/beats/apt`): beats apt repository attribute
 
-* `default['filebeat']['apt']['key']` (default: `http://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats apt reporitory attribute
+* `default['filebeat']['apt']['key']` (default: `http://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats apt repository attribute
 
-* `default['filebeat']['apt']['action']` (default: `:add`): filebeat apt reporitory attribute
+* `default['filebeat']['apt']['action']` (default: `:add`): filebeat apt repository attribute
 
 
 ## Other Attributes

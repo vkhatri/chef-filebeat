@@ -1,23 +1,44 @@
 filebeat CHANGELOG
 ==================
 
-This file is used to list changes made in each version of the filebeat cookbook.
-
 1.0.0
 -----
 
-- Virender Khatri - Added prospectors configuration files purge capability, #73
+- Virender Khatri - LWRP `filebeat_prospector` now creates configuration file with a prefix `lwrp-prospector-#{resource name}`, #73
+
+- Virender Khatri - Prospectors via node attribute `node['filebeat']['prospectors']` now uses LWRP `filebeat_prospector` instead of creating JSON file with a prefix `node-prospector-#{prospector name}`, #114
+
+- Virender Khatri - Added prospectors configuration files purge capability, #73, #103
 
   * Added new attribute `default['filebeat']['delete_prospectors_dir']` (default: `false`). If set to true, cookbook always delete and re-create prospectors configuration directory
+  * Added new attribute `default['filebeat']['purge_prospectors_dir']` (default: `false`): If set to true, purge files under prospectors configuration directory, except `lwrp-prospector-` (created by LWRP)
 
-  * Added new attribute `default['filebeat']['purge_prospectors_dir']` (default: `false`): If set to true, purge files under prospectors configuration directory, except `node-prospector-*` (created by node attribute) and `lwrp-prospector-` (created by LWRP)
+  >>> Note: Set attribute `default['filebeat']['delete_prospectors_dir']` or `default['filebeat']['purge_prospectors_dir']` as per your requirement.
 
-  * Prospectors LWRP now creates configuration file with a prefix `lwrp-prospector-#{prospector lwrp resoruce name}`
+- Virender Khatri - Dropped support for Chef <12.x, #110
 
-  * Prospectors via node attribute `node['filebeat']['prospectors']` now creates configuration file with a prefix `node-prospector-#{prospector lwrp resoruce name}`
+- Virender Khatri - No longer activelt test/support Filebeat v1.x, #113
 
+- Virender Khatri - Updated Kitchen Tests
+  * Created Chef 12.x and 13.x tests, #108
+  * Use Pinned Travis chef-dk version
+  * Use stable chef-dk version
+  * Added Amazon, Debian and, Fedora tests
+  * Added Filebeat preview release support
+  * Added Filebeat test cookbook
 
-- Virender Khatri - Updated kitchen to run separate tests for Chef latest 12.x and 13.x versions
+- Virender Khatri - Added recent Filebeat prospector option to LWRP filebeat_prospector, #100
+
+- Virender Khatri - Updated Filebeat version to v5.5.2
+
+- Virender Khatri - Added Filebeat Preview (alpha/beta) version support, #112
+
+- Virender Khatri - Created separate cookbooks for prospectors and service
+
+- Virender Khatri - Updated attributes to use new . convention, issue #
+
+- Virender Khatri - Added apt install option --force-yes, #104
+
 
 0.5.0
 -----

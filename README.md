@@ -15,11 +15,13 @@ This is a [Chef] cookbook to manage [Filebeat].
 cookbook 'filebeat', '~> 0.5.0'
 ```
 
+
 ## From Git
 
 ```ruby
 cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v0.5.0'
 ```
+
 
 ## Repository
 
@@ -27,11 +29,18 @@ cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v0.5.0'
 https://github.com/vkhatri/chef-filebeat
 ```
 
+
 ## Supported OS
 
-This cookbook was tested on Windows, Amazon & Ubuntu Linux and expected to work on other RHEL platforms.
+- Windows
+- Amazon Linux
+- CentOS
+- Fedora
+- Ubuntu
+- Debian
 
 This also works on Solaris zones given a physical Solaris 11.2 server. For that, use the .kitchen.zone.yml file. Check usage at (https://github.com/criticalmass/kitchen-zone). You will need an url to a filebeat package that works on Solaris 11.2. Checkout Building-Filebeat-On-Solaris11.md for instructions to build a filebeat package.
+
 
 ## Supported Chef
 
@@ -39,24 +48,18 @@ This also works on Solaris zones given a physical Solaris 11.2 server. For that,
 
 - Chef 13 (last tested on 13.2.20)
 
+
+## Supported Filebeat
+
+- 1.x (to be deprecated in cookbook version v1.0.0)
+- 5.x
+- 6.x
+
+
 ## Major Changes
 
-### v1.0.0 (Development)
+Refer CHANGELOG.md.
 
-- Added new attribute `default['filebeat']['delete_prospectors_dir']` (default: `false`). If set to true, cookbook always delete and re-create prospectors configuration directory
-
-- Added new attribute `default['filebeat']['purge_prospectors_dir']` (default: `false`): If set to true, purge files under prospectors configuration directory, except `node-prospector-*` (created by node attribute) and `lwrp-prospector-` (created by LWRP)
-
-- Prospectors LWRP now creates configuration file with a prefix `lwrp-prospector-#{prospector lwrp resource_name}`
-
-- Prospectors via node attribute `node['filebeat']['prospectors']` now creates configuration file with a prefix `node-prospector-#{prospector lwrp resource name}`
-
->>> Note: Set attribute `default['filebeat']['delete_prospectors_dir']` or `default['filebeat']['purge_prospectors_dir']` as per your requirement.
-
-
-### v0.2.5
-- Removed default output configuration attributes for `elasticsearch`, `logstash` and `file`
-- Removed attributed `default['filebeat']['enable_localhost_output']` as default `output` attributes are disabled
 
 ## Cookbook Dependency
 
@@ -65,6 +68,7 @@ This also works on Solaris zones given a physical Solaris 11.2 server. For that,
 - yum
 - yum-plugin-versionlock
 - runit
+
 
 ## Recipes
 
@@ -150,28 +154,25 @@ end
 - *force_close_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
 - *multiline* (optional, Hash)	- Multiline configuration hash. Options: `pattern`: <regex pattern to match>, `negate`: [true/false], `match`: [before/after]
 
+
 ## How to Add Filebeat Output via Node Attribute
 
-
-### Redis Output
+Filebeat output configuration can be added to attribute `node['filebeat']['config']`.
 
 ```json
   "default_attributes": {
     "filebeat": {
       "config": {
-        "output": {
-          "redis": {
-            "enable": true,
-            "host": "127.0.0.1",
-            "port": 6379,
-            "save_topology": false,
-            "index": "filebeat",
-            "db": 0,
-            "db_topology": 1,
-            "password": "",
-            "timeout": 5,
-            "reconnect_interval": 1
-          }
+        "output.elasticsearch": {
+          "enable": true,
+          "hosts": "127.0.0.1:9200"
+        },
+        "output.redis": {
+          "enable": true,
+          "option ..": "value .."
+        },
+        "{output.redis|output.elasticsearch|output.kafka|output.file|output.console|output.logstash| ..}": {
+          "option ..": "value ..",
         }
       }
     }
@@ -179,157 +180,59 @@ end
 
 ```
 
-### ElasticSearch Output
+Above filebeat output configuration will be added to `filebeat.yml` file.
 
-```json
-  "default_attributes": {
-    "filebeat": {
-      "config": {
-        "output": {
-          "elasticsearch": {
-            "enable": true,
-            "hosts": ["127.0.0.1:9200"],
-            "save_topology": false,
-            "max_retries": 3,
-            "bulk_max_size": 1000,
-            "flush_interval": null,
-            "protocol": "http",
-            "username": null,
-            "password": null,
-            "index": "filebeat",
-            "path": "/elasticsearch",
-            "tls": {
-              "certificate_authorities": ["/etc/ca.crt"],
-              "certificate": "/etc/client.crt",
-              "certificate_key": "/etc/client.key",
-              "insecure": false
-            }
-          }
-        }
-      }
-    }
-  }
-
-```
-
-### Logstash Output
-
-```json
-  "default_attributes": {
-    "filebeat": {
-      "config": {
-        "output": {
-          "logstash": {
-            "enable": true,
-            "hosts": ["127.0.0.1:5000"],
-            "loadbalance": true,
-            "save_topology": false,
-            "index": "filebeat",
-            "tls": {
-              "certificate_authorities": ["/etc/ca.crt"],
-              "certificate": "/etc/client.crt",
-              "certificate_key": "/etc/client.key",
-              "insecure": false
-            }
-          }
-        }
-      }
-    }
-  }
-
-```
-
-### File Output
-
-```json
-  "default_attributes": {
-    "filebeat": {
-      "config": {
-        "output": {
-          "file": {
-            "path": "/tmp/filebeat",
-            "filename": "filebeat",
-            "rotate_every_kb": 1000,
-            "number_of_files": 7
-          }
-        }
-      }
-    }
-  }
-
-```
 
 ## How to Add Filebeat Prospectors via Node Attribute
 
-Individual prospectors configuration file can be added using attribute `default['filebeat']['prospectors']`. Each prospector configuration will
-be created as a different yaml file under `default['filebeat']['prospector_dir']` with prefix `prospector-`
+Individual prospector configuration file can also be added using attribute `default['filebeat']['prospectors']`. Each prospector configuration will be created using LWRP.
+For more prospector options, check out LWRP `filebeat_prospector`
 
 ```json
   "default_attributes": {
     "filebeat": {
       "prospectors": {
+
         "system_logs": {
-          "filebeat": {
-            "prospectors": [
-              {
-                "paths": [
-                  "/var/log/messages",
-                  "/var/log/syslog"
-                ],
-                "type": "log",
-                "fields": {
-                  "type": "system_logs"
-                }
-              }
-            ]
-          }
+          "paths": [
+            "/var/log/messages",
+            "/var/log/syslog"
+          ],
+          "type": "log",
+          "fields": {
+            "type": "system_logs"
+          },
+          "option ...": "value ..."
         },
-        "secure_logs": {
-          "filebeat": {
-            "prospectors": [
-              {
-                "paths": [
-                  "/var/log/secure",
-                  "/var/log/auth.log"
-                ],
-                "type": "log",
-                "fields": {
-                  "type": "secure_logs"
-                }
-              }
-            ]
-          }
-        },
+
         "apache_logs": {
-          "filebeat": {
-            "prospectors": [
-              {
-                "paths": [
-                  "/var/log/apache/*.log"
-                ],
-                "type": "log",
-                "ignore_older": "24h",
-                "scan_frequency": "15s",
-                "harvester_buffer_size": 16384,
-                "fields": {
-                  "type": "apache_logs"
-                }
-              }
-            ]
-          }
+          "paths": [
+            "/var/log/apache/*.log"
+          ],
+          "type": "log",
+          "ignore_older": "24h",
+          "scan_frequency": "15s",
+          "harvester_buffer_size": 16384,
+          "fields": {
+            "type": "apache_logs"
+          },
+          "option ...": "value ..."
+        },
+
+        "prospector ...": {
+          "option ...": "value ..."
         }
+
       }
     }
   }
 
 ```
 
-
-Above configuration will create three different prospector files - `prospector-system_logs.yml, prospector-secure_logs.yml and prospector-apache_logs.yml`
+Above configuration will create three different prospector files - `prospector-system_logs.yml, prospector-secure_logs.yml and prospector-apache_logs.yml` under `node['filebeat']['prospectors_dir']`.
 
 
 ## Core Attributes
-
 
 * `default['filebeat']['version']` (default: `5.5.2`): filebeat version
 
@@ -342,6 +245,8 @@ Above configuration will create three different prospector files - `prospector-s
 * `default['filebeat']['service']['init_style']` (default: `init`): filebeat service init system, options: init, runit
 
 * `default['filebeat']['package_url']` (default: `auto`): package url for windows installation
+
+* `default['filebeat']['log_dir']` (default: `/var/log/filebeat`): filebeat logging directory
 
 * `default['filebeat']['conf_dir']` (default: `/etc/filebeat`): filebeat yaml configuration file directory
 
@@ -364,17 +269,15 @@ Above configuration will create three different prospector files - `prospector-s
 
 ## Configuration File filebeat.yml Attributes
 
-* `default['filebeat']['config']['filebeat']['prospectors']` (default: `[]`): filebeat prospectors configuration
+* `default['filebeat']['config']['filebeat.prospectors']` (default: `[]`): filebeat prospectors configuration
 
-* `default['filebeat']['config']['filebeat']['registry_file']` (default: `/var/lib/filebeat/registry`): filebeat services to capture packets
+* `default['filebeat']['config']['filebeat.modules']` (default: `[]`): filebeat prospectors configuration
 
-* `default['filebeat']['config']['filebeat']['config_dir']` (default: `node['filebeat']['prospectors_dir']`): filebeat prospectors configuration files folder
+* `default['filebeat']['config']['filebeat.registry_file']` (default: `/var/lib/filebeat/registry`): filebeat services to capture packets
 
-* `default['filebeat']['config']['output']` (default: `{}`): configure elasticsearch. logstash, file etc.  output
+* `default['filebeat']['config']['filebeat.config_dir']` (default: `node['filebeat']['prospectors_dir']`): filebeat prospectors configuration files folder
 
-For more attribute info, visit below links:
-
-https://github.com/elastic/filebeat/blob/master/etc/filebeat.yml
+For more attribute info check `attributes/config.rb`.
 
 
 ## Filebeat YUM/APT Repository Attributes

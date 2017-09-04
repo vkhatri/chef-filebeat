@@ -99,6 +99,14 @@ platforms:
       intermediate_instructions:
         - RUN yum install -y net-tools initscripts systemd-sysv which lsof curl
 
+  - name: fedora-26
+    driver:
+      image: fedora:26
+      pid_one_command: /usr/lib/systemd/systemd
+      platform: rhel
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts systemd-sysv which lsof curl
+
   - name: amazon
     driver:
       image: amazonlinux:2017.03

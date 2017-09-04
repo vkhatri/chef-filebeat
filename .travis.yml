@@ -22,6 +22,7 @@ env:
   matrix:
     - INSTANCE=chef12-centos-6
     - INSTANCE=chef12-centos-7
+    - INSTANCE=chef12-fedora-26
     - INSTANCE=chef12-ubuntu-14
     - INSTANCE=chef12-ubuntu-16
     - INSTANCE=chef12-debian-8
@@ -29,6 +30,7 @@ env:
     - INSTANCE=chef12-amazon
     - INSTANCE=chef13-centos-6
     - INSTANCE=chef13-centos-7
+    - INSTANCE=chef13-fedora-26
     - INSTANCE=chef13-ubuntu-14
     - INSTANCE=chef13-ubuntu-16
     - INSTANCE=chef13-debian-8
@@ -51,6 +53,7 @@ matrix:
   allow_failures:
     - env: INSTANCE=chef12-centos-6
     - env: INSTANCE=chef12-centos-7
+    - env: INSTANCE=chef12-fedora-26
     - env: INSTANCE=chef12-ubuntu-14
     - env: INSTANCE=chef12-ubuntu-16
     - env: INSTANCE=chef12-debian-8
@@ -58,6 +61,7 @@ matrix:
     - env: INSTANCE=chef12-amazon
     - env: INSTANCE=chef13-centos-6
     - env: INSTANCE=chef13-centos-7
+    - env: INSTANCE=chef13-fedora-26
     - env: INSTANCE=chef13-ubuntu-14
     - env: INSTANCE=chef13-ubuntu-16
     - env: INSTANCE=chef13-debian-8

@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-version_string = %w[rhel amazon].include?(node['platform_family']) ? "#{node['filebeat']['version']}-#{node['filebeat']['release']}" : node['filebeat']['version']
+version_string = %w[fedora rhel amazon].include?(node['platform_family']) ? "#{node['filebeat']['version']}-#{node['filebeat']['release']}" : node['filebeat']['version']
 
 case node['platform_family']
 when 'debian'
@@ -41,7 +41,7 @@ when 'debian'
     end
   end
 
-when 'rhel', 'amazon'
+when 'fedora', 'rhel', 'amazon'
   if node['filebeat']['setup_repo']
     # yum repository configuration
     yum_repository 'beats' do

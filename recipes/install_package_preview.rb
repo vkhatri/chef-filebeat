@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-if %w[rhel amazon].include?(node['platform_family'])
+if %w[fedora rhel amazon].include?(node['platform_family'])
   package_arch = node['kernel']['machine'] =~ /x86_64/ ? 'x86_64' : 'i686'
   package_family = 'rpm'
 elsif node['platform_family'] == 'debian'

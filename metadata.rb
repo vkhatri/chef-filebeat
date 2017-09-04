@@ -15,6 +15,6 @@ depends 'yum', '>= 5.0.1'
 depends 'yum-plugin-versionlock', '>= 0.1.2'
 depends 'runit'
 
-%w[windows ubuntu centos amazon redhat fedora].each do |os|
+%w[windows debian ubuntu centos amazon redhat fedora].each do |os|
   supports os
 end

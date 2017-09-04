@@ -37,3 +37,5 @@ Metrics/BlockLength:
     - "**/*_spec.rb"
 AbcSize:
   Enabled: false
+Style/BlockComments:
+  Enabled: false

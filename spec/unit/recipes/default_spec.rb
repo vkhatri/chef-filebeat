@@ -94,12 +94,12 @@ describe 'filebeat::default' do
       expect(chef_run).to install_package('filebeat')
     end
 
-    it "has correct default['filebeat']['config']['filebeat']['registry_file']" do
-      expect(node['filebeat']['config']['filebeat']['registry_file']).to eq('/var/lib/filebeat/registry')
+    it "has correct default['filebeat']['config']['filebeat.registry_file']" do
+      expect(node['filebeat']['config']['filebeat.registry_file']).to eq('/var/lib/filebeat/registry')
     end
 
-    it "has correct default['filebeat']['config']['filebeat']['config_dir']" do
-      expect(node['filebeat']['config']['filebeat']['config_dir']).to eq('/etc/filebeat/conf.d')
+    it "has correct default['filebeat']['config']['filebeat.config_dir']" do
+      expect(node['filebeat']['config']['filebeat.config_dir']).to eq('/etc/filebeat/conf.d')
     end
 
     it "has correct default['filebeat']['conf_dir']" do
@@ -152,12 +152,12 @@ describe 'filebeat::default' do
       expect(chef_run).to install_package('apt-transport-https')
     end
 
-    it "has correct default['filebeat']['config']['filebeat']['registry_file']" do
-      expect(node['filebeat']['config']['filebeat']['registry_file']).to eq('/var/lib/filebeat/registry')
+    it "has correct default['filebeat']['config']['filebeat.registry_file']" do
+      expect(node['filebeat']['config']['filebeat.registry_file']).to eq('/var/lib/filebeat/registry')
     end
 
-    it "has correct default['filebeat']['config']['filebeat']['config_dir']" do
-      expect(node['filebeat']['config']['filebeat']['config_dir']).to eq('/etc/filebeat/conf.d')
+    it "has correct default['filebeat']['config']['filebeat.config_dir']" do
+      expect(node['filebeat']['config']['filebeat.config_dir']).to eq('/etc/filebeat/conf.d')
     end
 
     it "has correct default['filebeat']['conf_dir']" do
@@ -211,12 +211,12 @@ describe 'filebeat::default' do
       expect(node['filebeat']['conf_dir']).to eq('C:/opt/filebeat/filebeat-5.5.2-windows-x86_64')
     end
 
-    it "has correct default['filebeat']['config']['filebeat']['registry_file']" do
-      expect(node['filebeat']['config']['filebeat']['registry_file']).to eq('C:/opt/filebeat/filebeat-5.5.2-windows-x86_64/registry')
+    it "has correct default['filebeat']['config']['filebeat.registry_file']" do
+      expect(node['filebeat']['config']['filebeat.registry_file']).to eq('C:/opt/filebeat/filebeat-5.5.2-windows-x86_64/registry')
     end
 
-    it "has correct default['filebeat']['config']['filebeat']['config_dir']" do
-      expect(node['filebeat']['config']['filebeat']['config_dir']).to eq('C:/opt/filebeat/filebeat-5.5.2-windows-x86_64/conf.d')
+    it "has correct default['filebeat']['config']['filebeat.config_dir']" do
+      expect(node['filebeat']['config']['filebeat.config_dir']).to eq('C:/opt/filebeat/filebeat-5.5.2-windows-x86_64/conf.d')
     end
   end
 end

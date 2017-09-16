@@ -44,7 +44,4 @@ filebeat_prospector 'test1' do
   backoff_factor 2
   harvester_limit 0
   enabled true
-  # close_older #v1
-  # force_close_files #v1
-  # multiline #v1
 end

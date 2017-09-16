@@ -55,7 +55,7 @@ class Chef
         content['json.overwrite_keys'] = new_resource.json_overwrite_keys if new_resource.json_overwrite_keys
         content['json.add_error_key'] = new_resource.json_add_error_key if new_resource.json_add_error_key
         content['json.message_key'] = new_resource.json_message_key if new_resource.json_message_key
-        content['multiline.pattern'] = new_resource.multiline_ if new_resource.multiline_pattern
+        content['multiline.pattern'] = new_resource.multiline_pattern if new_resource.multiline_pattern
         content['multiline.negate'] = new_resource.multiline_negate if new_resource.multiline_negate
         content['multiline.match'] = new_resource.multiline_match if new_resource.multiline_match
         content['multiline.flush_pattern'] = new_resource.multiline_flush_pattern if new_resource.multiline_flush_pattern

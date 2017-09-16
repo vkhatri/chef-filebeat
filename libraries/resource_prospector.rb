@@ -125,7 +125,7 @@ class Chef
       def close_renamed(arg = nil)
         set_or_return(
           :close_renamed, arg,
-          :kind_of => String,
+          :kind_of => [TrueClass, FalseClass],
           :default => nil
         )
       end
@@ -133,7 +133,7 @@ class Chef
       def close_removed(arg = nil)
         set_or_return(
           :close_removed, arg,
-          :kind_of => String,
+          :kind_of => [TrueClass, FalseClass],
           :default => nil
         )
       end
@@ -141,7 +141,7 @@ class Chef
       def close_eof(arg = nil)
         set_or_return(
           :close_eof, arg,
-          :kind_of => String,
+          :kind_of => [TrueClass, FalseClass],
           :default => nil
         )
       end
@@ -165,7 +165,7 @@ class Chef
       def clean_removed(arg = nil)
         set_or_return(
           :clean_removed, arg,
-          :kind_of => String,
+          :kind_of => [TrueClass, FalseClass],
           :default => nil
         )
       end

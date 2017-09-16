@@ -135,7 +135,7 @@ suites:
       chef_version: 13.3.42
     run_list:
       - recipe[filebeat::default]
-      - recipe[filebeat_test::default]
+      - recipe[filebeat_test::defaultv6]
     attributes:
       filebeat:
         version: 6.0.0-beta2

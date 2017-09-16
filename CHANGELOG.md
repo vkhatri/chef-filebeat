@@ -1,6 +1,21 @@
 filebeat CHANGELOG
 ==================
 
+1.1.0
+-----
+
+- Diogo Costa - PR Fix incorrect access to multiline_pattern attribute #116
+
+- Virender Khatri - Update file beat version v5.6.0 #117
+
+- Virender Khatri - Add test recipe missing prospector resource attributes #118
+
+- Virender Khatri - Match prospector resource attributes type with documentation #119
+
+- Virender Khatri - Add test recipe for v6 #120
+
+- Virender Khatri - Updated .kitchen.yml, dokken sync
+
 1.0.0
 -----
 

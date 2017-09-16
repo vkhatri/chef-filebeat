@@ -3,11 +3,52 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_zero
-  log_file: "/tmp/kitchen/chef-client.log"
   # client_rb:
     # treat_deprecation_warnings_as_errors: true
     # resource_cloning: false
+  name: chef_zero
+  log_file: "/tmp/kitchen/chef-client.log"
+  attributes:
+    apt:
+      confd:
+        install_recommends: false
+    filebeat:
+      config:
+        logging.level: info
+        logging.to_files: true
+        logging.files:
+          name: filebeat
+        output.elasticsearch:
+          hosts: ["127.0.0.1:9200"]
+      prospectors:
+        secure_logs:
+          paths:
+            - /var/log/secure
+          type: log
+          fields:
+            type: secure_logs
+        syslog_logs:
+          paths:
+            - /var/log/syslog
+          type: log
+          fields:
+            type: syslog_logs
+        messages_log:
+          paths:
+            - /var/log/messages
+          type: log
+          fields:
+            type: messages_log
+        extra_log:
+          paths:
+            - /var/log/*.log
+          type: log
+          fields:
+            type: extra_log
+          exclude_files:
+            - /var/log/messages
+            - /var/log/syslog
+            - /var/log/secure
 
 platforms:
   - name: ubuntu-14.04
@@ -26,209 +67,33 @@ platforms:
       communicator: winrm
       gui: false
 
-
 suites:
-  - name: default12
+  - name: chef12
     driver:
-      require_chef_omnibus: 12.21.3
+      require_chef_omnibus: 12.21.4
     run_list:
       - recipe[filebeat::default]
       - recipe[filebeat_test::default]
-    attributes:
-      filebeat:
-        purge_prospectors_dir: true
-        prospectors:
-          secure_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/secure
-                type: log
-                fields:
-                  type: secure_logs
-          syslog_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/syslog
-                type: log
-                fields:
-                  type: syslog_logs
-          messages_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/messages
-                type: log
-                fields:
-                  type: messages_log
-          extra_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/*.log
-                type: log
-                fields:
-                  type: extra_log
-                exclude_files:
-                - /var/log/messages
-                - /var/log/syslog
-                - /var/log/secure
-        config:
-          output:
-            elasticsearch:
-              hosts: ["127.0.0.1:9200"]
 
-  - name: default13
+  - name: chef13
     driver:
-      require_chef_omnibus: 13.2.20
+      require_chef_omnibus: 13.3.42
     run_list:
       - recipe[filebeat::default]
       - recipe[filebeat_test::default]
-    attributes:
-      filebeat:
-        purge_prospectors_dir: true
-        prospectors:
-          secure_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/secure
-                type: log
-                fields:
-                  type: secure_logs
-          syslog_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/syslog
-                type: log
-                fields:
-                  type: syslog_logs
-          messages_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/*.log
-                type: log
-                fields:
-                  type: messages_log
-          extra_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/*.log
-                type: log
-                fields:
-                  type: extra_log
-                exclude_files:
-                - /var/log/messages
-                - /var/log/syslog
-                - /var/log/secure
-        config:
-          output:
-            elasticsearch:
-              hosts: ["127.0.0.1:9200"]
 
   - name: runit
     excludes:
       - windows-2012R2
     run_list:
       - recipe[filebeat::default]
-    attributes:
-      filebeat:
-        purge_prospectors_dir: true
-        service:
-          init_style: 'runit'
-        prospectors:
-          secure_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/secure
-                type: log
-                fields:
-                  type: secure_logs
-          syslog_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/syslog
-                type: log
-                fields:
-                  type: syslog_logs
-          messages_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/*.log
-                type: log
-                fields:
-                  type: messages_log
-          extra_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/*.log
-                type: log
-                fields:
-                  type: extra_log
-                exclude_files:
-                - /var/log/messages
-                - /var/log/syslog
-                - /var/log/secure
-        config:
-          output:
-            elasticsearch:
-              hosts: ["127.0.0.1:9200"]
 
-  - name: default13-preview
+  - name: chef13-preview
     driver:
-      chef_version: 13.2.20
+      chef_version: 13.3.42
     run_list:
       - recipe[filebeat::default]
-      - recipe[filebeat_test::default]
+      - recipe[filebeat_test::defaultv6]
     attributes:
       filebeat:
-        version: 6.0.0-beta1
-        prospectors:
-          secure_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/secure
-                type: log
-                fields:
-                  type: secure_logs
-          syslog_logs:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/syslog
-                type: log
-                fields:
-                  type: syslog_logs
-          messages_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/messages
-                type: log
-                fields:
-                  type: messages_log
-          extra_log:
-            filebeat:
-              prospectors:
-              - paths:
-                - /var/log/*.log
-                type: log
-                fields:
-                  type: extra_log
-                exclude_files:
-                - /var/log/messages
-                - /var/log/syslog
-                - /var/log/secure
-        config:
-          output:
-            elasticsearch:
-              hosts: ["127.0.0.1:9200"]
+        version: 6.0.0-beta2

@@ -1,6 +1,11 @@
 filebeat CHANGELOG
 ==================
 
+1.2.0
+-----
+
+- Antek S. Baranski - Adding filebeat on Mac OS X install support
+ 
 1.1.0
 -----
 

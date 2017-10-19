@@ -38,6 +38,7 @@ https://github.com/vkhatri/chef-filebeat
 - Fedora
 - Ubuntu
 - Debian
+- Mac OSX
 
 Also works on Solaris zones given a physical Solaris 11.2 server. For that, use the .kitchen.zone.yml file. Check usage at (https://github.com/criticalmass/kitchen-zone). You will need an url to a filebeat package that works on Solaris 11.2. Checkout Building-Filebeat-On-Solaris11.md for instructions to build a filebeat package.
 
@@ -78,6 +79,8 @@ Refer CHANGELOG.md.
 
 - `filebeat::default` - default recipe (use it for run_list)
 
+- `filebeat::install_mac_os_x` - install filebeat for mac osx platform
+
 - `filebeat::install_package` - install filebeat package for linux platform
 
 - `filebeat::install_package_preview` - install filebeat preview (alpha/beta) package for linux platform
@@ -90,6 +93,9 @@ Refer CHANGELOG.md.
 
 - `filebeat::service` - configure filebeat service
 
+## Limitations
+
+The Mac OSX setup only allows for package installs and depends on brew, this means that version selection and preview build installs are not supported.
 
 ## LWRP filebeat_prospector
 

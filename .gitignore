@@ -28,3 +28,6 @@ coverage/
 .kitchen.local.yml
 
 .ignore/
+
+# IDE
+.idea/

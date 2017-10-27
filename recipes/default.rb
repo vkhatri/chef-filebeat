@@ -21,6 +21,8 @@ include_recipe 'filebeat::attributes'
 
 # install filebeat
 case node['platform']
+when 'mac_os_x'
+  include_recipe 'filebeat::install_mac_os_x'
 when 'windows'
   include_recipe 'filebeat::install_windows'
 when 'solaris2'

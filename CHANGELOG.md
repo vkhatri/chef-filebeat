@@ -5,7 +5,11 @@ filebeat CHANGELOG
 -----
 
 - Antek S. Baranski - Adding filebeat on Mac OS X install support
- 
+
+- Virender Khatri - Update file beat version v5.6.3
+
+- Virender Khatri - Added RC preview version support
+
 1.1.0
 -----
 

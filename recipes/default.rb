@@ -28,7 +28,7 @@ when 'windows'
 when 'solaris2'
   include_recipe 'filebeat::install_solaris'
 else
-  if node['filebeat']['version'].scan(/beta|alpha/).empty?
+  if node['filebeat']['version'].scan(/rc|beta|alpha/).empty?
     include_recipe 'yum-plugin-versionlock::default' if %w[fedora rhel amazon].include?(node['platform_family'])
     include_recipe 'filebeat::install_package'
   else

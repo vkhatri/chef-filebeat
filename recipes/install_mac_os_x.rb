@@ -22,7 +22,7 @@ include_recipe 'homebrew'
 # The brew package does not create the 'filebeat' directory in '/etc'.
 directory '/etc/filebeat' do
   action :create
-  mode 00755
+  mode 0o0755
   owner 'root'
   group 'wheel'
 end

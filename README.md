@@ -12,14 +12,14 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 1.1.0'
+cookbook 'filebeat', '~> 1.2.0'
 ```
 
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v1.1.0'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v1.2.0'
 ```
 
 
@@ -244,7 +244,7 @@ Above configuration will create three different prospector files - `lwrp-prospec
 
 ## Core Attributes
 
-* `default['filebeat']['version']` (default: `5.6.0`): filebeat version
+* `default['filebeat']['version']` (default: `5.6.3`): filebeat version
 
 * `default['filebeat']['ignore_version']` (default: `false`): ignore filebeat version for `package` install
 

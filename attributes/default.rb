@@ -23,3 +23,4 @@ default['filebeat']['service']['retry_delay'] = 2
 default['filebeat']['arch'] = node['kernel']['machine'] =~ /x86_64/ ? 'x86_64' : 'x86'
 
 default['filebeat']['log_dir'] = '/var/log/filebeat'
+default['filebeat']['apt']['options'] = "-o Dpkg::Options::='--force-confnew' --force-yes"

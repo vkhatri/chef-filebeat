@@ -52,16 +52,4 @@ node.default['filebeat']['config']['logging.files']['path'] = if node['platform'
                                                                 node['filebeat']['log_dir']
                                                               end
 
-# filebeat repository attributes
-if node['filebeat']['version'] < '5.0'
-  node.default['filebeat']['yum']['baseurl'] = 'https://packages.elastic.co/beats/yum/el/$basearch'
-  node.default['filebeat']['yum']['gpgkey'] = 'https://packages.elastic.co/GPG-KEY-elasticsearch'
-  node.default['filebeat']['apt']['uri'] = 'https://packages.elastic.co/beats/apt'
-  node.default['filebeat']['apt']['key'] = 'https://packages.elastic.co/GPG-KEY-elasticsearch'
-else
-  major_version = node['filebeat']['version'].split('.')[0]
-  node.default['filebeat']['yum']['baseurl'] = "https://artifacts.elastic.co/packages/#{major_version}.x/yum"
-  node.default['filebeat']['yum']['gpgkey'] = 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
-  node.default['filebeat']['apt']['uri'] = "https://artifacts.elastic.co/packages/#{major_version}.x/apt"
-  node.default['filebeat']['apt']['key'] = 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
-end
+node.default['elastic_beats_repo']['version'] = node['filebeat']['version']

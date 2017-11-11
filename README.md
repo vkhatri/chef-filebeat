@@ -244,7 +244,7 @@ Above configuration will create three different prospector files - `lwrp-prospec
 
 ## Core Attributes
 
-* `default['filebeat']['version']` (default: `5.6.3`): filebeat version
+* `default['filebeat']['version']` (default: `5.6.4`): filebeat version
 
 * `default['filebeat']['ignore_version']` (default: `false`): ignore filebeat version for `package` install
 

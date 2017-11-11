@@ -12,14 +12,14 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 1.2.0'
+cookbook 'filebeat', '~> 1.3.0'
 ```
 
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v1.2.0'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v1.3.0'
 ```
 
 
@@ -65,8 +65,7 @@ Refer CHANGELOG.md.
 ## Cookbook Dependency
 
 - windows
-- apt
-- yum
+- elastic_beats_repo
 - yum-plugin-versionlock
 - runit
 
@@ -288,34 +287,6 @@ Above configuration will create three different prospector files - `lwrp-prospec
 * `default['filebeat']['config']['filebeat.config_dir']` (default: `node['filebeat']['prospectors_dir']`): filebeat prospectors configuration files folder
 
 For more attribute info check `attributes/config.rb`.
-
-
-## Filebeat YUM/APT Repository Attributes
-
-* `default['filebeat']['yum']['description']` (default: ``): beats yum repository attribute
-
-* `default['filebeat']['yum']['gpgcheck']` (default: `true`): beats yum repository attribute
-
-* `default['filebeat']['yum']['enabled']` (default: `true`): beats yum repository attribute
-
-* `default['filebeat']['yum']['baseurl']` (default: `https://packages.elastic.co/beats/yum/el/$basearch`): beatsyum repository attribute
-
-* `default['filebeat']['yum']['gpgkey']` (default: `https://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats yum repository attribute
-
-* `default['filebeat']['yum']['metadata_expire']` (default: `3h`): beats yum repository attribute
-
-* `default['filebeat']['yum']['action']` (default: `:create`): beats yum repository attribute
-
-
-* `default['filebeat']['apt']['description']` (default: `calculated`): beats apt repository attribute
-
-* `default['filebeat']['apt']['components']` (default: `['stable', 'main']`): beats apt repository attribute
-
-* `default['filebeat']['apt']['uri']` (default: `https://packages.elastic.co/beats/apt`): beats apt repository attribute
-
-* `default['filebeat']['apt']['key']` (default: `http://packages.elasticsearch.org/GPG-KEY-elasticsearch`): beats apt repository attribute
-
-* `default['filebeat']['apt']['action']` (default: `:add`): filebeat apt repository attribute
 
 
 ## Other Attributes

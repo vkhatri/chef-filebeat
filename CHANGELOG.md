@@ -1,12 +1,20 @@
 filebeat CHANGELOG
 ==================
 
+1.3.0
+-----
+
+- Virender Khatri - Use cookbook elastic_beats_repo
+
+- Virender Khatri - Updated filebeat version v5.6.4
+
+
 1.2.0
 -----
 
 - Antek S. Baranski - Adding filebeat on Mac OS X install support
 
-- Virender Khatri - Update file beat version v5.6.3
+- Virender Khatri - Update filebeat version v5.6.3
 
 - Virender Khatri - Added RC preview version support
 

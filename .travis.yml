@@ -50,23 +50,6 @@ before_script:
 
 
 matrix:
-  allow_failures:
-    - env: INSTANCE=chef12-centos-6
-    - env: INSTANCE=chef12-centos-7
-    - env: INSTANCE=chef12-fedora-26
-    - env: INSTANCE=chef12-ubuntu-14
-    - env: INSTANCE=chef12-ubuntu-16
-    - env: INSTANCE=chef12-debian-8
-    - env: INSTANCE=chef12-debian-9
-    - env: INSTANCE=chef12-amazon
-    - env: INSTANCE=chef13-centos-6
-    - env: INSTANCE=chef13-centos-7
-    - env: INSTANCE=chef13-fedora-26
-    - env: INSTANCE=chef13-ubuntu-14
-    - env: INSTANCE=chef13-ubuntu-16
-    - env: INSTANCE=chef13-debian-8
-    - env: INSTANCE=chef13-debian-9
-    - env: INSTANCE=chef13-amazon
   include:
     - script:
       - /opt/chefdk/bin/chef exec rake

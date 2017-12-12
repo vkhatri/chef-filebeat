@@ -1,4 +1,4 @@
-default['filebeat']['version'] = '5.6.4'
+default['filebeat']['version'] = '6.0.1'
 default['filebeat']['release'] = '1'
 default['filebeat']['delete_prospectors_dir'] = false
 default['filebeat']['purge_prospectors_dir'] = false

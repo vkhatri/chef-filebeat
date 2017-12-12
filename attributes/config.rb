@@ -15,8 +15,6 @@ default['filebeat']['config']['filebeat.modules'] = []
 # default['filebeat']['config']['tags'] = ["service-X", "web-tier"]
 # default['filebeat']['config']['fields'] = {'env' => 'test'}
 # default['filebeat']['config']['fields_under_root'] = false
-# default['filebeat']['config']['queue_size'] = 1000
-# default['filebeat']['config']['bulk_queue_size'] = 0
 # default['filebeat']['config']['max_procs'] =
 
 # ===== add filebeat prospectors using node attribute example =====

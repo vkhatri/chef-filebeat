@@ -38,7 +38,7 @@ remote_file 'filebeat_package_file' do
   not_if { ::File.exist?(package_file) }
 end
 
-package 'filebeat' do
+package 'filebeat' do # ~FC109
   source package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
 end

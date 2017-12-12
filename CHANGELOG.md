@@ -1,13 +1,17 @@
 filebeat CHANGELOG
 ==================
 
+1.4.0
+-----
+
+- Virender Khatri - Updated filebeat version v6.0.1
+
 1.3.0
 -----
 
 - Virender Khatri - Use cookbook elastic_beats_repo
 
 - Virender Khatri - Updated filebeat version v5.6.4
-
 
 1.2.0
 -----

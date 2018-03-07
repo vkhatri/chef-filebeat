@@ -61,6 +61,7 @@ describe 'filebeat::default' do
     end
   end
 
+
   context 'rhel' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
@@ -200,7 +201,7 @@ describe 'filebeat::default' do
     end
 
     it 'unzip filebeat package file to C:/opt/filebeat' do
-      expect(chef_run).to unzip_windows_zipfile_to('C:/opt/filebeat')
+      expect(chef_run).to unzip_windows_zipfile('C:/opt/filebeat')
     end
 
     it 'run powershell_script to install filebeat as service' do

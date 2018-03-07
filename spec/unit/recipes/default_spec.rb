@@ -61,7 +61,6 @@ describe 'filebeat::default' do
     end
   end
 
-
   context 'rhel' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|

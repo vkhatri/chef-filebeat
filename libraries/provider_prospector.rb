@@ -99,6 +99,7 @@ class Chef
           content file_content
           notifies :restart, "service[#{node['filebeat']['service']['name']}]" if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
           mode 0o600
+          sensitive true
           action action
         end
         t.updated?

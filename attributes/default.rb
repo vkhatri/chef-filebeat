@@ -17,6 +17,9 @@ default['filebeat']['solaris'] = {
 
 default['filebeat']['service']['init_style'] = 'init' # or runit
 default['filebeat']['service']['name'] = 'filebeat'
+# see https://www.elastic.co/guide/en/beats/filebeat/current/command-line-options.html
+default['filebeat']['service']['additional_command_line_options'] = ''
+default['filebeat']['service']['ignore_failure'] = false
 default['filebeat']['service']['retries'] = 0
 default['filebeat']['service']['retry_delay'] = 2
 

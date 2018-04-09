@@ -7,7 +7,7 @@ NAME=<%= @name %>
 
 PIDFILE="/var/run/${NAME}.pid"
 DAEMON=<%= @daemon_path %>
-ARGS="-c <%= @conf_path %>"
+ARGS="-c <%= @conf_path %> <%= node['filebeat']['service']['additional_command_line_options'] %>"
 
 start() {
     echo -n $"Starting $NAME: "

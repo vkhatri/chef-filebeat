@@ -49,7 +49,7 @@ end
 service_action = node['filebeat']['disable_service'] ? %i[disable stop] : %i[enable nothing]
 
 if node['filebeat']['service']['init_style'] == 'runit'
-  runit_cmd = "/usr/share/filebeat/bin/filebeat -c #{node['filebeat']['conf_file']} -path.home /usr/share/filebeat -path.config #{node['filebeat']['conf_dir']} -path.data /var/lib/filebeat -path.logs /var/log/filebeat"
+  runit_cmd = "/usr/share/filebeat/bin/filebeat -c #{node['filebeat']['conf_file']} -path.home /usr/share/filebeat -path.config #{node['filebeat']['conf_dir']} -path.data /var/lib/filebeat -path.logs /var/log/filebeat #{node['filebeat']['service']['additional_command_line_options']}"
   runit_service node['filebeat']['service']['name'] do
     options(
       'user' => 'root',
@@ -57,6 +57,7 @@ if node['filebeat']['service']['init_style'] == 'runit'
     )
     default_logger true
     action service_action
+    ignore_failure node['filebeat']['service']['ignore_failure']
   end
 else
   service node['filebeat']['service']['name'] do
@@ -65,5 +66,6 @@ else
     retry_delay node['filebeat']['service']['retry_delay']
     supports :status => true, :restart => true
     action service_action
+    ignore_failure node['filebeat']['service']['ignore_failure']
   end
 end

@@ -6,6 +6,9 @@ driver:
 transport:
   name: dokken
 
+verifier:
+  name: inspec
+
 provisioner:
   name: dokken
   attributes:
@@ -51,7 +54,7 @@ provisioner:
             - /var/log/secure
 
 platforms:
-  - name: ubuntu-14
+  - name: ubuntu14
     driver:
       image: ubuntu:14.04
       pid_one_command: /sbin/init
@@ -59,7 +62,7 @@ platforms:
         - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-  - name: ubuntu-16
+  - name: ubuntu16
     driver:
       image: ubuntu:16.04
       pid_one_command: /bin/systemd
@@ -67,7 +70,7 @@ platforms:
         - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-  - name: debian-8
+  - name: debian8
     driver:
       image: debian:8.9
       pid_one_command: /sbin/init
@@ -75,7 +78,7 @@ platforms:
         - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-  - name: debian-9
+  - name: debian9
     driver:
       image: dokken/debian-9
       pid_one_command: /bin/systemd
@@ -83,7 +86,7 @@ platforms:
         - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-  - name: centos-6
+  - name: centos6
     driver:
       image: centos:6.9
       pid_one_command: /sbin/init
@@ -91,7 +94,7 @@ platforms:
       intermediate_instructions:
         - RUN yum install -y net-tools initscripts which curl
 
-  - name: centos-7
+  - name: centos7
     driver:
       image: centos:7
       pid_one_command: /usr/lib/systemd/systemd
@@ -99,7 +102,7 @@ platforms:
       intermediate_instructions:
         - RUN yum install -y net-tools initscripts systemd-sysv which lsof curl
 
-  - name: fedora-26
+  - name: fedora26
     driver:
       image: fedora:26
       pid_one_command: /usr/lib/systemd/systemd
@@ -115,20 +118,44 @@ platforms:
       intermediate_instructions:
         - RUN yum install -y net-tools initscripts which
 
+  - name: amazon2
+    driver:
+      image: amazonlinux:2
+      pid_one_command: /usr/lib/systemd/systemd
+      platform: amazon
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts
+
 suites:
   - name: chef12
     driver:
       chef_version: 12.21.4
+    verifier:
+      inspec_tests:
+        - test/smoke/v6
     run_list:
       - recipe[filebeat::default]
-      - recipe[filebeat_test::default]
+      - recipe[filebeat_test::defaultv6]
 
   - name: chef13
     driver:
       chef_version: 13.3.42
+    verifier:
+      inspec_tests:
+        - test/smoke/v6
     run_list:
       - recipe[filebeat::default]
-      - recipe[filebeat_test::default]
+      - recipe[filebeat_test::defaultv6]
+
+  - name: chef14
+    driver:
+      chef_version: 14.0.202
+    verifier:
+      inspec_tests:
+        - test/smoke/v6
+    run_list:
+      - recipe[filebeat::default]
+      - recipe[filebeat_test::defaultv6]
 
   - name: chef13-preview
     driver:

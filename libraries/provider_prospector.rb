@@ -8,8 +8,6 @@ class Chef
         true
       end
 
-      use_inline_resources
-
       action :create do
         converge_by "create filebeat prospector configuration #{new_resource.name}" do
           prospector_file
@@ -99,7 +97,7 @@ class Chef
           content file_content
           notifies :restart, "service[#{node['filebeat']['service']['name']}]" if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
           mode 0o600
-          sensitive true
+          sensitive new_resource.sensitive
           action action
         end
         t.updated?

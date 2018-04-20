@@ -15,6 +15,14 @@ class Chef
         @name = name
       end
 
+      def sensitive(arg = nil)
+        set_or_return(
+          :sensitive, arg,
+          :kind_of => [TrueClass, FalseClass],
+          :default => true
+        )
+      end
+
       def type(arg = nil)
         set_or_return(
           :type, arg,

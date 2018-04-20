@@ -1,4 +1,5 @@
 filebeat_prospector 'test1' do
+  sensitive false
   type 'log'
   fields 'type' => 'test1_logs'
   type 'log'

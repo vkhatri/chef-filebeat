@@ -41,7 +41,7 @@ describe 'filebeat::default' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
         node.automatic['platform_family'] = 'rhel'
-        node.override['filebeat']['version'] = '6.0.1-beta1'
+        node.override['filebeat']['version'] = '6.2.4-beta1'
         node.override['filebeat']['purge_prospectors_dir'] = true
       end.converge(described_recipe)
     end
@@ -179,12 +179,12 @@ describe 'filebeat::default' do
 
     include_examples 'filebeat'
 
-    it 'create prospector directory C:/opt/filebeat/filebeat-6.0.1-windows-x86_64/conf.d' do
-      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-6.0.1-windows-x86_64/conf.d')
+    it 'create prospector directory C:/opt/filebeat/filebeat-6.2.4-windows-x86_64/conf.d' do
+      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-6.2.4-windows-x86_64/conf.d')
     end
 
-    it 'configure C:/opt/filebeat/filebeat-6.0.1-windows/filebeat.yml' do
-      expect(chef_run).to create_file('C:/opt/filebeat/filebeat-6.0.1-windows-x86_64/filebeat.yml')
+    it 'configure C:/opt/filebeat/filebeat-6.2.4-windows/filebeat.yml' do
+      expect(chef_run).to create_file('C:/opt/filebeat/filebeat-6.2.4-windows-x86_64/filebeat.yml')
     end
 
     it 'include recipe filebeat::install_windows' do
@@ -208,15 +208,15 @@ describe 'filebeat::default' do
     end
 
     it "has correct default['filebeat']['conf_dir']" do
-      expect(node['filebeat']['conf_dir']).to eq('C:/opt/filebeat/filebeat-6.0.1-windows-x86_64')
+      expect(node['filebeat']['conf_dir']).to eq('C:/opt/filebeat/filebeat-6.2.4-windows-x86_64')
     end
 
     it "has correct default['filebeat']['config']['filebeat.registry_file']" do
-      expect(node['filebeat']['config']['filebeat.registry_file']).to eq('C:/opt/filebeat/filebeat-6.0.1-windows-x86_64/registry')
+      expect(node['filebeat']['config']['filebeat.registry_file']).to eq('C:/opt/filebeat/filebeat-6.2.4-windows-x86_64/registry')
     end
 
     it "has correct default['filebeat']['config']['filebeat.config_dir']" do
-      expect(node['filebeat']['config']['filebeat.config_dir']).to eq('C:/opt/filebeat/filebeat-6.0.1-windows-x86_64/conf.d')
+      expect(node['filebeat']['config']['filebeat.config_dir']).to eq('C:/opt/filebeat/filebeat-6.2.4-windows-x86_64/conf.d')
     end
   end
 end

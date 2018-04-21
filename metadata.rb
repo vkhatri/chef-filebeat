@@ -10,7 +10,7 @@ issues_url 'https://github.com/vkhatri/chef-filebeat/issues' if respond_to?(:iss
 chef_version '>= 12.1' if respond_to?(:chef_version)
 
 depends 'homebrew', '~> 4.2'
-depends 'elastic_beats_repo'
+depends 'elastic_beats_repo', '>= 1.2.0'
 depends 'yum-plugin-versionlock', '>= 0.1.2'
 depends 'runit'
 depends 'windows'

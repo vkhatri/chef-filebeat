@@ -1,7 +1,6 @@
 filebeat_prospector 'test1' do
   type 'log'
   fields 'type' => 'test1_logs'
-  type 'log'
   input_type 'log'
   paths %w[/var/log/test1.log]
   recursive_glob_enabled false

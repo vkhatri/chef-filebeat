@@ -1,6 +1,20 @@
 filebeat CHANGELOG
 ==================
 
+1.5.0
+-----
+- Virender Khatri - Updated filebeat version to v6.2.4
+
+- Jean Rouge - Making it possible to pass additional command line arguments to the filebeat service
+
+- Virender Khatri - Updated tests and clean up
+
+- Michael Burns - Updated default_spec.rb
+
+- Michael Burns - Use unzip_windows_zipfile for unit test
+
+- Oleksiy Kovyrin - Enable sensitive flag for filebeat file resource
+
 1.4.0
 -----
 

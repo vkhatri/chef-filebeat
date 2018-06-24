@@ -20,15 +20,6 @@ services: docker
 
 env:
   matrix:
-    - INSTANCE=chef12-centos6
-    - INSTANCE=chef12-centos7
-    - INSTANCE=chef12-fedora26
-    - INSTANCE=chef12-ubuntu14
-    - INSTANCE=chef12-ubuntu16
-    - INSTANCE=chef12-debian8
-    - INSTANCE=chef12-debian9
-    - INSTANCE=chef12-amazon
-    - INSTANCE=chef12-amazon2
     - INSTANCE=chef13-centos6
     - INSTANCE=chef13-centos7
     - INSTANCE=chef13-fedora26

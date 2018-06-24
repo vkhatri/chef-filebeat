@@ -15,43 +15,6 @@ provisioner:
     apt:
       confd:
         install_recommends: false
-    filebeat:
-      config:
-        logging.level: info
-        logging.to_files: true
-        logging.files:
-          name: filebeat
-        output.elasticsearch:
-          hosts: ["127.0.0.1:9200"]
-      prospectors:
-        secure_logs:
-          paths:
-            - /var/log/secure
-          type: log
-          fields:
-            type: secure_logs
-        syslog_logs:
-          paths:
-            - /var/log/syslog
-          type: log
-          fields:
-            type: syslog_logs
-        messages_log:
-          paths:
-            - /var/log/messages
-          type: log
-          fields:
-            type: messages_log
-        extra_log:
-          paths:
-            - /var/log/*.log
-          type: log
-          fields:
-            type: extra_log
-          exclude_files:
-            - /var/log/messages
-            - /var/log/syslog
-            - /var/log/secure
 
 platforms:
   - name: ubuntu14
@@ -129,40 +92,42 @@ platforms:
 suites:
   - name: chef12
     driver:
-      chef_version: 12.21.4
+      chef_version: 12.22.5
     verifier:
       inspec_tests:
         - test/smoke/v6
     run_list:
-      - recipe[filebeat::default]
       - recipe[filebeat_test::defaultv6]
 
   - name: chef13
     driver:
-      chef_version: 13.3.42
+      chef_version: 13.9.4
     verifier:
       inspec_tests:
         - test/smoke/v6
     run_list:
-      - recipe[filebeat::default]
       - recipe[filebeat_test::defaultv6]
 
   - name: chef14
     driver:
-      chef_version: 14.0.202
+      chef_version: 14.2.0
     verifier:
       inspec_tests:
         - test/smoke/v6
     run_list:
-      - recipe[filebeat::default]
       - recipe[filebeat_test::defaultv6]
+
+  - name: chef13runit
+    driver:
+      chef_version: 13.9.4
+    verifier:
+      inspec_tests:
+        - test/smoke/v6runit
+    run_list:
+      - recipe[filebeat_test::defaultv6runit]
 
   - name: chef13-preview
     driver:
       chef_version: 13.3.42
     run_list:
-      - recipe[filebeat::default]
-      - recipe[filebeat_test::defaultv6]
-    attributes:
-      filebeat:
-        version: 6.0.0-rc2
+      - recipe[filebeat_test::defaultv6preview]

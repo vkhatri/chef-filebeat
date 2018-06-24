@@ -32,7 +32,7 @@ ClassLength:
 Metrics/MethodLength:
   Enabled: false
 Metrics/BlockLength:
-  Max: 50
+  Max: 125
   Exclude:
     - "**/*_spec.rb"
 AbcSize:

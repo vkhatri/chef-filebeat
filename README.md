@@ -12,14 +12,14 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 1.4.0'
+cookbook 'filebeat', '~> 2.0.0'
 ```
 
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v1.4.0'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v2.0.0'
 ```
 
 
@@ -52,250 +52,212 @@ Also works on Solaris zones given a physical Solaris 11.2 server. For that, use 
 
 ## Supported Filebeat
 
-- 1.x (dropped test support in cookbook version v1.0.0)
 - 5.x
 - 6.x
 
 
-## Major Changes
-
-Refer CHANGELOG.md.
-
-
 ## Cookbook Dependency
 
-- windows
-- elastic_beats_repo
-- yum-plugin-versionlock
-- runit
+- `homebrew`
+- `elastic_repo`
+- `yum-plugin-versionlock`
+- `runit`
+- `windows`
 
 
 ## Recipes
 
-- `filebeat::attributes` - cookbook derived default attributes
+- lwrp_test - LWRP examples recipe
 
-- `filebeat::config` - configure filebeat
 
-- `filebeat::default` - default recipe (use it for run_list)
+## LWRP Resources
 
-- `filebeat::install_mac_os_x` - install filebeat for mac osx platform
+- `filebeat_config` - filebeat configuration resource
 
-- `filebeat::install_package` - install filebeat package for linux platform
+- `filebeat_install` - filebeat install resource
 
-- `filebeat::install_package_preview` - install filebeat preview (alpha/beta) package for linux platform
+- `filebeat_install_preview` - filebeat preview package install resource
 
-- `filebeat::install_solaris` - install filebeat package for solaris platform
+- `filebeat_service` - filebeat service resource
 
-- `filebeat::install_windows` - install filebeat for windows platform
+- `filebeat_prospector` - filebeat prospector resource
 
-- `filebeat::prospectors` - configure filebeat prospectors via node attribute `node['filebeat']['prospectors']`
-
-- `filebeat::service` - configure filebeat service
 
 ## Limitations
 
 The Mac OSX setup only allows for package installs and depends on brew, this means that version selection and preview build installs are not supported.
 
-## LWRP filebeat_prospector
 
-LWRP `filebeat_prospector` creates filebeat prospector configuration yaml file under directory `node['filebeat']['prospectors_dir']` with file name `lwrp-prospector-#{resource_name}.yml`.
+## LWRP filebeat_install
+
+LWRP `filebeat_install` installs filebeat, creates log/prospectors directories, and also enable filebeat service.
+
+Below attributes are derived using helper methods and also used by other LWRP.
+
+- `conf_dir`
+- `prospectors_dir`
+- `log_dir`
+
+**LWRP example**
+
+```ruby
+filebeat_install 'default' do
+  [options ..]
+end
+```
+
+
+**LWRP Options**
+
+- *action* (optional)	- default `:create`, options: :create, :delete
+- *version* (optional, String)	- default `6.3.0`, filebeat version
+- *release* (optional, String)	- default `1`, filebeat release version, used by `rhel` family package resource
+- *setup_repo* (optional, Boolean) - default `true`, set to `false`, to skip elastic repository setup using cookbook `elastic_repo`
+- *ignore_package_version* (optional, Boolean) - default `false`, set to true, to install latest available yum/apt filebeat package
+- *service_name* (optional, String) - default `filebeat`, filebeat service name, must be common across resources
+- *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
+- *notify_restart* (optional, Boolean) - default `true`, set to `false`, to ignore filebeat service restart notify
+- *delete_prospectors_dir* (optional, Boolean) - default `false`, set to `true`, to purge prospectors directory by deleting and recrating prospectors directory
+- *conf_dir* (optional, String, NilClass) - default `nil`, filebeat configuration directory, this attribute is derived by helper method
+- *prospectors_dir* (optional, String, NilClass) - default `nil`, filebeat prospectors directory, this attribute is derived by helper method
+- *log_dir* (optional, String, NilClass) - default `nil`, filebeat log directory, this attribute is derived by helper method
+- *windows_package_url* (optional, String) - default `auto`, windows filebeat package url
+- *windows_base_dir* (optional, String) - default `C:/opt/filebeat`, filebeat windows base directory
+- *apt_options* (optional, Array) - default `%w[stable main]`, filebeat package resource attribute for `debian` platform family
+
+
+## LWRP filebeat_service
+
+LWRP `filebeat_service` configures `filebeat` service.
 
 
 **LWRP example**
 
 ```ruby
-filebeat_prospector 'messages' do
-  paths ['/var/log/messages']
-  document_type 'apache'
-  ignore_older '24h'
-  scan_frequency '15s'
-  harvester_buffer_size 16384
-  fields 'type' => 'apacheLogs'
+filebeat_service 'default' do
+  [options ..]
 end
 ```
 
 **LWRP Options**
 
-- *action* (optional)	- default :create, options: :create, :delete
-- *type* (optional, String) - filebeat prospector configuration attribute
-- *input_type* (optional, String) - filebeat prospector configuration attribute
-- *paths* (optional, String)	- filebeat prospector configuration attribute
-- *recursive_glob_enabled* (optional, TrueClass/FalseClass) - filebeat prospector configuration attribute
-- *encoding* (optional, String)	- filebeat prospector configuration attribute
-- *exclude_lines* (optional, Array) - A list of regular expressions to match the lines that you want filebeat to exclude. Filebeat drops any lines that match a regular expression in the list. By default, no lines are dropped.
-- *include_lines* (optional, Array) - A list of regular expressions to match the lines that you want filebeat to include. Filebeat exports only the lines that match a regular expression in the list. By default, all lines are exported.
-- *exclude_files* (optional, Array) - A list of regular expressions to match the files that you want filebeat prospector instance to exclude.
-- *tags* (optional, Array)   - filebeat prospector configuration attribute
-- *fields* (optional, Hash)	- filebeat prospector configuration attribute
-- *fields_under_root* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
-- *ignore_older* (optional, String)	- filebeat prospector configuration attribute
-- *close_inactive* (optional, String)  - filebeat prospector configuration attribute
-- *close_renamed* (optional, String)  - filebeat prospector configuration attribute
-- *close_eof* (optional, String)  - filebeat prospector configuration attribute
-- *close_timeout* (optional, String)  - filebeat prospector configuration attribute
-- *clean_inactive* (optional, String)  - filebeat prospector configuration attribute
-- *clean_removed* (optional, String)  - filebeat prospector configuration attribute
-- *scan_frequency* (optional, String) - filebeat prospector configuration attribute
-- *scan_sort* (optional, String) - filebeat prospector configuration attribute `scan.sort`
-- *scan_order* (optional, String) - filebeat prospector configuration attribute `sort.order`
-- *document_type* (optional, String)	- filebeat prospector configuration attribute
-- *harvester_buffer_size* (optional, Integer)	- filebeat prospector configuration attribute
-- *max_bytes* (optional, Integer) - filebeat prospector configuration attribute
-- *json_keys_under_root* (optional, String) - filebeat prospector configuration attribute `json.keys_under_root`
-- *json_overwrite_keys* (optional, String)  - filebeat prospector configuration attribute `json.overwrite_keys`
-- *json_add_error_key* (optional, String) - filebeat prospector configuration attribute `json.add_error_key`
-- *json_message_key* (optional, String) - filebeat prospector configuration attribute `json.message_key`
-- *multiline_pattern* (optional, String) - filebeat prospector configuration attribute `multiline.pattern`
-- *multiline_negate* (optional, String) - filebeat prospector configuration attribute `multiline.negate`
-- *multiline_match* (optional, String) - filebeat prospector configuration attribute `multiline.match`
-- *multiline_flush_pattern* (optional, String) - filebeat prospector configuration attribute `multiline.flush_pattern`
-- *multiline_max_lines* (optional, String) - filebeat prospector configuration attribute `multiline.max_lines`
-- *multiline_timeout* (optional, String) - filebeat prospector configuration attribute `multiline.timeout`
-- *tail_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
-- *pipeline* (optional, String)	- filebeat prospector configuration attribute
-- *symlinks* (optional, String)	- filebeat prospector configuration attribute
-- *backoff* (optional, String)	- filebeat prospector configuration attribute
-- *max_backoff* (optional, String)	- filebeat prospector configuration attribute
-- *backoff_factor* (optional, Integer)	- filebeat prospector configuration attribute
-- *harvester_limit* (optional, Integer)	- filebeat prospector configuration attribute
-- *enabled* (optional, TrueClass/FalseClass) - filebeat prospector configuration attribute
-- *close_older* (optional, String)  - filebeat prospector configuration attribute
-- *force_close_files* (optional, TrueClass/FalseClass)	- filebeat prospector configuration attribute
-- *multiline* (optional, Hash)	- Multiline configuration hash. Options: `pattern`: <regex pattern to match>, `negate`: [true/false], `match`: [before/after]
+- *action* (optional)	- default `:create`, options: :create, :delete
+- *filebeat_install_resource_name* (optional, String) - default `default`, filebeat_install/filebeat_install_preview resource name, set this attribute if LWRP resource name is other than `default`
+- *service_name* (optional, String) - default `filebeat`, filebeat service name, must be common across resources
+- *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
+- *notify_restart* (optional, Boolean) - default `true`, set to `false`, to ignore filebeat service restart notify
+- *purge_prospectors_dir* (optional, Boolean) - default `false`, set to `true`, to purge prospectors
+- *runit_filebeat_cmd_options* (optional, Boolean) - default `''`, set to `true`, runit filebeat service command line options
+- *ignore_failure* (optional, Boolean) - default `false`, set to `true`, to ignore filebeat service failures
+- *retries* (optional, Integer) - default `2`, filebeat service resource attribute
+- *retry_delay* (optional, Integer) - default `0`, filebeat service resource attribute
 
 
-## How to Add Filebeat Output Configuration via Node Attribute
+## LWRP filebeat_config
 
-Filebeat output configuration can be added to attribute `node['filebeat']['config']`.
+LWRP `filebeat_config` creates filebeat configuration yaml file `/etc/filebeat/filebeat.yml`.
 
-```json
-  "default_attributes": {
-    "filebeat": {
-      "config": {
-        "output.elasticsearch": {
-          "enable": true,
-          "hosts": "127.0.0.1:9200"
-        },
-        "output.redis": {
-          "enable": true,
-          "option ..": "value .."
-        },
-        "{output.redis|output.elasticsearch|output.kafka|output.file|output.console|output.logstash| ..}": {
-          "option ..": "value ..",
-        }
-      }
-    }
-  }
+Below filebeat configuration parameters gets overwritten by the LWRP.
 
+- `filebeat.registry_file`
+- `filebeat.config_dir`
+- `logging.files`
+
+
+**LWRP example**
+
+```ruby
+conf = {
+  'filebeat.modules' => [],
+  'prospectors' => [],
+  'logging.level' => 'info',
+  'logging.to_files' => true,
+  'logging.files' => { 'name' => 'filebeat' },
+  'output.elasticsearch' => { 'hosts' => ['127.0.0.1:9200'] }
+}
+
+filebeat_config 'default' do
+  config conf
+  action :create
+end
 ```
 
-Above filebeat output configuration will be added to `filebeat.yml` file.
+Above LWRP Resource will create a file `/etc/filebeat/conf.d/lwrp-prospector-messages_log.yml` with content:
 
-
-## How to Add Filebeat Prospectors via Node Attribute
-
-Individual prospector configuration file can also be added using attribute `default['filebeat']['prospectors']`. Each prospector configuration will be created using LWRP.
-For more prospector options, check out LWRP `filebeat_prospector`
-
-```json
-  "default_attributes": {
-    "filebeat": {
-      "prospectors": {
-
-        "system_logs": {
-          "paths": [
-            "/var/log/messages",
-            "/var/log/syslog"
-          ],
-          "type": "log",
-          "fields": {
-            "type": "system_logs"
-          },
-          "option ...": "value ..."
-        },
-
-        "apache_logs": {
-          "paths": [
-            "/var/log/apache/*.log"
-          ],
-          "type": "log",
-          "ignore_older": "24h",
-          "scan_frequency": "15s",
-          "harvester_buffer_size": 16384,
-          "fields": {
-            "type": "apache_logs"
-          },
-          "option ...": "value ..."
-        },
-
-        "prospector ...": {
-          "option ...": "value ..."
-        }
-
-      }
-    }
-  }
-
+```yaml
+filebeat.modules: []
+prospectors: []
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: "/var/log/filebeat"
+output.elasticsearch:
+  hosts:
+  - 127.0.0.1:9200
+filebeat.registry_file: "/var/lib/filebeat/registry"
+filebeat.config_dir: "/etc/filebeat/conf.d"
 ```
 
-Above configuration will create three different prospector files - `lwrp-prospector-system_logs.yml, lwrp-prospector-secure_logs.yml and lwrp-prospector-apache_logs.yml` under `node['filebeat']['prospectors_dir']`.
+**LWRP Options**
+
+- *action* (optional)	- default `:create`, options: :create, :delete
+- *filebeat_install_resource_name* (optional, String) - default `default`, filebeat_install/filebeat_install_preview resource name, set this attribute if LWRP resource name is other than `default`
+- *config* (Hash) - default `{}` filebeat configuration options
+- *sensitive* (optional, Boolean) - default `false`, filebeat configuration file chef resource attribute
+- *service_name* (optional, String) - default `filebeat`, filebeat service name, must be common across resources
+- *conf_file* (optional, String, NilClass) - default `nil`, filebeat configuration file, this attribute is derived by helper method
+- *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
+- *notify_restart* (optional, Boolean) - default `true`, set to `false`, to ignore filebeat service restart notify
 
 
-## Core Attributes
+## LWRP filebeat_prospector
 
-* `default['filebeat']['version']` (default: `6.0.1`): filebeat version
-
-* `default['filebeat']['ignore_version']` (default: `false`): ignore filebeat version for `package` install
-
-* `default['filebeat']['setup_repo']` (default: `true`): setup `apt` or `yum` repository if set to `true`
-
-* `default['filebeat']['release']` (default: `1`): filebeat release for yum package
-
-* `default['filebeat']['service']['init_style']` (default: `init`): filebeat service init system, options: init, runit
-
-* `default['filebeat']['package_url']` (default: `auto`): package url for windows installation
-
-* `default['filebeat']['log_dir']` (default: `/var/log/filebeat`): filebeat logging directory
-
-* `default['filebeat']['conf_dir']` (default: `/etc/filebeat`): filebeat yaml configuration file directory
-
-* `default['filebeat']['conf_file']` (default: `/etc/filebeat/filebeat.yml`): filebeat configuration file
-
-* `default['filebeat']['notify_restart']` (default: `true`): whether to restart filebeat service on configuration file change
-
-* `default['filebeat']['disable_service']` (default: `false`): whether to stop and disable filebeat service
-
-* `default['filebeat']['prospectors_dir']` (default: `/etc/filebeat/conf.d`): prospectors configuration file directory
-
-* `default['filebeat']['prospectors']` (default: `{}`): prospectors configuration via node attribute
-
-* `default['filebeat']['modules']` (default: `{}`): modules configuration via node attribute
-
-* `default['filebeat']['delete_prospectors_dir']` (default: `false`): delete and create prospectors configuration directory if set to true
-
-* `default['filebeat']['purge_prospectors_dir']` (default: `false`): purge files under prospectors configuration directory if set to true, except `node-prospector-*` (created by node attribute) and `lwrp-prospector-` (created by LWRP)
+LWRP `filebeat_prospector` creates a filebeat prospector configuration yaml file under prospectors directory with file name `lwrp-prospector-#{resource_name}.yml`.
 
 
-## Configuration File filebeat.yml Attributes
+**LWRP example**
 
-* `default['filebeat']['config']['filebeat.prospectors']` (default: `[]`): filebeat prospectors configuration
+```ruby
+conf = {
+  'enabled' => true,
+  'paths' => ['/var/log/messages'],
+  'type' => 'log',
+  'fields' => {'type' => 'messages_log'}
+}
 
-* `default['filebeat']['config']['filebeat.modules']` (default: `[]`): filebeat prospectors configuration
+filebeat_prospector 'messages_log' do
+  config conf
+  action :create
+end
+```
 
-* `default['filebeat']['config']['filebeat.registry_file']` (default: `/var/lib/filebeat/registry`): filebeat services to capture packets
+Above LWRP Resource will create a file `/etc/filebeat/conf.d/lwrp-prospector-messages_log.yml` with content:
 
-* `default['filebeat']['config']['filebeat.config_dir']` (default: `node['filebeat']['prospectors_dir']`): filebeat prospectors configuration files folder
+```yaml
+filebeat:
+  prospectors:
+  - enabled: true
+    paths:
+    - "/var/log/messages"
+    type: log
+    fields:
+      type: messages_log
+```
 
-For more attribute info check `attributes/config.rb`.
+**LWRP Options**
+
+- *action* (optional)	- default `:create`, options: :create, :delete
+- *filebeat_install_resource_name* (optional, String) - default `default`, filebeat_install/filebeat_install_preview resource name, set this attribute if LWRP resource name is other than `default`
+- *config* (Hash) - default `{}` filebeat configuration options
+- *sensitive* (optional, Boolean) - default `false`, filebeat configuration file chef resource attribute
+- *service_name* (optional, String) - default `filebeat`, filebeat service name, must be common across resources
+- *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
+- *notify_restart* (optional, Boolean) - default `true`, set to `false`, to ignore filebeat service restart notify
 
 
-## Other Attributes
+## How to Create Filebeat LWRP Resources via Node Attribute
 
-* `default['filebeat']['service']['name']` (default: `filebeat`): filebeat service name
-
-* `default['filebeat']['service']['retries']` (default: `:0`): filebeat service resource attribute
-
-* `default['filebeat']['service']['retry_delay']` (default: `:2`): filebeat service resource attribute
+Check out filebeat test cookbook [filebeat_test](test/cookbooks/filebeat_test).
 
 
 ## Contributing

@@ -19,6 +19,7 @@ property :log_dir, [String, NilClass], default: nil
 property :windows_package_url, String, default: 'auto'
 property :windows_base_dir, String, default: 'C:/opt/filebeat'
 property :apt_options, String, default: "-o Dpkg::Options::='--force-confnew' --force-yes"
+property :elastic_repo_options, Hash, default: {}
 
 default_action :create
 
@@ -89,8 +90,12 @@ action :create do
   ## install filebeat yum/apt
   if %w[fedora rhel amazon debian].include?(node['platform_family'])
     # setup yum/apt repository
+    elastic_repo_opts = new_resource.elastic_repo_options.dup
+    elastic_repo_opts['version'] = new_resource.version
     elastic_repo 'default' do
-      version new_resource.version
+      elastic_repo_opts.each do |key, value|
+        send(key, value) unless value.nil?
+      end
       only_if { new_resource.setup_repo }
     end
 

@@ -183,7 +183,7 @@ filebeat_config 'default' do
 end
 ```
 
-Above LWRP Resource will create a file `/etc/filebeat/conf.d/lwrp-prospector-messages_log.yml` with content:
+Above LWRP Resource will create a file `/etc/filebeat/filebeat.yml` with content:
 
 ```yaml
 filebeat.modules: []

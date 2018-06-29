@@ -12,14 +12,14 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 2.0.0'
+cookbook 'filebeat', '~> 2.1.0'
 ```
 
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v2.0.0'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v2.1.0'
 ```
 
 

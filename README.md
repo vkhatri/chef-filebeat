@@ -12,14 +12,14 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 2.0.0'
+cookbook 'filebeat', '~> 2.1.0'
 ```
 
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v2.0.0'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v2.1.0'
 ```
 
 
@@ -124,6 +124,7 @@ end
 - *windows_package_url* (optional, String) - default `auto`, windows filebeat package url
 - *windows_base_dir* (optional, String) - default `C:/opt/filebeat`, filebeat windows base directory
 - *apt_options* (optional, Array) - default `%w[stable main]`, filebeat package resource attribute for `debian` platform family
+- *elastic_repo_options* (optional, Hash) - default `{}`, resource elastic_repo options, `filebeat_install` attribute `version` overrides `elasti_repo_options` key `version` value. Check out [elastic_repo cookbook](https://github.com/vkhatri/chef-elastic-repo) for more details.
 
 
 ## LWRP filebeat_service

@@ -1,6 +1,31 @@
 filebeat CHANGELOG
 ==================
 
+2.1.0
+-----
+
+- Virender Khatri - Added filebeat_install attr :elastic_repo_options for :elastic_repo resource configuration
+
+- Virender Khatri - Added filebeat Log Directory Resource
+
+- Virender Khatri - Updated filebeat_service service resource
+
+- Virender Khatri - Updated filebeat_resource lookup to use attr filebeat_install_resource_name
+
+- Virender Khatri - Fixed filebeat_install for windows
+
+- Virender Khatri - Updated elastic_repo cookbook version
+
+
+2.0.0
+-----
+
+- Virender Khatri - Converted Recipes to LWRP Resources, check README for available resources and test cookbook for usage reference
+
+- Virender Khatri - LWRP Resources uses elastic_repo cookbook to setup elastic yum/apt repository
+
+- Michael Burns - Clean up redundant filebeat_prospector resource attribute in test cookbook
+
 1.5.0
 -----
 - Virender Khatri - Updated filebeat version to v6.2.4

@@ -50,7 +50,7 @@ action :create do
 end
 
 action :delete do
-  filebeat_install_resource = find_beat_resource(Chef.run_context, :filebeat_install)
+  filebeat_install_resource = find_beat_resource(Chef.run_context, :filebeat_install, new_resource.filebeat_install_resource_name)
   new_resource.conf_file = new_resource.conf_file || default_conf_file(filebeat_install_resource.conf_dir)
 
   file new_resource.conf_file do

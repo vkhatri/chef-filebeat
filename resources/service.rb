@@ -13,7 +13,6 @@ property :ignore_failure, [TrueClass, FalseClass], default: false
 
 property :retries, Integer, default: 2
 property :retry_delay, Integer, default: 0
-property :notify_restart, [TrueClass, FalseClass], default: false
 
 default_action :create
 
@@ -48,15 +47,13 @@ action :create do
 
   service_action = new_resource.disable_service ? %i[disable stop] : %i[enable nothing]
 
-  with_run_context(:root) do
-    edit_resource(:service, new_resource.service_name) do
-      provider Chef::Provider::Service::Solaris if node['platform_family'] == 'solaris2'
-      retries new_resource.retries
-      retry_delay new_resource.retry_delay
-      supports :status => true, :restart => true
-      action service_action
-      ignore_failure new_resource.ignore_failure
-    end
+  service new_resource.service_name do
+    provider Chef::Provider::Service::Solaris if node['platform_family'] == 'solaris2'
+    retries new_resource.retries
+    retry_delay new_resource.retry_delay
+    supports :status => true, :restart => true
+    action service_action
+    ignore_failure new_resource.ignore_failure
   end
 end
 

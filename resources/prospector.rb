@@ -46,7 +46,7 @@ action :create do
 end
 
 action :delete do
-  filebeat_install_resource = find_beat_resource(Chef.run_context, :filebeat_install)
+  filebeat_install_resource = find_beat_resource(Chef.run_context, :filebeat_install, new_resource.filebeat_install_resource_name)
   file "prospector_#{new_resource.name}" do
     path ::File.join(filebeat_install_resource.prospectors_dir, "lwrp-prospector-#{new_resource.name}.yml")
     action :delete

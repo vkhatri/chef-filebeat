@@ -29,10 +29,9 @@ action :create do
   new_resource.log_dir = new_resource.log_dir || default_log_dir(new_resource.conf_dir)
   version_string = %w[fedora rhel amazon].include?(node['platform_family']) ? "#{new_resource.version}-#{new_resource.release}" : new_resource.version
 
-  service_action = new_resource.disable_service ? %i[disable nothing] : %i[enable nothing]
   with_run_context(:root) do
     edit_resource(:service, new_resource.service_name) do
-      action service_action
+      action :nothing
     end
   end
 
@@ -62,7 +61,7 @@ action :create do
 
   ## install filebeat windows
   if node['platform'] == 'windows'
-    package_url = windows_package_url(new_resource.version, new_resource.windows_package_url)
+    package_url = win_package_url(new_resource.version, new_resource.windows_package_url)
     package_file = ::File.join(Chef::Config[:file_cache_path], ::File.basename(package_url))
 
     remote_file 'filebeat_package_file' do
@@ -131,7 +130,9 @@ action :create do
     end
   end
 
-  directory new_resource.log_dir
+  directory new_resource.log_dir do
+    mode 0o755
+  end
 
   prospectors_dir_action = new_resource.delete_prospectors_dir ? %i[delete create] : %i[create]
 
@@ -153,6 +154,11 @@ action :delete do
   end
 
   directory '/etc/filebeat' do
+    action :delete
+    recursive true
+  end
+
+  directory '/var/log/filebeat' do
     action :delete
     recursive true
   end

@@ -23,7 +23,7 @@ def machine_arch
   node['kernel']['machine'] =~ /x86_64/ ? 'x86_64' : 'x86'
 end
 
-def windows_package_url(version, package_url)
+def win_package_url(version, package_url)
   package_url = if version < '5.0'
                   package_url == 'auto' ? "https://download.elastic.co/beats/filebeat/filebeat-#{version}-windows.zip" : package_url
                 else

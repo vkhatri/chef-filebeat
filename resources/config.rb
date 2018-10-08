@@ -30,7 +30,7 @@ action :create do
 
   config['filebeat.registry_file'] = node['platform'] == 'windows' ? "#{filebeat_install_resource.conf_dir}/registry" : '/var/lib/filebeat/registry'
   config['filebeat.config_dir'] = filebeat_install_resource.prospectors_dir
-  config['logging.files'] = { 'path' => logging_files_path }
+  config['logging.files']['path'] ||= logging_files_path
 
   # Filebeat and psych v1.x don't get along.
   if Psych::VERSION.start_with?('1')

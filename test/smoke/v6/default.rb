@@ -17,7 +17,7 @@ end
 
 describe package('filebeat') do
   it { should be_installed }
-  its('version') { should match '6.3.0' }
+  its('version') { should match '6.4.2' }
 end
 
 if %w[16.04 2 7].include?(os[:release])

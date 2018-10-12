@@ -13,7 +13,7 @@ property :config, Hash, default: default_config
 property :conf_file, [String, NilClass], default: nil
 property :disable_service, [TrueClass, FalseClass], default: false
 property :notify_restart, [TrueClass, FalseClass], default: true
-property :sensitive, [TrueClass, FalseClass], default: false
+property :config_sensitive, [TrueClass, FalseClass], default: false
 
 default_action :create
 
@@ -42,7 +42,7 @@ action :create do
     content JSON.parse(config.to_json).to_yaml.lines.to_a[1..-1].join
     notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
     mode 0o600
-    sensitive new_resource.sensitive
+    sensitive new_resource.config_sensitive
   end
 
   # ...and put this back the way we found them.
@@ -56,4 +56,8 @@ action :delete do
   file new_resource.conf_file do
     action :delete
   end
+end
+
+action_class do
+  include ::Filebeat::Helpers
 end

@@ -57,7 +57,9 @@ action :create do
     provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
   end
 
-  directory new_resource.log_dir
+  directory new_resource.log_dir do
+    mode 0o755
+  end
 
   prospectors_dir_action = new_resource.delete_prospectors_dir ? %i[delete create] : %i[create]
 
@@ -82,4 +84,8 @@ action :delete do
     action :delete
     recursive true
   end
+end
+
+action_class do
+  include ::Filebeat::Helpers
 end

@@ -25,8 +25,6 @@ env:
     - INSTANCE=chef13-fedora26
     - INSTANCE=chef13-ubuntu14
     - INSTANCE=chef13-ubuntu16
-    - INSTANCE=chef13-debian8
-    - INSTANCE=chef13-debian9
     - INSTANCE=chef13-amazon
     - INSTANCE=chef13-amazon2
 

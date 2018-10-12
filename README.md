@@ -80,6 +80,8 @@ Also works on Solaris zones given a physical Solaris 11.2 server. For that, use 
 
 - `filebeat_service` - filebeat service resource
 
+- `filebeat_runit_service` - filebeat service resource using runit
+
 - `filebeat_prospector` - filebeat prospector resource
 
 
@@ -146,12 +148,10 @@ end
 - *filebeat_install_resource_name* (optional, String) - default `default`, filebeat_install/filebeat_install_preview resource name, set this attribute if LWRP resource name is other than `default`
 - *service_name* (optional, String) - default `filebeat`, filebeat service name, must be common across resources
 - *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
-- *notify_restart* (optional, Boolean) - default `true`, set to `false`, to ignore filebeat service restart notify
 - *purge_prospectors_dir* (optional, Boolean) - default `false`, set to `true`, to purge prospectors
-- *runit_filebeat_cmd_options* (optional, Boolean) - default `''`, set to `true`, runit filebeat service command line options
-- *ignore_failure* (optional, Boolean) - default `false`, set to `true`, to ignore filebeat service failures
-- *retries* (optional, Integer) - default `2`, filebeat service resource attribute
-- *retry_delay* (optional, Integer) - default `0`, filebeat service resource attribute
+- *service_ignore_failure* (optional, Boolean) - default `false`, set to `true`, to ignore filebeat service failures
+- *service_retries* (optional, Integer) - default `2`, filebeat service resource attribute
+- *service_retry_delay* (optional, Integer) - default `0`, filebeat service resource attribute
 
 
 ## LWRP filebeat_config
@@ -204,7 +204,7 @@ filebeat.config_dir: "/etc/filebeat/conf.d"
 - *action* (optional)	- default `:create`, options: :create, :delete
 - *filebeat_install_resource_name* (optional, String) - default `default`, filebeat_install/filebeat_install_preview resource name, set this attribute if LWRP resource name is other than `default`
 - *config* (Hash) - default `{}` filebeat configuration options
-- *sensitive* (optional, Boolean) - default `false`, filebeat configuration file chef resource attribute
+- *config_sensitive* (optional, Boolean) - default `false`, filebeat configuration file chef resource attribute
 - *service_name* (optional, String) - default `filebeat`, filebeat service name, must be common across resources
 - *conf_file* (optional, String, NilClass) - default `nil`, filebeat configuration file, this attribute is derived by helper method
 - *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
@@ -250,15 +250,44 @@ filebeat:
 - *action* (optional)	- default `:create`, options: :create, :delete
 - *filebeat_install_resource_name* (optional, String) - default `default`, filebeat_install/filebeat_install_preview resource name, set this attribute if LWRP resource name is other than `default`
 - *config* (Hash) - default `{}` filebeat configuration options
-- *sensitive* (optional, Boolean) - default `false`, filebeat configuration file chef resource attribute
+- *config_sensitive* (optional, Boolean) - default `false`, filebeat configuration file chef resource attribute
 - *service_name* (optional, String) - default `filebeat`, filebeat service name, must be common across resources
 - *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
 - *notify_restart* (optional, Boolean) - default `true`, set to `false`, to ignore filebeat service restart notify
 
 
+## LWRP filebeat_runit_service
+
+LWRP `filebeat_runit_service` configures `filebeat` service using `runit`.
+
+
+**LWRP example**
+
+```ruby
+filebeat_runit_service 'default' do
+  [options ..]
+end
+```
+
+**LWRP Options**
+
+- *action* (optional) - default `:create`, options: :create, :delete
+- *filebeat_install_resource_name* (optional, String) - default `default`, filebeat_install/filebeat_install_preview resource name, set this attribute if LWRP resource name is other than `default`
+- *service_name* (optional, String) - default `filebeat`, filebeat service name, must be common across resources
+- *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
+- *purge_prospectors_dir* (optional, Boolean) - default `false`, set to `true`, to purge prospectors
+- *runit_filebeat_cmd_options* (optional, Boolean) - default `''`, set to `true`, runit filebeat service command line options
+- *service_ignore_failure* (optional, Boolean) - default `false`, set to `true`, to ignore filebeat service failures
+
+
 ## How to Create Filebeat LWRP Resources via Node Attribute
 
 Check out filebeat test cookbook [filebeat_test](test/cookbooks/filebeat_test).
+
+
+## TODO
+
+- Add other platforms support to install_preview resource
 
 
 ## Contributing

@@ -8,9 +8,11 @@ resource_name :filebeat_prospector
 property :service_name, String, default: 'filebeat'
 property :filebeat_install_resource_name, String, default: 'default'
 property :config, [Array, Hash], default: {}
+property :cookbook_file_name, [String, NilClass], default: nil
+property :cookbook_file_name_cookbook, [String, NilClass], default: nil
 property :disable_service, [TrueClass, FalseClass], default: false
 property :notify_restart, [TrueClass, FalseClass], default: true
-property :sensitive, [TrueClass, FalseClass], default: false
+property :config_sensitive, [TrueClass, FalseClass], default: false
 
 default_action :create
 
@@ -35,13 +37,23 @@ action :create do
   # ...and put this back the way we found them.
   YAML::ENGINE.yamler = defaultengine if Psych::VERSION.start_with?('1')
 
-  file "prospector_#{new_resource.name}" do
-    path ::File.join(filebeat_install_resource.prospectors_dir, "lwrp-prospector-#{new_resource.name}.yml")
-    content file_content
-    notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
-    mode 0o600
-    sensitive new_resource.sensitive
-    action action
+  if new_resource.cookbook_file_name && new_resource.cookbook_file_name_cookbook
+    cookbook_file "prospector_#{new_resource.name}" do
+      path ::File.join(filebeat_install_resource.prospectors_dir, "lwrp-prospector-#{new_resource.name}.yml")
+      source new_resource.cookbook_file_name
+      cookbook new_resource.cookbook_file_name_cookbook
+      notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
+      mode 0o600
+      sensitive new_resource.config_sensitive
+    end
+  else
+    file "prospector_#{new_resource.name}" do
+      path ::File.join(filebeat_install_resource.prospectors_dir, "lwrp-prospector-#{new_resource.name}.yml")
+      content file_content
+      notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
+      mode 0o600
+      sensitive new_resource.config_sensitive
+    end
   end
 end
 
@@ -51,4 +63,8 @@ action :delete do
     path ::File.join(filebeat_install_resource.prospectors_dir, "lwrp-prospector-#{new_resource.name}.yml")
     action :delete
   end
+end
+
+action_class do
+  include ::Filebeat::Helpers
 end

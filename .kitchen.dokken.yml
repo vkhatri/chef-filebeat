@@ -90,18 +90,9 @@ platforms:
         - RUN yum install -y net-tools initscripts
 
 suites:
-  - name: chef12
-    driver:
-      chef_version: 12.22.5
-    verifier:
-      inspec_tests:
-        - test/smoke/v6
-    run_list:
-      - recipe[filebeat_test::defaultv6]
-
   - name: chef13
     driver:
-      chef_version: 13.9.4
+      chef_version: 13.11.3
     verifier:
       inspec_tests:
         - test/smoke/v6
@@ -110,24 +101,24 @@ suites:
 
   - name: chef14
     driver:
-      chef_version: 14.2.0
+      chef_version: 14.5.33
     verifier:
       inspec_tests:
         - test/smoke/v6
     run_list:
       - recipe[filebeat_test::defaultv6]
 
-  - name: chef13runit
+  - name: chef14runit
     driver:
-      chef_version: 13.9.4
+      chef_version: 14.5.33
     verifier:
       inspec_tests:
         - test/smoke/v6runit
     run_list:
       - recipe[filebeat_test::defaultv6runit]
 
-  - name: chef13-preview
+  - name: chef14preview
     driver:
-      chef_version: 13.9.4
+      chef_version: 14.5.33
     run_list:
       - recipe[filebeat_test::defaultv6preview]

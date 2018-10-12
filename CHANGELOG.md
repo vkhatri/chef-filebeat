@@ -1,6 +1,24 @@
 filebeat CHANGELOG
 ==================
 
+2.2.0
+-----
+
+- Luke Waite - Correct default file path for `filebeat_config` lwrp
+
+- Piotr Kantyka - Updated logging.files path config only when empty
+
+- Virender Khatri - Updated filebeat version to v6.4.2
+
+- Virender Khatri - Updated Kitchen Test for recent Chef Version
+
+- Virender Khatri - Removed v5 / Chef12 configuration references
+
+- Virender Khatri - Rename helper method purge_prospectors_dir to purge_prospectors_config in favor of filebeat_service resource
+
+- Virender Khatri - Wrapped helper methods into a module Filebeat::Helpers
+
+
 2.1.0
 -----
 

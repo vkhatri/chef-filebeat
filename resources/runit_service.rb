@@ -10,11 +10,7 @@ property :filebeat_install_resource_name, String, default: 'default'
 property :disable_service, [TrueClass, FalseClass], default: false
 property :purge_prospectors_dir, [TrueClass, FalseClass], default: false
 property :runit_filebeat_cmd_options, String, default: ''
-property :ignore_failure, [TrueClass, FalseClass], default: false
-
-property :retries, Integer, default: 2
-property :retry_delay, Integer, default: 0
-property :notify_restart, [TrueClass, FalseClass], default: false
+property :service_ignore_failure, [TrueClass, FalseClass], default: false
 
 default_action :create
 
@@ -59,10 +55,14 @@ action :create do
     )
     default_logger true
     action service_action
-    ignore_failure new_resource.ignore_failure
+    ignore_failure new_resource.service_ignore_failure
     cookbook 'filebeat'
   end
 end
 
 action :delete do
+end
+
+action_class do
+  include ::Filebeat::Helpers
 end

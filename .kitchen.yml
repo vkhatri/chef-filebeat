@@ -36,20 +36,9 @@ platforms:
       platform: windows
 
 suites:
-  - name: chef12
-    driver:
-      require_chef_omnibus: 12.22.5
-    verifier:
-      inspec_tests:
-        - test/smoke/v6
-    excludes:
-      - windows-2012R2
-    run_list:
-      - recipe[filebeat_test::defaultv6]
-
   - name: chef13
     driver:
-      require_chef_omnibus: 13.9.4
+      require_chef_omnibus: 13.11.3
     verifier:
       inspec_tests:
         - test/smoke/v6
@@ -60,7 +49,7 @@ suites:
 
   - name: chef14
     driver:
-      require_chef_omnibus: 14.2.0
+      require_chef_omnibus: 14.5.33
     verifier:
       inspec_tests:
         - test/smoke/v6
@@ -69,9 +58,9 @@ suites:
     run_list:
       - recipe[filebeat_test::defaultv6]
 
-  - name: chef13win
+  - name: chef14win
     driver:
-      require_chef_omnibus: 13.9.4
+      require_chef_omnibus: 14.5.33
     verifier:
       inspec_tests:
         - test/smoke/v6windows
@@ -80,17 +69,17 @@ suites:
     includes:
       - windows-2012R2
 
-  - name: chef13runit
+  - name: chef14runit
     driver:
-      require_chef_omnibus: 13.9.4
+      require_chef_omnibus: 14.5.33
     excludes:
       - windows-2012R2
     run_list:
       - recipe[filebeat::default]
 
-  - name: chef13preview
+  - name: chef14preview
     driver:
-      chef_version: 13.9.4
+      require_chef_omnibus: 14.5.33
     verifier:
       inspec_tests:
         - test/smoke/v6

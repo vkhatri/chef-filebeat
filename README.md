@@ -213,7 +213,7 @@ filebeat.config_dir: "/etc/filebeat/conf.d"
 
 ## LWRP filebeat_prospector
 
-LWRP `filebeat_prospector` creates a filebeat prospector configuration yaml file under prospectors directory with file name `lwrp-prospector-#{resource_name}.yml`.
+LWRP `filebeat_prospector` creates a filebeat prospector configuration yaml file under prospectors directory with file name `#{resource_name}.yml`.
 
 
 **LWRP example**
@@ -232,7 +232,7 @@ filebeat_prospector 'messages_log' do
 end
 ```
 
-Above LWRP Resource will create a file `/etc/filebeat/conf.d/lwrp-prospector-messages_log.yml` with content:
+Above LWRP Resource will create a file `/etc/filebeat/conf.d/messages_log.yml` with content:
 
 ```yaml
 filebeat:

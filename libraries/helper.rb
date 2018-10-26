@@ -5,9 +5,10 @@ module Filebeat
   module Helpers
     def purge_prospectors_config(prospectors_dir)
       valid_prospectors = []
+      prospector_prefix = node['filebeat']['prospector']['prefix']
 
       # collect lwrp filebeat_prospector prospectors
-      run_context.resource_collection.select { |resource| valid_prospectors.push("#{resource.name}.yml") if resource.resource_name == :filebeat_prospector }
+      run_context.resource_collection.select { |resource| valid_prospectors.push("#{prospector_prefix}#{resource.name}.yml") if resource.resource_name == :filebeat_prospector }
 
       # prospectors yml files to clean up
       extra_prospectors = Dir.entries(prospectors_dir).reject { |a| valid_prospectors.include?(a) || a.match(/^custom-prospector-.*yml$/) }.sort

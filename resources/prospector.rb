@@ -17,8 +17,6 @@ property :config_sensitive, [TrueClass, FalseClass], default: false
 
 default_action :create
 
-#prospector_prefix = node['filebeat']['prospector']['prefix']
-
 action :create do
   install_preview_resource = check_beat_resource(Chef.run_context, :filebeat_install_preview, new_resource.filebeat_install_resource_name)
   install_resource = check_beat_resource(Chef.run_context, :filebeat_install, new_resource.filebeat_install_resource_name)

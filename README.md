@@ -209,23 +209,13 @@ filebeat.config_dir: "/etc/filebeat/conf.d"
 - *conf_file* (optional, String, NilClass) - default `nil`, filebeat configuration file, this attribute is derived by helper method
 - *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
 - *notify_restart* (optional, Boolean) - default `true`, set to `false`, to ignore filebeat service restart notify
+- *prefix* (optional, String) - default `lwrp-prospector-`, filebeat prospecteor filename prefix, set to '' if no prefix is desired
 
 
 ## LWRP filebeat_prospector
 
 LWRP `filebeat_prospector` creates a filebeat prospector configuration yaml file under prospectors directory with file name `lwrp-prospector-#{resource_name}.yml`.
-`lwrp-prospector-` prefix can be changed with `default['filebeat']['prospector']['prefix']` attribute:
-
-```ruby
-default['filebeat']['prospector']['prefix'] = 'some-custom-prefix-'
-```
-
-or to disable the prefix:
-
-```ruby
-default['filebeat']['prospector']['prefix'] = ''
-```
-
+`lwrp-prospector-` prefix can be changed with `prefix` property (see above).
 
 **LWRP example**
 
@@ -240,10 +230,11 @@ conf = {
 filebeat_prospector 'messages_log' do
   config conf
   action :create
+  prefix 'my-custom-prefix-'
 end
 ```
 
-Above LWRP Resource will create a file `/etc/filebeat/conf.d/lwrp-prospector-messages_log.yml` with content:
+Above LWRP Resource will create a file `/etc/filebeat/conf.d/my-custom-prefix-messages_log.yml` with content:
 
 ```yaml
 filebeat:

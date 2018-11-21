@@ -7,7 +7,7 @@ module Filebeat
       valid_prospectors = []
 
       # collect lwrp filebeat_prospector prospectors
-      run_context.resource_collection.select { |resource| valid_prospectors.push("lwrp-prospector-#{resource.name}.yml") if resource.resource_name == :filebeat_prospector }
+      run_context.resource_collection.select { |resource| valid_prospectors.push("#{resource.prefix}#{resource.name}.yml") if resource.resource_name == :filebeat_prospector }
 
       # prospectors yml files to clean up
       extra_prospectors = Dir.entries(prospectors_dir).reject { |a| valid_prospectors.include?(a) || a.match(/^custom-prospector-.*yml$/) }.sort

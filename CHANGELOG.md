@@ -1,6 +1,11 @@
 filebeat CHANGELOG
 ==================
 
+2.3.0
+-----
+
+- Piotr Kantyka - Added property for prefix in prospector yaml filename
+
 2.2.0
 -----
 

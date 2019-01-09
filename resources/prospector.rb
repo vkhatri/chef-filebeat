@@ -40,7 +40,7 @@ action :create do
 
   if new_resource.cookbook_file_name && new_resource.cookbook_file_name_cookbook
     cookbook_file "prospector_#{new_resource.name}" do
-      path ::File.join(filebeat_install_resource.prospectors_dir, "#{prefix}#{new_resource.name}.yml")
+      path ::File.join(filebeat_install_resource.prospectors_dir, "#{new_resource.prefix}#{new_resource.name}.yml")
       source new_resource.cookbook_file_name
       cookbook new_resource.cookbook_file_name_cookbook
       notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
@@ -49,7 +49,7 @@ action :create do
     end
   else
     file "prospector_#{new_resource.name}" do
-      path ::File.join(filebeat_install_resource.prospectors_dir, "#{prefix}#{new_resource.name}.yml")
+      path ::File.join(filebeat_install_resource.prospectors_dir, "#{new_resource.prefix}#{new_resource.name}.yml")
       content file_content
       notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
       mode 0o600
@@ -61,7 +61,7 @@ end
 action :delete do
   filebeat_install_resource = find_beat_resource(Chef.run_context, :filebeat_install, new_resource.filebeat_install_resource_name)
   file "prospector_#{new_resource.name}" do
-    path ::File.join(filebeat_install_resource.prospectors_dir, "#{prefix}#{new_resource.name}.yml")
+    path ::File.join(filebeat_install_resource.prospectors_dir, "#{new_resource.prefix}#{new_resource.name}.yml")
     action :delete
   end
 end

@@ -21,7 +21,7 @@ action :create do
   install_preview_resource = check_beat_resource(Chef.run_context, :filebeat_install_preview, new_resource.filebeat_install_resource_name)
   install_resource = check_beat_resource(Chef.run_context, :filebeat_install, new_resource.filebeat_install_resource_name)
   filebeat_install_resource = install_preview_resource || install_resource
-  raise "could not find resource filebeat_install[#{filebeat_install_resource_name}] or filebeat_install_preview[#{filebeat_install_resource_name}]" if filebeat_install_resource.nil?
+  raise "could not find resource filebeat_install[#{new_resource.filebeat_install_resource_name}] or filebeat_install_preview[#{new_resource.filebeat_install_resource_name}]" if filebeat_install_resource.nil?
 
   config = new_resource.config.dup
   config = [config] unless new_resource.config.is_a?(Array)
@@ -40,7 +40,7 @@ action :create do
 
   if new_resource.cookbook_file_name && new_resource.cookbook_file_name_cookbook
     cookbook_file "prospector_#{new_resource.name}" do
-      path ::File.join(filebeat_install_resource.prospectors_dir, "#{prefix}#{new_resource.name}.yml")
+      path ::File.join(filebeat_install_resource.prospectors_dir, "#{new_resource.prefix}#{new_resource.name}.yml")
       source new_resource.cookbook_file_name
       cookbook new_resource.cookbook_file_name_cookbook
       notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
@@ -49,7 +49,7 @@ action :create do
     end
   else
     file "prospector_#{new_resource.name}" do
-      path ::File.join(filebeat_install_resource.prospectors_dir, "#{prefix}#{new_resource.name}.yml")
+      path ::File.join(filebeat_install_resource.prospectors_dir, "#{new_resource.prefix}#{new_resource.name}.yml")
       content file_content
       notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
       mode 0o600
@@ -61,7 +61,7 @@ end
 action :delete do
   filebeat_install_resource = find_beat_resource(Chef.run_context, :filebeat_install, new_resource.filebeat_install_resource_name)
   file "prospector_#{new_resource.name}" do
-    path ::File.join(filebeat_install_resource.prospectors_dir, "#{prefix}#{new_resource.name}.yml")
+    path ::File.join(filebeat_install_resource.prospectors_dir, "#{new_resource.prefix}#{new_resource.name}.yml")
     action :delete
   end
 end

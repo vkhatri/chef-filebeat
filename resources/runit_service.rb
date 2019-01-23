@@ -56,6 +56,7 @@ action :create do
     default_logger true
     action service_action
     ignore_failure new_resource.service_ignore_failure
+    run_template_name 'filebeat' # use sv-filebeat-run.erb as the run file
     cookbook 'filebeat'
   end
 end

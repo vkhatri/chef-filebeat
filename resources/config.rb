@@ -21,7 +21,7 @@ action :create do
   install_preview_resource = check_beat_resource(Chef.run_context, :filebeat_install_preview, new_resource.filebeat_install_resource_name)
   install_resource = check_beat_resource(Chef.run_context, :filebeat_install, new_resource.filebeat_install_resource_name)
   filebeat_install_resource = install_preview_resource || install_resource
-  raise "could not find resource filebeat_install[#{filebeat_install_resource_name}] or filebeat_install_preview[#{filebeat_install_resource_name}]" if filebeat_install_resource.nil?
+  raise "could not find resource filebeat_install[#{new_resource.filebeat_install_resource_name}] or filebeat_install_preview[#{new_resource.filebeat_install_resource_name}]" if filebeat_install_resource.nil?
 
   new_resource.conf_file = new_resource.conf_file || default_conf_file(filebeat_install_resource.conf_dir)
 

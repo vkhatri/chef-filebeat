@@ -20,13 +20,15 @@ services: docker
 
 env:
   matrix:
-    - INSTANCE=chef13-centos6
-    - INSTANCE=chef13-centos7
-    - INSTANCE=chef13-fedora26
-    - INSTANCE=chef13-ubuntu14
-    - INSTANCE=chef13-ubuntu16
-    - INSTANCE=chef13-amazon
-    - INSTANCE=chef13-amazon2
+    - INSTANCE=chef14-centos6
+    - INSTANCE=chef14-centos7
+    - INSTANCE=chef14-fedora28
+    - INSTANCE=chef14-ubuntu16
+    - INSTANCE=chef14-ubuntu18
+    - INSTANCE=chef14-debian8
+    - INSTANCE=chef14-debian9
+    - INSTANCE=chef14-amazon
+    - INSTANCE=chef14-amazon2
 
 script:
   - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
@@ -41,6 +43,9 @@ before_script:
 
 
 matrix:
+  allow_failures:
+    - env: INSTANCE=chef14v6-amazon2
+
   include:
     - script:
       - /opt/chefdk/bin/chef exec rake

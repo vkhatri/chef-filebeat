@@ -17,14 +17,6 @@ provisioner:
         install_recommends: false
 
 platforms:
-  - name: ubuntu14
-    driver:
-      image: ubuntu:14.04
-      pid_one_command: /sbin/init
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update -qq
-        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
-
   - name: ubuntu16
     driver:
       image: ubuntu:16.04
@@ -32,6 +24,13 @@ platforms:
       intermediate_instructions:
         - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
+
+  - name: ubuntu18
+    driver:
+      image: dokken/ubuntu-18.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update -qq
 
   - name: debian8
     driver:
@@ -51,7 +50,7 @@ platforms:
 
   - name: centos6
     driver:
-      image: centos:6.9
+      image: centos:6.10
       pid_one_command: /sbin/init
       platform: rhel
       intermediate_instructions:
@@ -59,15 +58,15 @@ platforms:
 
   - name: centos7
     driver:
-      image: centos:7
+      image: centos:7.6.1810
       pid_one_command: /usr/lib/systemd/systemd
       platform: rhel
       intermediate_instructions:
         - RUN yum install -y net-tools initscripts systemd-sysv which lsof curl
 
-  - name: fedora26
+  - name: fedora28
     driver:
-      image: fedora:26
+      image: fedora:28
       pid_one_command: /usr/lib/systemd/systemd
       platform: rhel
       intermediate_instructions:
@@ -75,7 +74,7 @@ platforms:
 
   - name: amazon
     driver:
-      image: amazonlinux:2017.03
+      image: amazonlinux:2018.03.0.20190212
       pid_one_command: /sbin/init
       platform: amazon
       intermediate_instructions:
@@ -83,7 +82,7 @@ platforms:
 
   - name: amazon2
     driver:
-      image: amazonlinux:2
+      image: amazonlinux:2.0.20190228
       pid_one_command: /usr/lib/systemd/systemd
       platform: amazon
       intermediate_instructions:
@@ -92,7 +91,7 @@ platforms:
 suites:
   - name: chef13
     driver:
-      chef_version: 13.11.3
+      chef_version: 13.12.14
     verifier:
       inspec_tests:
         - test/smoke/v6
@@ -101,7 +100,7 @@ suites:
 
   - name: chef14
     driver:
-      chef_version: 14.5.33
+      chef_version: 14.11.21
     verifier:
       inspec_tests:
         - test/smoke/v6
@@ -110,7 +109,7 @@ suites:
 
   - name: chef14runit
     driver:
-      chef_version: 14.5.33
+      chef_version: 14.11.21
     verifier:
       inspec_tests:
         - test/smoke/v6runit
@@ -119,6 +118,6 @@ suites:
 
   - name: chef14preview
     driver:
-      chef_version: 14.5.33
+      chef_version: 14.11.21
     run_list:
       - recipe[filebeat_test::defaultv6preview]

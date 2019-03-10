@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Cookbook Name:: filebeat
 # Resource:: filebeat_install_preview
@@ -5,7 +7,7 @@
 
 resource_name :filebeat_install_preview
 
-property :version, String, default: '6.0.0-rc2'
+property :version, String, default: '7.0.0-beta1'
 property :service_name, String, default: 'filebeat'
 property :notify_restart, [TrueClass, FalseClass], default: true
 property :disable_service, [TrueClass, FalseClass], default: false

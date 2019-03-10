@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 filebeat_install 'default' do
   disable_service true
   notify_restart false

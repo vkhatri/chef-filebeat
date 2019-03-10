@@ -1,4 +1,5 @@
 # # encoding: utf-8
+# frozen_string_literal: true
 
 # Inspec test for recipe filebeat::v6
 
@@ -17,7 +18,7 @@ end
 
 describe package('filebeat') do
   it { should be_installed }
-  its('version') { should match '6.4.2' }
+  its('version') { should match '6.6.1' }
 end
 
 if %w[16.04 2 7].include?(os[:release])

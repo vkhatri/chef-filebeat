@@ -6,6 +6,17 @@ filebeat CHANGELOG
 
 - Piotr Kantyka - Added property for prefix in prospector yaml filename
 
+- Virender Khatri - Support nil value for property prefix in prospector yaml filename
+
+- Virender Khatri - Update filebeat release to 6.6.1 and preview version to 7.0.0-beta1
+
+- Virender Khatri - Use configuration filebeat.config.inputs for v6+
+
+- Virender Khatri - Update dependency cookbook versions
+
+- Virender Khatri - Updated Kitchen Tests
+
+
 2.2.0
 -----
 

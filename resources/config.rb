@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Cookbook Name:: filebeat
 # Resource:: filebeat_config
@@ -29,8 +31,13 @@ action :create do
   logging_files_path = node['platform'] == 'windows' ? "#{filebeat_install_resource.conf_dir}/logs" : filebeat_install_resource.log_dir
 
   config['filebeat.registry_file'] = node['platform'] == 'windows' ? "#{filebeat_install_resource.conf_dir}/registry" : '/var/lib/filebeat/registry'
-  config['filebeat.config_dir'] = filebeat_install_resource.prospectors_dir
   config['logging.files']['path'] ||= logging_files_path
+
+  if filebeat_install_resource.version < '6'
+    config['filebeat.config_dir'] = filebeat_install_resource.prospectors_dir
+  else
+    config['filebeat.config.inputs'] = { "enabled": true, "path": "#{filebeat_install_resource.prospectors_dir}/*.yml" }
+  end
 
   # Filebeat and psych v1.x don't get along.
   if Psych::VERSION.start_with?('1')

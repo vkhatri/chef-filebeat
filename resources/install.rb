@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Cookbook Name:: filebeat
 # Resource:: filebeat_install
@@ -5,7 +7,7 @@
 
 resource_name :filebeat_install
 
-property :version, String, default: '6.4.2'
+property :version, String, default: '6.6.1'
 property :release, String, default: '1'
 property :setup_repo, [TrueClass, FalseClass], default: true
 property :ignore_package_version, [TrueClass, FalseClass], default: false

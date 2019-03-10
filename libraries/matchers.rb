@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if defined?(ChefSpec)
   ChefSpec.define_matcher(:filebeat_install)
   ChefSpec.define_matcher(:filebeat_install_preview)

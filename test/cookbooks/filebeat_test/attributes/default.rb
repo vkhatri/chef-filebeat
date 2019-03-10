@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 default['filebeat_test']['prospectors']['test'].tap do |t|
   t['enabled'] = true
   t['sensitive'] = false

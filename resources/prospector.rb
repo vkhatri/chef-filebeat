@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Cookbook Name:: filebeat
 # Resource:: filebeat_prospector
@@ -7,7 +9,7 @@ resource_name :filebeat_prospector
 
 property :service_name, String, default: 'filebeat'
 property :filebeat_install_resource_name, String, default: 'default'
-property :prefix, String, default: 'lwrp-prospector-'
+property :prefix, [String, NilClass], default: 'lwrp-prospector-'
 property :config, [Array, Hash], default: {}
 property :cookbook_file_name, [String, NilClass], default: nil
 property :cookbook_file_name_cookbook, [String, NilClass], default: nil
@@ -38,9 +40,11 @@ action :create do
   # ...and put this back the way we found them.
   YAML::ENGINE.yamler = defaultengine if Psych::VERSION.start_with?('1')
 
+  prospector_file_name = "#{new_resource.prefix}#{new_resource.name}.yml"
+
   if new_resource.cookbook_file_name && new_resource.cookbook_file_name_cookbook
     cookbook_file "prospector_#{new_resource.name}" do
-      path ::File.join(filebeat_install_resource.prospectors_dir, "#{new_resource.prefix}#{new_resource.name}.yml")
+      path ::File.join(filebeat_install_resource.prospectors_dir, prospector_file_name)
       source new_resource.cookbook_file_name
       cookbook new_resource.cookbook_file_name_cookbook
       notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
@@ -49,7 +53,7 @@ action :create do
     end
   else
     file "prospector_#{new_resource.name}" do
-      path ::File.join(filebeat_install_resource.prospectors_dir, "#{new_resource.prefix}#{new_resource.name}.yml")
+      path ::File.join(filebeat_install_resource.prospectors_dir, prospector_file_name)
       content file_content
       notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
       mode 0o600
@@ -59,9 +63,10 @@ action :create do
 end
 
 action :delete do
+  prospector_file_name = "#{new_resource.prefix}#{new_resource.name}.yml"
   filebeat_install_resource = find_beat_resource(Chef.run_context, :filebeat_install, new_resource.filebeat_install_resource_name)
   file "prospector_#{new_resource.name}" do
-    path ::File.join(filebeat_install_resource.prospectors_dir, "#{new_resource.prefix}#{new_resource.name}.yml")
+    path ::File.join(filebeat_install_resource.prospectors_dir, prospector_file_name)
     action :delete
   end
 end

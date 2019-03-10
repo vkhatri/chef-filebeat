@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'filebeat::lwrp_test' do
@@ -78,12 +80,12 @@ describe 'filebeat::lwrp_test' do
 
     let(:node) { chef_run.node }
 
-    it 'create prospector directory C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/conf.d' do
-      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/conf.d')
+    it 'create prospector directory C:/opt/filebeat/filebeat-6.6.1-windows-x86_64/conf.d' do
+      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-6.6.1-windows-x86_64/conf.d')
     end
 
-    it 'create prospector directory C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/logs' do
-      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/logs')
+    it 'create prospector directory C:/opt/filebeat/filebeat-6.6.1-windows-x86_64/logs' do
+      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-6.6.1-windows-x86_64/logs')
     end
 
     it 'download filebeat package file' do
@@ -204,8 +206,8 @@ describe 'filebeat::lwrp_test' do
   #
   #   let(:node) { chef_run.node }
   #
-  #   it 'configure C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/filebeat.yml' do
-  #     expect(chef_run).to create_file('C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/filebeat.yml')
+  #   it 'configure C:/opt/filebeat/filebeat-6.6.1-windows-x86_64/filebeat.yml' do
+  #     expect(chef_run).to create_file('C:/opt/filebeat/filebeat-6.6.1-windows-x86_64/filebeat.yml')
   #   end
   # end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Cookbook Name:: filebeat
 # Resource:: filebeat_runit_service

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 name 'filebeat_test'
 maintainer 'Virender Khatri'
 maintainer_email 'vir.khatri@gmail.com'

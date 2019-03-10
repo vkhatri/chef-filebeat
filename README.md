@@ -12,14 +12,14 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 2.2.0'
+cookbook 'filebeat', '~> 2.3.0'
 ```
 
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v2.2.0'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v2.3.0'
 ```
 
 
@@ -45,9 +45,9 @@ Also works on Solaris zones given a physical Solaris 11.2 server. For that, use 
 
 ## Supported Chef
 
-- Chef 12 (last tested on 12.21.4)
+- Chef 13
 
-- Chef 13 (last tested on 13.3.42)
+- Chef 14
 
 
 ## Supported Filebeat
@@ -209,7 +209,7 @@ filebeat.config_dir: "/etc/filebeat/conf.d"
 - *conf_file* (optional, String, NilClass) - default `nil`, filebeat configuration file, this attribute is derived by helper method
 - *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
 - *notify_restart* (optional, Boolean) - default `true`, set to `false`, to ignore filebeat service restart notify
-- *prefix* (optional, String) - default `lwrp-prospector-`, filebeat prospecteor filename prefix, set to '' if no prefix is desired
+- *prefix* (optional, String, NilClass) - default `lwrp-prospector-`, filebeat prospecteor filename prefix, set to `''` or `nil` if no prefix is desired
 
 
 ## LWRP filebeat_prospector

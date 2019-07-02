@@ -33,7 +33,12 @@ action :create do
   end
 
   # file_content = { 'filebeat' => { 'prospectors' => config } }.to_yaml
-  file_content = JSON.parse({ 'filebeat' => { 'prospectors' => config } }.to_json).to_yaml.lines.to_a[1..-1].join
+  file_content =
+    if filebeat_install_resource.version.to_f >= 6.3
+      JSON.parse(config.to_json).to_yaml.lines.to_a[1..-1].join
+    else
+      JSON.parse({ 'filebeat' => { 'prospectors' => config } }.to_json).to_yaml.lines.to_a[1..-1].join
+    end
 
   # ...and put this back the way we found them.
   YAML::ENGINE.yamler = defaultengine if Psych::VERSION.start_with?('1')

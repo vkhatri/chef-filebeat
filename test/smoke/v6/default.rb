@@ -15,6 +15,15 @@ else
   end
 end
 
+describe file('/etc/filebeat/filebeat.yml') do
+  its('content') { should match 'filebeat.config.inputs' }
+end
+
+describe command('filebeat test config') do
+  its('exit_status') { should eq 0 }
+  its('stdout') { should match 'Config OK' }
+end
+
 describe package('filebeat') do
   it { should be_installed }
   its('version') { should match '6.4.2' }

@@ -5,9 +5,7 @@ filebeat Cookbook
 
 This is a [Chef] cookbook to manage [Filebeat].
 
-
 >> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/filebeat).
-
 
 ## Most Recent Release
 
@@ -15,20 +13,17 @@ This is a [Chef] cookbook to manage [Filebeat].
 cookbook 'filebeat', '~> 2.2.0'
 ```
 
-
 ## From Git
 
 ```ruby
 cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v2.2.0'
 ```
 
-
 ## Repository
 
-```
+```bash
 https://github.com/vkhatri/chef-filebeat
 ```
-
 
 ## Supported OS
 
@@ -42,19 +37,16 @@ https://github.com/vkhatri/chef-filebeat
 
 Also works on Solaris zones given a physical Solaris 11.2 server. For that, use the .kitchen.zone.yml file. Check usage at (https://github.com/criticalmass/kitchen-zone). You will need an url to a filebeat package that works on Solaris 11.2. Checkout Building-Filebeat-On-Solaris11.md for instructions to build a filebeat package.
 
-
 ## Supported Chef
 
 - Chef 12 (last tested on 12.21.4)
 
 - Chef 13 (last tested on 13.3.42)
 
-
 ## Supported Filebeat
 
 - 5.x
 - 6.x
-
 
 ## Cookbook Dependency
 
@@ -64,11 +56,9 @@ Also works on Solaris zones given a physical Solaris 11.2 server. For that, use 
 - `runit`
 - `windows`
 
-
 ## Recipes
 
 - lwrp_test - LWRP examples recipe
-
 
 ## LWRP Resources
 
@@ -82,13 +72,11 @@ Also works on Solaris zones given a physical Solaris 11.2 server. For that, use 
 
 - `filebeat_runit_service` - filebeat service resource using runit
 
-- `filebeat_prospector` - filebeat prospector resource
-
+- `filebeat_prospector` - filebeat prospector resource (renamed filebeat inputs in version 6.3+)
 
 ## Limitations
 
 The Mac OSX setup only allows for package installs and depends on brew, this means that version selection and preview build installs are not supported.
-
 
 ## LWRP filebeat_install
 
@@ -153,7 +141,6 @@ end
 - *service_retries* (optional, Integer) - default `2`, filebeat service resource attribute
 - *service_retry_delay* (optional, Integer) - default `0`, filebeat service resource attribute
 
-
 ## LWRP filebeat_config
 
 LWRP `filebeat_config` creates filebeat configuration yaml file `/etc/filebeat/filebeat.yml`.
@@ -164,8 +151,7 @@ Below filebeat configuration parameters gets overwritten by the LWRP.
 - `filebeat.config_dir`
 - `logging.files`
 
-
-**LWRP example**
+### Filebeat version < 6.0
 
 ```ruby
 conf = {
@@ -199,6 +185,42 @@ filebeat.registry_file: "/var/lib/filebeat/registry"
 filebeat.config_dir: "/etc/filebeat/conf.d"
 ```
 
+### Filebeat version 6.0+
+
+```ruby
+conf = {
+  'filebeat.modules' => [],
+  'filebeat.inputs' => [],
+  'logging.level' => 'info',
+  'logging.to_files' => true,
+  'logging.files' => { 'name' => 'filebeat' },
+  'output.elasticsearch' => { 'hosts' => ['127.0.0.1:9200'] }
+}
+
+filebeat_config 'default' do
+  config conf
+  action :create
+end
+```
+
+Above LWRP Resource will create a file `/etc/filebeat/filebeat.yml` with content:
+
+```yaml
+filebeat.modules: []
+prospectors: []
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: "/var/log/filebeat"
+output.elasticsearch:
+  hosts:
+  - 127.0.0.1:9200
+filebeat.registry_file: "/var/lib/filebeat/registry"
+filebeat.config.inputs:
+  enabled: true
+  path: "/etc/filebeat/conf.d/*.yml"
+```
+
 **LWRP Options**
 
 - *action* (optional)	- default `:create`, options: :create, :delete
@@ -212,8 +234,9 @@ filebeat.config_dir: "/etc/filebeat/conf.d"
 - *prefix* (optional, String) - default `lwrp-prospector-`, filebeat prospecteor filename prefix, set to '' if no prefix is desired
 
 
-## LWRP filebeat_prospector
+## LWRP filebeat_prospector (inputs)
 
+### Filebeat version up to 6.3
 LWRP `filebeat_prospector` creates a filebeat prospector configuration yaml file under prospectors directory with file name `lwrp-prospector-#{resource_name}.yml`.
 `lwrp-prospector-` prefix can be changed with `prefix` property (see above).
 
@@ -247,6 +270,36 @@ filebeat:
       type: messages_log
 ```
 
+### Filebeat version 6.3+
+
+With `filebeat.config.inputs` set, Filebeat 6.3+ will read in the files as previous versions and the same config will work as expected
+
+```ruby
+conf = {
+  'type'    => 'log',
+  'enabled' => true,
+  'paths'   => ['/var/log/messages'],
+  'type'    => 'log',
+  'fields'  => {'type' => 'messages_log'}
+}
+
+filebeat_prospector 'messages_log' do
+  config conf
+  action :create
+end
+```
+
+the file is created with content:
+
+```yaml
+- enabled: true
+  paths:
+  - "/var/log/messages"
+  type: log
+  fields:
+    type: messages_log
+```
+
 **LWRP Options**
 
 - *action* (optional)	- default `:create`, options: :create, :delete
@@ -256,7 +309,6 @@ filebeat:
 - *service_name* (optional, String) - default `filebeat`, filebeat service name, must be common across resources
 - *disable_service* (optional, Boolean) - default `false`, set to `true`, to disable filebeat service
 - *notify_restart* (optional, Boolean) - default `true`, set to `false`, to ignore filebeat service restart notify
-
 
 ## LWRP filebeat_runit_service
 
@@ -286,11 +338,9 @@ end
 
 Check out filebeat test cookbook [filebeat_test](test/cookbooks/filebeat_test).
 
-
 ## TODO
 
 - Add other platforms support to install_preview resource
-
 
 ## Contributing
 
@@ -302,7 +352,6 @@ Check out filebeat test cookbook [filebeat_test](test/cookbooks/filebeat_test).
 6. Write new resource/attribute description to `README.md`
 7. Write description about changes to PR
 8. Submit a Pull Request using Github
-
 
 ## Copyright & License
 
@@ -321,7 +370,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 </pre>
-
 
 [Chef]: https://www.chef.io/
 [Filebeat]: https://www.elastic.co/products/beats/filebeat

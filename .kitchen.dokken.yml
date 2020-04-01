@@ -35,7 +35,7 @@ platforms:
 
   - name: debian8
     driver:
-      image: debian:8.9
+      image: dokken/debian-8
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN /usr/bin/apt-get update -qq

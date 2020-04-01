@@ -99,7 +99,8 @@ describe 'filebeat::lwrp_test' do
     end
 
     it 'run powershell_script to install filebeat as service' do
-      expect(chef_run).to run_powershell_script('install filebeat as service')
+      expect(chef_run.windows_zipfile('C:/opt/filebeat')).to notify('powershell_script[install filebeat as service]').to(:run).immediately
+      expect(chef_run).to_not run_powershell_script('install filebeat as service')
     end
   end
 

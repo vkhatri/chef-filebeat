@@ -10,13 +10,13 @@ This is a [Chef] cookbook to manage [Filebeat].
 ## Most Recent Release
 
 ```ruby
-cookbook 'filebeat', '~> 2.2.0'
+cookbook 'filebeat', '~> 2.4.0'
 ```
 
 ## From Git
 
 ```ruby
-cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v2.2.0'
+cookbook 'filebeat', github: 'vkhatri/chef-filebeat',  tag: 'v2.4.0'
 ```
 
 ## Repository
@@ -39,14 +39,12 @@ Also works on Solaris zones given a physical Solaris 11.2 server. For that, use 
 
 ## Supported Chef
 
-- Chef 12 (last tested on 12.21.4)
-
-- Chef 13 (last tested on 13.3.42)
+This cookbook is tested against current Chef version. But, the cookbook is known to work with Chef Client version >=12.14.
 
 ## Supported Filebeat
 
-- 5.x
 - 6.x
+- 7.x
 
 ## Cookbook Dependency
 

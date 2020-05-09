@@ -16,7 +16,8 @@ else
 end
 
 describe file('/etc/filebeat/filebeat.yml') do
-  its('content') { should match 'filebeat.config.inputs' }
+  it { should exist }
+  # its('content') { should match 'filebeat.config.inputs' }
 end
 
 describe command('filebeat test config') do
@@ -26,7 +27,7 @@ end
 
 describe package('filebeat') do
   it { should be_installed }
-  its('version') { should match '6.4.2' }
+  its('version') { should match '6.8.8' }
 end
 
 if %w[16.04 2 7].include?(os[:release])

@@ -5,7 +5,7 @@
 
 resource_name :filebeat_install
 
-property :version, String, default: '6.4.2'
+property :version, String, default: '7.6.2'
 property :release, String, default: '1'
 property :setup_repo, [TrueClass, FalseClass], default: true
 property :ignore_package_version, [TrueClass, FalseClass], default: false

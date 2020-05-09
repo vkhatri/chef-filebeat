@@ -28,8 +28,14 @@ action :create do
   config = new_resource.config.dup
   logging_files_path = node['platform'] == 'windows' ? "#{filebeat_install_resource.conf_dir}/logs" : filebeat_install_resource.log_dir
 
-  config['filebeat.registry_file'] = node['platform'] == 'windows' ? "#{filebeat_install_resource.conf_dir}/registry" : '/var/lib/filebeat/registry'
   config['logging.files']['path'] ||= logging_files_path
+
+  if filebeat_install_resource.version.to_f >= 7.0
+    config['filebeat.registry.path'] = node['platform'] == 'windows' ? "#{filebeat_install_resource.conf_dir}/registry" : '/var/lib/filebeat/registry'
+  else
+    config['filebeat.registry_file'] = node['platform'] == 'windows' ? "#{filebeat_install_resource.conf_dir}/registry" : '/var/lib/filebeat/registry'
+  end
+
   if filebeat_install_resource.version.to_f >= 6.0
     config['filebeat.config.inputs'] ||= {
       'enabled' => true,

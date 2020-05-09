@@ -26,7 +26,7 @@ describe 'filebeat::lwrp_test' do
 
   context 'rhel-install' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(step_into: ['filebeat_install'], platform: 'centos', version: '6.8') do |node|
+      ChefSpec::SoloRunner.new(step_into: ['filebeat_install'], platform: 'centos', version: '7.6') do |node|
         node.automatic['platform_family'] = 'rhel'
       end.converge(described_recipe)
     end
@@ -50,7 +50,7 @@ describe 'filebeat::lwrp_test' do
 
   context 'ubuntu-install' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(step_into: ['filebeat_install'], platform: 'ubuntu', version: '14.04') do |node|
+      ChefSpec::SoloRunner.new(step_into: ['filebeat_install'], platform: 'ubuntu', version: '18.04') do |node|
         node.automatic['platform_family'] = 'debian'
       end.converge(described_recipe)
     end
@@ -78,12 +78,12 @@ describe 'filebeat::lwrp_test' do
 
     let(:node) { chef_run.node }
 
-    it 'create prospector directory C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/conf.d' do
-      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/conf.d')
+    it 'create prospector directory C:/opt/filebeat/filebeat-7.6.2-windows-x86_64/conf.d' do
+      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-7.6.2-windows-x86_64/conf.d')
     end
 
-    it 'create prospector directory C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/logs' do
-      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/logs')
+    it 'create prospector directory C:/opt/filebeat/filebeat-7.6.2-windows-x86_64/logs' do
+      expect(chef_run).to create_directory('C:/opt/filebeat/filebeat-7.6.2-windows-x86_64/logs')
     end
 
     it 'download filebeat package file' do
@@ -205,8 +205,8 @@ describe 'filebeat::lwrp_test' do
   #
   #   let(:node) { chef_run.node }
   #
-  #   it 'configure C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/filebeat.yml' do
-  #     expect(chef_run).to create_file('C:/opt/filebeat/filebeat-6.4.2-windows-x86_64/filebeat.yml')
+  #   it 'configure C:/opt/filebeat/filebeat-7.6.2-windows-x86_64/filebeat.yml' do
+  #     expect(chef_run).to create_file('C:/opt/filebeat/filebeat-7.6.2-windows-x86_64/filebeat.yml')
   #   end
   # end
 end

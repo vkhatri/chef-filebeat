@@ -1,14 +1,10 @@
-sudo: required
-dist: trusty
-
 addons:
   apt:
     sources:
-      - chef-stable-trusty
+      - chef-stable-xenial
     packages:
-      - chefdk
+      - chef-workstation
 
-# Don't run bundle install
 install: echo "skip bundle install"
 
 branches:
@@ -20,28 +16,34 @@ services: docker
 
 env:
   matrix:
-    - INSTANCE=chef13-centos6
-    - INSTANCE=chef13-centos7
-    - INSTANCE=chef13-fedora26
-    - INSTANCE=chef13-ubuntu14
-    - INSTANCE=chef13-ubuntu16
-    - INSTANCE=chef13-amazon
-    - INSTANCE=chef13-amazon2
-
-script:
-  - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
-  - cat .kitchen/logs/kitchen.log
+    - INSTANCE=current-version-ubuntu18
+    - INSTANCE=v7-ubuntu20
+    - INSTANCE=v7-debian9
+    - INSTANCE=v7-centos7
+    - INSTANCE=v7-centos8
+    - INSTANCE=v7-fedora
+    - INSTANCE=v7-amazon
+    - INSTANCE=v7-amazon2
+    - INSTANCE=v6-ubuntu16
+    - INSTANCE=v6-ubuntu18
+    - INSTANCE=v6-debian9
+    - INSTANCE=v6-centos7
+    - INSTANCE=v6-centos8
+    - INSTANCE=v6-fedora
+    - INSTANCE=v6-amazon
+    - INSTANCE=v6-amazon2
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-  - /opt/chefdk/embedded/bin/chef --version
-  - /opt/chefdk/embedded/bin/cookstyle --version
-  - /opt/chefdk/embedded/bin/foodcritic --version
+  - eval "$(chef shell-init bash)"
+  - chef --version
 
+script: CHEF_LICENSE=accept KITCHEN_LOCAL_YAML=kitchen.dokken.yml kitchen verify ${INSTANCE}
 
 matrix:
   include:
     - script:
-      - /opt/chefdk/bin/chef exec rake
-      env: UNIT_AND_LINT=1
+      - delivery local all
+      env:
+        - UNIT_AND_LINT=1
+        - CHEF_LICENSE=accept

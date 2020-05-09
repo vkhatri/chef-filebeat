@@ -40,3 +40,5 @@ AbcSize:
   Enabled: false
 Style/BlockComments:
   Enabled: false
+ChefModernize/WindowsZipfileUsage:
+  Enabled: false

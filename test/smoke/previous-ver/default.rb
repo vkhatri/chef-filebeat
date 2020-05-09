@@ -5,7 +5,7 @@
 # The Inspec reference, with examples and extensive documentation, can be
 # found at http://inspec.io/docs/reference/resources/
 
-if %w[redhat fedora amazon].include?(os[:family])
+if %w(redhat fedora amazon).include?(os[:family])
   describe file('/etc/yum.repos.d/elastic6.repo') do
     its('content') { should match %r{https://artifacts.elastic.co/packages/6.x/yum} }
   end
@@ -30,7 +30,7 @@ describe package('filebeat') do
   its('version') { should match '6.8.8' }
 end
 
-if %w[16.04 2 7].include?(os[:release])
+if %w(16.04 2 7).include?(os[:release])
   describe systemd_service('filebeat') do
     it { should be_installed }
     it { should be_enabled }

@@ -16,22 +16,28 @@ services: docker
 
 env:
   matrix:
-    - INSTANCE=current-version-ubuntu18
-    - INSTANCE=v7-ubuntu20
-    - INSTANCE=v7-debian9
-    - INSTANCE=v7-centos7
-    - INSTANCE=v7-centos8
-    - INSTANCE=v7-fedora
-    - INSTANCE=v7-amazon
-    - INSTANCE=v7-amazon2
-    - INSTANCE=v6-ubuntu16
-    - INSTANCE=v6-ubuntu18
-    - INSTANCE=v6-debian9
-    - INSTANCE=v6-centos7
-    - INSTANCE=v6-centos8
-    - INSTANCE=v6-fedora
-    - INSTANCE=v6-amazon
-    - INSTANCE=v6-amazon2
+    - INSTANCE=current-ver-amazonlinux
+    - INSTANCE=current-ver-amazonlinux-2
+    - INSTANCE=current-ver-debian-9
+    - INSTANCE=current-ver-debian-10
+    - INSTANCE=current-ver-centos-7
+    - INSTANCE=current-ver-centos-8
+    - INSTANCE=current-ver-oraclelinux-7
+    - INSTANCE=current-ver-oraclelinux-8
+    - INSTANCE=current-ver-fedora-latest
+    - INSTANCE=current-ver-ubuntu-1804
+    - INSTANCE=current-ver-ubuntu-2004
+    - INSTANCE=previous-ver-amazonlinux
+    - INSTANCE=previous-ver-amazonlinux-2
+    - INSTANCE=previous-ver-debian-9
+    - INSTANCE=previous-ver-debian-10
+    - INSTANCE=previous-ver-centos-7
+    - INSTANCE=previous-ver-centos-8
+    - INSTANCE=previous-ver-oraclelinux-7
+    - INSTANCE=previous-ver-oraclelinux-8
+    - INSTANCE=previous-ver-fedora-latest
+    - INSTANCE=previous-ver-ubuntu-1804
+    - INSTANCE=previous-ver-ubuntu-2004
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )

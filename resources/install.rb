@@ -1,21 +1,21 @@
 #
-# Cookbook Name:: filebeat
+# Cookbook:: filebeat
 # Resource:: filebeat_install
 #
 
 resource_name :filebeat_install
 
-property :version, String, default: '6.4.2'
+property :version, String, default: '7.6.2'
 property :release, String, default: '1'
-property :setup_repo, [TrueClass, FalseClass], default: true
-property :ignore_package_version, [TrueClass, FalseClass], default: false
+property :setup_repo, [true, false], default: true
+property :ignore_package_version, [true, false], default: false
 property :service_name, String, default: 'filebeat'
-property :notify_restart, [TrueClass, FalseClass], default: true
-property :disable_service, [TrueClass, FalseClass], default: false
-property :delete_prospectors_dir, [TrueClass, FalseClass], default: false
-property :conf_dir, [String, NilClass], default: nil
-property :prospectors_dir, [String, NilClass], default: nil
-property :log_dir, [String, NilClass], default: nil
+property :notify_restart, [true, false], default: true
+property :disable_service, [true, false], default: false
+property :delete_prospectors_dir, [true, false], default: false
+property :conf_dir, [String, NilClass]
+property :prospectors_dir, [String, NilClass]
+property :log_dir, [String, NilClass]
 property :windows_package_url, String, default: 'auto'
 property :windows_base_dir, String, default: 'C:/opt/filebeat'
 property :apt_options, String, default: "-o Dpkg::Options::='--force-confnew' --force-yes"
@@ -27,7 +27,7 @@ action :create do
   new_resource.conf_dir = new_resource.conf_dir || default_config_dir(new_resource.version, new_resource.windows_base_dir)
   new_resource.prospectors_dir = new_resource.prospectors_dir || default_prospectors_dir(new_resource.conf_dir)
   new_resource.log_dir = new_resource.log_dir || default_log_dir(new_resource.conf_dir)
-  version_string = %w[fedora rhel amazon].include?(node['platform_family']) ? "#{new_resource.version}-#{new_resource.release}" : new_resource.version
+  version_string = platform_family?('fedora', 'rhel', 'amazon') ? "#{new_resource.version}-#{new_resource.release}" : new_resource.version
 
   with_run_context(:root) do
     edit_resource(:service, new_resource.service_name) do
@@ -36,13 +36,13 @@ action :create do
   end
 
   ## install filebeat MacOS
-  if node['platform'] == 'mac_os_x'
+  if platform?('mac_os_x')
     include_recipe 'homebrew'
 
     # The brew package does not create the 'filebeat' directory in '/etc'.
     directory '/etc/filebeat' do
       action :create
-      mode 0o0755
+      mode '755'
       owner 'root'
       group 'wheel'
     end
@@ -60,7 +60,7 @@ action :create do
   end
 
   ## install filebeat windows
-  if node['platform'] == 'windows'
+  if platform?('windows')
     package_url = win_package_url(new_resource.version, new_resource.windows_package_url)
     package_file = ::File.join(Chef::Config[:file_cache_path], ::File.basename(package_url))
 
@@ -89,7 +89,7 @@ action :create do
   end
 
   ## install filebeat yum/apt
-  if %w[fedora rhel amazon debian].include?(node['platform_family'])
+  if platform_family?('fedora', 'rhel', 'amazon', 'debian')
     # setup yum/apt repository
     elastic_repo_opts = new_resource.elastic_repo_options.dup
     elastic_repo_opts['version'] = new_resource.version
@@ -123,9 +123,9 @@ action :create do
 
     package 'filebeat' do # ~FC009
       version version_string unless new_resource.ignore_package_version
-      options new_resource.apt_options if new_resource.apt_options && node['platform_family'] == 'debian'
+      options new_resource.apt_options if new_resource.apt_options && platform_family?('debian')
       notifies :restart, "service[#{new_resource.service_name}]" if new_resource.notify_restart && !new_resource.disable_service
-      if %w[rhel amazon].include?(node['platform_family'])
+      if platform_family?('rhel', 'amazon')
         flush_cache(:before => true)
         allow_downgrade true
       end
@@ -133,10 +133,10 @@ action :create do
   end
 
   directory new_resource.log_dir do
-    mode 0o755
+    mode '755'
   end
 
-  prospectors_dir_action = new_resource.delete_prospectors_dir ? %i[delete create] : %i[create]
+  prospectors_dir_action = new_resource.delete_prospectors_dir ? %i(delete create) : %i(create)
 
   directory new_resource.prospectors_dir do
     recursive true

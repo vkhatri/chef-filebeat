@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: filebeat
+# Cookbook:: filebeat
 # Resource:: filebeat_runit_service
 #
 
@@ -7,10 +7,10 @@ resource_name :filebeat_runit_service
 
 property :service_name, String, default: 'filebeat'
 property :filebeat_install_resource_name, String, default: 'default'
-property :disable_service, [TrueClass, FalseClass], default: false
-property :purge_prospectors_dir, [TrueClass, FalseClass], default: false
+property :disable_service, [true, false], default: false
+property :purge_prospectors_dir, [true, false], default: false
 property :runit_filebeat_cmd_options, String, default: ''
-property :service_ignore_failure, [TrueClass, FalseClass], default: false
+property :service_ignore_failure, [true, false], default: false
 
 default_action :create
 
@@ -45,7 +45,7 @@ action :create do
 
   include_recipe 'runit::default'
 
-  service_action = new_resource.disable_service ? %i[disable stop] : %i[enable nothing]
+  service_action = new_resource.disable_service ? %i(disable stop) : %i(enable nothing)
 
   runit_cmd = "/usr/share/filebeat/bin/filebeat -c #{conf_file} -path.home /usr/share/filebeat -path.config #{filebeat_install_resource.conf_dir} -path.data /var/lib/filebeat -path.logs #{filebeat_install_resource.log_dir} #{new_resource.runit_filebeat_cmd_options}"
   runit_service new_resource.service_name do

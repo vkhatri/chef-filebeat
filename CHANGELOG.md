@@ -1,10 +1,31 @@
 filebeat CHANGELOG
 ==================
 
-2.3.0
+2.4.0
 -----
 
 - Piotr Kantyka - Added property for prefix in prospector yaml filename
+
+- Oskar Bedychaj - Added filebeat_install no resource handle
+
+- Neil Duff-Howie - Fixed runit service when a service name is supplied
+
+- Doug Luxem - Fixes Windows issue where filebeats service is reinstalled on each run
+
+- Chris Minton - Update the config and prospector resources to handle version dependency
+
+- Chris Minton - Update the integration tests for configs
+
+- Chris Minton - Update the README to give the correct configuration for different versions
+
+- Virender Khatri - Updated Kitchen Tests
+
+- Virender Khatri - Update filebeat version to the latest
+
+- Virender Khatri - Fix issue #159 - Filebeat 7.x replaces filebeat.registry_file with filebeat.registry.path
+
+- Virender Khatri - Update dependency cookbook versions
+
 
 2.2.0
 -----

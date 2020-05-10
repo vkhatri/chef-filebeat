@@ -5,7 +5,7 @@ default['filebeat_test']['prospectors']['test'].tap do |t|
   t['fields'] = { 'type' => 'test1_logs', 'engine' => 'kitchen' }
   t['type'] = 'log'
   t['input_type'] = 'log'
-  t['paths'] = %w[/var/log/test1.log]
+  t['paths'] = %w(/var/log/test1.log)
   t['recursive_glob_enabled'] = false
   t['encoding'] = 'utf-8'
   t['exclude_lines'] = ['^DBG']
@@ -82,15 +82,15 @@ default['filebeat_test']['prospectors']['extra_log_list'] = [
     'paths' => ['/var/log/*.logy'],
     'type' => 'log',
     'fields' => { 'type' => 'extra_log_y' },
-    'exclude_files' => ['/var/log/messages', '/var/log/syslog', '/var/log/secure']
+    'exclude_files' => ['/var/log/messages', '/var/log/syslog', '/var/log/secure'],
   },
   {
     'enabled' => true,
     'paths' => ['/var/log/*.logx'],
     'type' => 'log',
     'fields' => { 'type' => 'extra_log_x' },
-    'exclude_files' => ['/var/log/messages', '/var/log/syslog', '/var/log/secure']
-  }
+    'exclude_files' => ['/var/log/messages', '/var/log/syslog', '/var/log/secure'],
+  },
 ]
 
 default['filebeat_test']['filebeat_config'].tap do |c|

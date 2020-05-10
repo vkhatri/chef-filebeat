@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: filebeat
+# Cookbook:: filebeat
 # Resource:: filebeat_install_preview
 #
 
@@ -7,18 +7,18 @@ resource_name :filebeat_install_preview
 
 property :version, String, default: '6.0.0-rc2'
 property :service_name, String, default: 'filebeat'
-property :notify_restart, [TrueClass, FalseClass], default: true
-property :disable_service, [TrueClass, FalseClass], default: false
-property :delete_prospectors_dir, [TrueClass, FalseClass], default: false
+property :notify_restart, [true, false], default: true
+property :disable_service, [true, false], default: false
+property :delete_prospectors_dir, [true, false], default: false
 property :package_url, String, default: 'auto'
 
-property :conf_dir, [String, NilClass], default: nil
-property :prospectors_dir, [String, NilClass], default: nil
-property :log_dir, [String, NilClass], default: nil
+property :conf_dir, [String, NilClass]
+property :prospectors_dir, [String, NilClass]
+property :log_dir, [String, NilClass]
 
 property :windows_base_dir, String, default: 'C:/opt/filebeat'
 
-property :apt_install_options, [String, NilClass], default: nil
+property :apt_install_options, [String, NilClass]
 
 default_action :create
 
@@ -33,10 +33,10 @@ action :create do
     end
   end
 
-  if %w[fedora rhel amazon].include?(node['platform_family'])
+  if platform_family?('fedora', 'rhel', 'amazon')
     package_arch = node['kernel']['machine'] =~ /x86_64/ ? 'x86_64' : 'i686'
     package_family = 'rpm'
-  elsif node['platform_family'] == 'debian'
+  elsif platform_family?('debian')
     package_arch = node['kernel']['machine'] =~ /x86_64/ ? 'amd64' : 'i386'
     package_family = 'deb'
   else
@@ -54,14 +54,14 @@ action :create do
 
   package 'filebeat' do # ~FC109
     source package_file
-    provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
+    provider Chef::Provider::Package::Dpkg if platform_family?('debian')
   end
 
   directory new_resource.log_dir do
-    mode 0o755
+    mode '755'
   end
 
-  prospectors_dir_action = new_resource.delete_prospectors_dir ? %i[delete create] : %i[create]
+  prospectors_dir_action = new_resource.delete_prospectors_dir ? %i(delete create) : %i(create)
 
   directory new_resource.prospectors_dir do
     recursive true

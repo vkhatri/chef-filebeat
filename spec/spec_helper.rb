@@ -13,5 +13,3 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
-
-at_exit { ChefSpec::Coverage.report! }

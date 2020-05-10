@@ -1,14 +1,10 @@
-sudo: required
-dist: trusty
-
 addons:
   apt:
     sources:
-      - chef-stable-trusty
+      - chef-stable-xenial
     packages:
-      - chefdk
+      - chef-workstation
 
-# Don't run bundle install
 install: echo "skip bundle install"
 
 branches:
@@ -20,28 +16,47 @@ services: docker
 
 env:
   matrix:
-    - INSTANCE=chef13-centos6
-    - INSTANCE=chef13-centos7
-    - INSTANCE=chef13-fedora26
-    - INSTANCE=chef13-ubuntu14
-    - INSTANCE=chef13-ubuntu16
-    - INSTANCE=chef13-amazon
-    - INSTANCE=chef13-amazon2
-
-script:
-  - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
-  - cat .kitchen/logs/kitchen.log
+    - INSTANCE=current-ver-amazonlinux
+    - INSTANCE=current-ver-amazonlinux-2
+    - INSTANCE=current-ver-debian-9
+    - INSTANCE=current-ver-debian-10
+    - INSTANCE=current-ver-centos-7
+    - INSTANCE=current-ver-centos-8
+    - INSTANCE=current-ver-oraclelinux-7
+    - INSTANCE=current-ver-oraclelinux-8
+    - INSTANCE=current-ver-fedora-latest
+    - INSTANCE=current-ver-ubuntu-1804
+    - INSTANCE=current-ver-ubuntu-2004
+    - INSTANCE=previous-ver-amazonlinux
+    - INSTANCE=previous-ver-amazonlinux-2
+    - INSTANCE=previous-ver-debian-9
+    - INSTANCE=previous-ver-debian-10
+    - INSTANCE=previous-ver-centos-7
+    - INSTANCE=previous-ver-centos-8
+    - INSTANCE=previous-ver-oraclelinux-7
+    - INSTANCE=previous-ver-oraclelinux-8
+    - INSTANCE=previous-ver-fedora-latest
+    - INSTANCE=previous-ver-ubuntu-1804
+    - INSTANCE=previous-ver-ubuntu-2004
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-  - /opt/chefdk/embedded/bin/chef --version
-  - /opt/chefdk/embedded/bin/cookstyle --version
-  - /opt/chefdk/embedded/bin/foodcritic --version
+  - eval "$(chef shell-init bash)"
+  - chef --version
 
+script: CHEF_LICENSE=accept KITCHEN_LOCAL_YAML=kitchen.dokken.yml kitchen verify ${INSTANCE}
 
 matrix:
+  allow_failures:
+    - env: INSTANCE=previous-ver-oraclelinux-7
+    - env: INSTANCE=previous-ver-oraclelinux-8
+    - env: INSTANCE=current-ver-oraclelinux-7
+    - env: INSTANCE=current-ver-oraclelinux-8
+    - env: INSTANCE=previous-ver-fedora-latest
+    - env: INSTANCE=current-ver-fedora-latest
   include:
     - script:
-      - /opt/chefdk/bin/chef exec rake
-      env: UNIT_AND_LINT=1
+      - delivery local all
+      env:
+        - UNIT_AND_LINT=1
+        - CHEF_LICENSE=accept

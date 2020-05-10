@@ -5,18 +5,19 @@
 # The Inspec reference, with examples and extensive documentation, can be
 # found at http://inspec.io/docs/reference/resources/
 
-if %w[redhat fedora amazon].include?(os[:family])
-  describe file('/etc/yum.repos.d/elastic6.repo') do
-    its('content') { should match %r{https://artifacts.elastic.co/packages/6.x/yum} }
+if %w(redhat fedora amazon).include?(os[:family])
+  describe file('/etc/yum.repos.d/elastic7.repo') do
+    its('content') { should match %r{https://artifacts.elastic.co/packages/7.x/yum} }
   end
 else
-  describe file('/etc/apt/sources.list.d/elastic6.list') do
-    its('content') { should match %r{https://artifacts.elastic.co/packages/6.x/apt} }
+  describe file('/etc/apt/sources.list.d/elastic7.list') do
+    its('content') { should match %r{https://artifacts.elastic.co/packages/7.x/apt} }
   end
 end
 
 describe file('/etc/filebeat/filebeat.yml') do
-  its('content') { should match 'filebeat.config.inputs' }
+  it { should exist }
+  # its('content') { should match 'filebeat.config.inputs' }
 end
 
 describe command('filebeat test config') do
@@ -26,10 +27,10 @@ end
 
 describe package('filebeat') do
   it { should be_installed }
-  its('version') { should match '6.4.2' }
+  its('version') { should match '7.6.2' }
 end
 
-if %w[16.04 2 7].include?(os[:release])
+if %w(18.04 20.04 2 7 8).include?(os[:release])
   describe systemd_service('filebeat') do
     it { should be_installed }
     it { should be_enabled }

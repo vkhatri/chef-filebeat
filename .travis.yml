@@ -47,6 +47,13 @@ before_script:
 script: CHEF_LICENSE=accept KITCHEN_LOCAL_YAML=kitchen.dokken.yml kitchen verify ${INSTANCE}
 
 matrix:
+  allow_failures:
+    - env: INSTANCE=previous-ver-oraclelinux-7
+    - env: INSTANCE=previous-ver-oraclelinux-8
+    - env: INSTANCE=current-ver-oraclelinux-7
+    - env: INSTANCE=current-ver-oraclelinux-8
+    - env: INSTANCE=previous-ver-fedora-latest
+    - env: INSTANCE=current-ver-fedora-latest
   include:
     - script:
       - delivery local all
